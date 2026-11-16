@@ -1,0 +1,58 @@
+label{
+    color:var(--bs-body-color, #111827);
+    display: flex;
+    gap: 12.5px;
+    align-items: center;
+
+}
+h5{
+    font-weight: 500;
+    margin: 0;
+/*     font-size: 16px;
+ */}
+p{
+    margin: 0;
+}
+.form-check-input{
+    width: 22px;
+    height: 22px;
+}
+label{
+    font-size: 16px;
+    font-weight: 500;
+}
+.students-number-container{
+    border: 1px solid #DBDBDB;
+    padding: 20px;
+            border-radius:16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.bg-light-custom {
+  background-color: #F9FAFB;
+}
+.decrement,.increment{
+    width: 40px;
+    height: 40px;
+    background-color: #E9E9E9;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.timer{
+    display: flex !important;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    width: 30%;
+}
+.time .number{
+    font-size: 16px;
+    font-weight: 500;
+    color:var(--bs-body-color, #111827) ;
+}svg{
+    margin-top: -2px;
+}

@@ -1,0 +1,111 @@
+.question-title-cont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+h5{
+    margin: 0;
+}
+.questions-container{
+        display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+.matchings-container 
+{
+    display: flex;
+    gap: 16px;
+}
+.questionsInputs-container{
+    display: flex;
+    gap: 16px;
+}
+.terms-container,.matches-container{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+            border: 1px solid #DEDEDE;
+         padding: 12px 24px;
+         border-radius: 0.25rem;
+}
+.addChoice{
+    max-width: 100px;
+}
+.questions-container .border-icon{
+    width: 90%;
+    background-color:#d0d0d0a1;
+} 
+.question-title-cont .border-cont:last-child {
+  display: none;
+}
+.border-cont{
+    display: flex;
+    justify-content: center;
+}
+.choose-answers-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.question-title-cont svg{
+    cursor: pointer;
+}
+.option-container,.sides-container{
+    position: relative;
+}
+.option-container svg,
+.sides-container svg{
+    position :absolute;
+top: 19px;
+    cursor: pointer;
+}
+:dir(ltr) .option-container svg,
+:dir(ltr) .sides-container svg{
+    right: 1.5%;
+     transform: translateY(-50%); /* adjust so center aligns exactly */
+}
+:dir(rtl) .option-container svg,
+:dir(rtl) .sides-container svg {
+    left: 1.5%;
+    right: auto;
+    transform: translateY(-50%);
+}
+.correctanswer{
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+.correct-answer-container{
+    border: 1px solid #5156be;
+    border-radius: 0.25rem;
+    padding: 16px;
+}
+    .border-cont.hide-border  {
+        display: none;
+    }
+    .option-checkbox-container{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    input[type="checkbox"]{
+    width: 21px;
+        height: 21px;
+        margin-top: -1px;
+}
+@media(max-width:768px){
+    .matchings-container {
+   flex-direction: column;
+    }
+    .terms-container,.matches-container{
+    width: 100%;
+    }
+    .questionsInputs-container{
+ flex-direction: column;
+}
+.questionsInputs-container ng-select{
+    width: 100%;
+}
+}

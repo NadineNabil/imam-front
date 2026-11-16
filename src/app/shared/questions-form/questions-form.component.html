@@ -1,0 +1,237 @@
+<form [formGroup]="examForm">
+
+  <!-- TITLE -->
+  <div class="cards-title d-flex justify-content-between align-items-center">
+    <h5 class="title-text">{{ 'EXAMS.QUESTIONS' | translate }} <span class="text-danger font-size-12 mt-1">*</span></h5>
+
+    <button type="button" class="plus-btn btn btn-primary" (click)="addQuestion()" *ngIf="!fromdetailsflag">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path
+          d="M10.5 20V13.5H4C2.5 13.5 2.5 10.5 4 10.5H10.5V4C10.5 2.5 13.5 2.5 13.5 4V10.5H20C21.5 10.5 21.5 13.5 20 13.5H13.5V20C13.5 21.5 10.5 21.5 10.5 20Z"
+          fill="#fff" />
+      </svg>
+
+    </button>
+  </div>
+
+  <!-- QUESTIONS ARRAY -->
+  <div formArrayName="questions">
+
+    <div class="questions-container" *ngFor="let block of questionsArray.controls; index as i; last as isLast"
+      [formGroupName]="i">
+
+      <!-- QUESTION HEADER -->
+      <div class="question-title-cont">
+        <label style="font-size:16px;">{{ 'EXAMS.QUESTION' | translate }} {{i + 1}}</label>
+
+        <svg *ngIf="!fromdetailsflag" width="24" height="25" (click)="removequestion(i)" viewBox="0 0 24 25">
+          <path d="M19 4.5H5V6.5H19V4.5ZM6 7.5H18V19.5C18 20.6 17.1 21.5 16 21.5H8C6.9 21.5 6 20.6 6 19.5V7.5Z"
+            fill="#DD1616" />
+        </svg>
+      </div>
+
+      <!-- SELECTS -->
+      <div class="questionsInputs-container">
+
+        <!-- QUESTION TYPE -->
+        <div class="w-100 w-lg-50">
+          <ng-select class="inputs" formControlName="type" (change)="onTypeChange(block,i,$event.key)"
+            [items]="questionTypesList" bindLabel="key" bindValue="key" [clearable]="false"
+            placeholder="{{ 'EXAMS.CHOOSE_TYPE' | translate }}">
+            <ng-template ng-label-tmp let-item="item">
+              {{ ('ENUM.QUESTION_TYPES.'+item.key)| translate }}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              {{ ('ENUM.QUESTION_TYPES.'+item.key)| translate }}
+            </ng-template>
+          </ng-select>
+          <div class="text-danger font-size-12 mt-1 font-size-12 mt-1" *ngIf="hasError(block.get('type'), 'required')">
+            {{ 'EXAMS.ERRORS.TYPE_REQUIRED' | translate }}
+          </div>
+        </div>
+
+        <!-- OBJECTIVES -->
+        <div class="w-100 w-lg-50">
+          <ng-select class="inputs" formControlName="objectiveId" bindLabel="objectiveText" bindValue="id"
+            [items]="learningObjectives" [clearable]="false" placeholder="{{ 'EXAMS.CHOOSE_OBJECTIVE' | translate }}">
+            <ng-template ng-label-tmp let-item="item">
+              {{ fixPunctuation(item.objectiveText) | translate }}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              {{ fixPunctuation(item.objectiveText) | translate }}
+            </ng-template>
+          </ng-select>
+          <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(block.get('objectiveId'), 'required')">
+            {{ 'EXAMS.ERRORS.OBJECTIVE_REQUIRED' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- QUESTION TEXT -->
+      <div class="question" *ngIf="!matchingOrDragandDrop(block)">
+        <input type="text" class="form-control" formControlName="question" trimInput
+          [placeholder]="('EXAMS.ENTER_QUESTION_HERE'| translate) + ' ..'">
+        <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(block.get('question'), 'required')">
+          {{'EXAMS.ERRORS.QUESTION_REQUIRED' | translate }}
+        </div>
+        <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(block.get('question'), 'minlength')">
+  {{'EXAMS.ERRORS.QUESTION_MIN' | translate:{ min: 3 } }}
+</div>
+      </div>
+
+      <!-- MATCHING / DRAG & DROP -->
+      <div class="matchings-container" *ngIf="matchingOrDragandDrop(block)">
+
+        <!-- LEFT ITEMS -->
+        <div formArrayName="leftitems" class="terms-container">
+          {{ getDynamicTerms(block.get('type')?.value) | translate }}
+
+          <div class="sides-container"
+            *ngFor="let option of getTerms(block).controls; let j = index   trackBy: trackByFn" [formGroupName]="j">
+
+            <input type="text" class="form-control" formControlName="leftitem"
+              [placeholder]="(placeholderdynamiccontent(block.get('type')?.value) | translate) + ' ' + (j + 1) + '..'">
+            <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(option.get('leftitem'), 'required')">
+              {{ 'EXAMS.ERRORS.ITEM_REQUIRED' | translate }} {{ j + 1 }}
+            </div>
+
+            <svg _ngcontent-ng-c2366503626="" xmlns="http://www.w3.org/2000/svg"
+              (click)="removeItem(block,j,'leftitems')" width="14" height="18" viewBox="0 0 14 18" fill="none">
+              <mask _ngcontent-ng-c2366503626="" id="path-1-inside-1_2363_7008" fill="white">
+                <path _ngcontent-ng-c2366503626=""
+                  d="M14 1H10.5L9.5 0H4.5L3.5 1H0V3H14M1 16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H11C11.5304 18 12.0391 17.7893 12.4142 17.4142C12.7893 17.0391 13 16.5304 13 16V4H1V16Z">
+                </path>
+              </mask>
+              <path _ngcontent-ng-c2366503626=""
+                d="M10.5 1L9.79289 1.70711L10.0858 2H10.5V1ZM9.5 0L10.2071 -0.707107L9.91421 -1H9.5V0ZM4.5 0V-1H4.08579L3.79289 -0.707107L4.5 0ZM3.5 1V2H3.91421L4.20711 1.70711L3.5 1ZM0 1V0H-1V1H0ZM0 3H-1V4H0V3ZM1 16H0H1ZM13 4H14V3H13V4ZM1 4V3H0V4H1ZM14 1V0H10.5V1V2H14V1ZM10.5 1L11.2071 0.292893L10.2071 -0.707107L9.5 0L8.79289 0.707107L9.79289 1.70711L10.5 1ZM9.5 0V-1H4.5V0V1H9.5V0ZM4.5 0L3.79289 -0.707107L2.79289 0.292893L3.5 1L4.20711 1.70711L5.20711 0.707107L4.5 0ZM3.5 1V0H0V1V2H3.5V1ZM0 1H-1V3H0H1V1H0ZM0 3V4H14V3V2H0V3ZM1 16H0C0 16.7957 0.31607 17.5587 0.87868 18.1213L1.58579 17.4142L2.29289 16.7071C2.10536 16.5196 2 16.2652 2 16H1ZM1.58579 17.4142L0.87868 18.1213C1.44129 18.6839 2.20435 19 3 19V18V17C2.73478 17 2.48043 16.8946 2.29289 16.7071L1.58579 17.4142ZM3 18V19H11V18V17H3V18ZM11 18V19C11.7957 19 12.5587 18.6839 13.1213 18.1213L12.4142 17.4142L11.7071 16.7071C11.5196 16.8946 11.2652 17 11 17V18ZM12.4142 17.4142L13.1213 18.1213C13.6839 17.5587 14 16.7957 14 16H13H12C12 16.2652 11.8946 16.5196 11.7071 16.7071L12.4142 17.4142ZM13 16H14V4H13H12V16H13ZM13 4V3H1V4V5H13V4ZM1 4H0V16H1H2V4H1Z"
+                fill="#DD1616" mask="url(#path-1-inside-1_2363_7008)"> </path>
+            </svg>
+          </div>
+
+          <button *ngIf="!fromdetailsflag" type="button" class="addChoice btn btn-primary mt-2" (click)="addTerm(i)">
+            {{ 'EXAMS.ADD_ITEM' | translate }}
+          </button>
+        </div>
+
+        <!-- RIGHT ITEMS -->
+        <div formArrayName="rightitems" class="matches-container">
+          {{ getDynamicMatches(block.get('type')?.value) | translate }}
+
+          <div class="sides-container"
+            *ngFor="let option of getMatches(block).controls; let j = index   trackBy: trackByFn" [formGroupName]="j">
+
+            <input type="text" class="form-control" formControlName="rightitem"
+              [placeholder]="(placeholderdynamiccontent2(block.get('type')?.value) | translate) + ' ' + (j + 1) + '..'">
+            <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(option.get('rightitem'), 'required')">
+              {{ 'EXAMS.ERRORS.ITEM_REQUIRED' | translate }} {{ j + 1 }}
+            </div>
+
+            <svg _ngcontent-ng-c2366503626="" xmlns="http://www.w3.org/2000/svg"
+              (click)="removeItem(block,j,'leftitems')" width="14" height="18" viewBox="0 0 14 18" fill="none">
+              <mask _ngcontent-ng-c2366503626="" id="path-1-inside-1_2363_7008" fill="white">
+                <path _ngcontent-ng-c2366503626=""
+                  d="M14 1H10.5L9.5 0H4.5L3.5 1H0V3H14M1 16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H11C11.5304 18 12.0391 17.7893 12.4142 17.4142C12.7893 17.0391 13 16.5304 13 16V4H1V16Z">
+                </path>
+              </mask>
+              <path _ngcontent-ng-c2366503626=""
+                d="M10.5 1L9.79289 1.70711L10.0858 2H10.5V1ZM9.5 0L10.2071 -0.707107L9.91421 -1H9.5V0ZM4.5 0V-1H4.08579L3.79289 -0.707107L4.5 0ZM3.5 1V2H3.91421L4.20711 1.70711L3.5 1ZM0 1V0H-1V1H0ZM0 3H-1V4H0V3ZM1 16H0H1ZM13 4H14V3H13V4ZM1 4V3H0V4H1ZM14 1V0H10.5V1V2H14V1ZM10.5 1L11.2071 0.292893L10.2071 -0.707107L9.5 0L8.79289 0.707107L9.79289 1.70711L10.5 1ZM9.5 0V-1H4.5V0V1H9.5V0ZM4.5 0L3.79289 -0.707107L2.79289 0.292893L3.5 1L4.20711 1.70711L5.20711 0.707107L4.5 0ZM3.5 1V0H0V1V2H3.5V1ZM0 1H-1V3H0H1V1H0ZM0 3V4H14V3V2H0V3ZM1 16H0C0 16.7957 0.31607 17.5587 0.87868 18.1213L1.58579 17.4142L2.29289 16.7071C2.10536 16.5196 2 16.2652 2 16H1ZM1.58579 17.4142L0.87868 18.1213C1.44129 18.6839 2.20435 19 3 19V18V17C2.73478 17 2.48043 16.8946 2.29289 16.7071L1.58579 17.4142ZM3 18V19H11V18V17H3V18ZM11 18V19C11.7957 19 12.5587 18.6839 13.1213 18.1213L12.4142 17.4142L11.7071 16.7071C11.5196 16.8946 11.2652 17 11 17V18ZM12.4142 17.4142L13.1213 18.1213C13.6839 17.5587 14 16.7957 14 16H13H12C12 16.2652 11.8946 16.5196 11.7071 16.7071L12.4142 17.4142ZM13 16H14V4H13H12V16H13ZM13 4V3H1V4V5H13V4ZM1 4H0V16H1H2V4H1Z"
+                fill="#DD1616" mask="url(#path-1-inside-1_2363_7008)"> </path>
+            </svg>
+          </div>
+
+          <button *ngIf="!fromdetailsflag" type="button" class="addChoice btn btn-primary mt-2" (click)="addMatch(i)">
+            {{ 'EXAMS.ADD_ITEM' | translate }}
+          </button>
+        </div>
+
+      </div>
+
+      <!-- OPTIONS -->
+      <div formArrayName="options" class="choose-answers-container">
+
+        <div class="option-container"
+          *ngFor="let option of getOptions(block).controls; let j = index   trackBy: trackByFn" [formGroupName]="j">
+          <div class="option-checkbox-container">
+
+            <input type="checkbox" class="form-check-input" (change)="onCorrectChange(block,j)"
+              formControlName="isCorrect" [attr.title]="'EXAMS.MARK_AS_CORRECT' | translate">
+            <!-- normal options -->
+            <input *ngIf="block.get('type')?.value !== QuestionTypeEnum.true_false" type="text" class="form-control" trimInput
+              formControlName="option" [placeholder]="
+    (optiondynamidtext(block.get('type')?.value) | translate) + ' ' + (j + 1) + ' ..'
+  " trimInput>
+
+            <!-- true/false options -->
+            <span  *ngIf="block.get('type')?.value === QuestionTypeEnum.true_false">
+       {{ option.get('option')?.value | translate }}
+</span>
+          </div>
+
+
+          <svg _ngcontent-ng-c2366503626="" xmlns="http://www.w3.org/2000/svg" (click)="removeItem(block,j,'options')"
+            *ngIf="block.get('type')?.value != QuestionTypeEnum.true_false" width="14" height="18" viewBox="0 0 14 18"
+            fill="none">
+            <mask _ngcontent-ng-c2366503626="" id="path-1-inside-1_2363_7008" fill="white">
+              <path _ngcontent-ng-c2366503626=""
+                d="M14 1H10.5L9.5 0H4.5L3.5 1H0V3H14M1 16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H11C11.5304 18 12.0391 17.7893 12.4142 17.4142C12.7893 17.0391 13 16.5304 13 16V4H1V16Z">
+              </path>
+            </mask>
+            <path _ngcontent-ng-c2366503626=""
+              d="M10.5 1L9.79289 1.70711L10.0858 2H10.5V1ZM9.5 0L10.2071 -0.707107L9.91421 -1H9.5V0ZM4.5 0V-1H4.08579L3.79289 -0.707107L4.5 0ZM3.5 1V2H3.91421L4.20711 1.70711L3.5 1ZM0 1V0H-1V1H0ZM0 3H-1V4H0V3ZM1 16H0H1ZM13 4H14V3H13V4ZM1 4V3H0V4H1ZM14 1V0H10.5V1V2H14V1ZM10.5 1L11.2071 0.292893L10.2071 -0.707107L9.5 0L8.79289 0.707107L9.79289 1.70711L10.5 1ZM9.5 0V-1H4.5V0V1H9.5V0ZM4.5 0L3.79289 -0.707107L2.79289 0.292893L3.5 1L4.20711 1.70711L5.20711 0.707107L4.5 0ZM3.5 1V0H0V1V2H3.5V1ZM0 1H-1V3H0H1V1H0ZM0 3V4H14V3V2H0V3ZM1 16H0C0 16.7957 0.31607 17.5587 0.87868 18.1213L1.58579 17.4142L2.29289 16.7071C2.10536 16.5196 2 16.2652 2 16H1ZM1.58579 17.4142L0.87868 18.1213C1.44129 18.6839 2.20435 19 3 19V18V17C2.73478 17 2.48043 16.8946 2.29289 16.7071L1.58579 17.4142ZM3 18V19H11V18V17H3V18ZM11 18V19C11.7957 19 12.5587 18.6839 13.1213 18.1213L12.4142 17.4142L11.7071 16.7071C11.5196 16.8946 11.2652 17 11 17V18ZM12.4142 17.4142L13.1213 18.1213C13.6839 17.5587 14 16.7957 14 16H13H12C12 16.2652 11.8946 16.5196 11.7071 16.7071L12.4142 17.4142ZM13 16H14V4H13H12V16H13ZM13 4V3H1V4V5H13V4ZM1 4H0V16H1H2V4H1Z"
+              fill="#DD1616" mask="url(#path-1-inside-1_2363_7008)"> </path>
+          </svg>
+          <div class="text-danger font-size-12 mt-1 mt-1" *ngIf="hasError(option.get('option'), 'required') || hasError(option.get('option'), 'pattern')">
+            {{ 'EXAMS.ERRORS.OPTION_REQUIRED' | translate }} {{ j + 1 }}
+          </div>
+        </div>
+
+        <button
+          *ngIf="showOptions(block) && !fromdetailsflag && block.get('type')?.value != QuestionTypeEnum.true_false"
+          type="button" class="addChoice btn btn-primary mt-2" (click)="addChoice(i)">
+          {{ 'EXAMS.ADD_ITEM' | translate }}
+        </button>
+      </div>
+
+      <!-- CORRECT ANSWER -->
+      <!-- CORRECT ANSWER -->
+      <div class="correct-answer-container" *ngIf="!hasOptions(block.get('type')?.value)">
+        <label>{{ 'EXAMS.ANSWER' | translate }}:</label>
+
+        <!-- MULTIPLE CHOICE ONLY -->
+        <!-- <ng-select
+  *ngIf="hasOptions(block.get('type')?.value)"
+  [items]="getOptions(block).value"
+  bindLabel="option"
+  bindValue="option"
+  (change)="assignIsCorrect(block)"
+  formControlName="correctAnswer"
+  [multiple]="block.get('type')?.value == QuestionTypeEnum.multiple_response"
+  [placeholder]="'EXAMS.SELECT_CORRECT_ANSWER' | translate"
+  [clearable]="false">
+</ng-select> -->
+
+        <!-- ALL OTHER TYPES -->
+        <input type="text" class="form-control" formControlName="correctAnswer"
+          [placeholder]="'EXAMS.ENTER_CORRECT_ANSWER' | translate" trimInput>
+
+        <!-- ERROR -->
+        <div class="text-danger font-size-12 mt-1" *ngIf="hasError(block.get('correctAnswer'), 'required') || hasError(block.get('correctAnswer'), 'pattern')">
+          {{ 'EXAMS.ERRORS.CORRECT_ANSWER_REQUIRED' | translate }}
+        </div>
+      </div>
+
+
+      <!-- DIVIDER -->
+      <div class="border-cont" [class.hide-border]="isLast">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1040" height="2" viewBox="0 0 1040 2" fill="none"
+          class="border-icon">
+          <path d="M0.5 1L1039.5 1" stroke-linecap="round"></path>
+        </svg>
+      </div>
+
+    </div>
+
+  </div>
+</form>

@@ -1,0 +1,10 @@
+<div class="modal-body text-center p-4">
+    <div class="mt-2">
+        <h4 class="mb-3 fw-semibold">{{ 'LOGOUT.CONFIRM_TITLE' | translate }}</h4>
+        <p class="text-muted mb-4">{{ 'LOGOUT.CONFIRM_DESC' | translate }}</p>
+        <div class="hstack gap-2 justify-content-center">
+            <button type="button" class="btn btn-logout w-md" (click)="confirm()">{{ 'LOGOUT.CONFIRM_LOGOUT' | translate }}</button>
+            <button type="button" class="btn btn-cancel w-md" (click)="dismiss()">{{ 'LOGOUT.CONFIRM_CANCEL' | translate }}</button>
+        </div>
+    </div>
+</div>

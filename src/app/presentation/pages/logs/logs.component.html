@@ -1,0 +1,163 @@
+<section class="activity-page">
+
+    <div class="page-header">
+        <div>
+            <span class="eyebrow">{{ 'LOGS.EYEBROW' | translate }}</span>
+            <h2>{{ 'LOGS.TITLE' | translate }}</h2>
+            <p>{{ 'LOGS.TRACK' | translate }}</p>
+        </div>
+
+        <div class="header-stats">
+
+            <div class="stat">
+                <span class="value">2,540</span>
+                <span class="label">{{ 'LOGS.STAT_TODAY' | translate }}</span>
+            </div>
+
+            <div class="stat">
+                <span class="value">145</span>
+                <span class="label">{{ 'LOGS.STAT_ACTIVE_USERS' | translate }}</span>
+            </div>
+
+            <div class="stat">
+                <span class="value">18</span>
+                <span class="label">{{ 'LOGS.STAT_ADMINS' | translate }}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="filters">
+
+        <input
+            type="text"
+            [placeholder]="'LOGS.SEARCH' | translate">
+
+        <select>
+            <option>{{ 'LOGS.ALL_USERS' | translate }}</option>
+        </select>
+
+        <select>
+            <option>{{ 'LOGS.ALL_ROLES' | translate }}</option>
+        </select>
+
+        <select>
+            <option>{{ 'LOGS.ALL_ACTIONS' | translate }}</option>
+        </select>
+
+        <input type="date">
+
+    </div>
+
+
+
+    <div class="table-wrapper">
+
+        <table class="activity-table">
+
+            <thead>
+
+            <tr>
+                <th>{{ 'LOGS.TIME' | translate }}</th>
+                <th>{{ 'LOGS.USER' | translate }}</th>
+                <th>{{ 'LOGS.ROLE' | translate }}</th>
+                <th>{{ 'LOGS.ACTION' | translate }}</th>
+                <th>{{ 'LOGS.MODULE' | translate }}</th>
+                <th>{{ 'LOGS.STATUS' | translate }}</th>
+                <th>{{ 'LOGS.IP' | translate }}</th>
+                <th>{{ 'LOGS.DETAILS' | translate }}</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>10:42 AM</td>
+                <td>
+                    <div class="user-cell">
+                        <div class="avatar">A</div>
+                        Ahmed Ali
+                    </div>
+                </td>
+                <td>{{ 'LOGS.ADMIN' | translate }}</td>
+                <td>{{ 'LOGS.ACTION_CREATE_COURSE' | translate }}</td>
+                <td>{{ 'LOGS.MODULE_COURSES' | translate }}</td>
+                <td><span class="badge success">{{ 'LOGS.SUCCESS' | translate }}</span></td>
+                <td>192.168.1.4</td>
+                <td><button>{{ 'LOGS.VIEW' | translate }}</button></td>
+            </tr>
+
+            <tr>
+                <td>10:39 AM</td>
+                <td>
+                    <div class="user-cell">
+                        <div class="avatar">S</div>
+                        Sara Omar
+                    </div>
+                </td>
+                <td>{{ 'LOGS.TRAINER' | translate }}</td>
+                <td>{{ 'LOGS.ACTION_UPDATE_ASSESSMENT' | translate }}</td>
+                <td>{{ 'LOGS.MODULE_ASSESSMENTS' | translate }}</td>
+                <td><span class="badge success">{{ 'LOGS.SUCCESS' | translate }}</span></td>
+                <td>192.168.1.8</td>
+                <td><button>{{ 'LOGS.VIEW' | translate }}</button></td>
+            </tr>
+
+            <tr>
+                <td>10:30 AM</td>
+                <td>
+                    <div class="user-cell">
+                        <div class="avatar">M</div>
+                        Mohamed Adel
+                    </div>
+                </td>
+                <td>{{ 'LOGS.STUDENT' | translate }}</td>
+                <td>{{ 'LOGS.ACTION_SUBMIT_ASSESSMENT' | translate }}</td>
+                <td>{{ 'LOGS.MODULE_LEARNING' | translate }}</td>
+                <td><span class="badge success">{{ 'LOGS.SUCCESS' | translate }}</span></td>
+                <td>192.168.1.15</td>
+                <td><button>{{ 'LOGS.VIEW' | translate }}</button></td>
+            </tr>
+
+            <tr>
+                <td>10:22 AM</td>
+                <td>
+                    <div class="user-cell">
+                        <div class="avatar">A</div>
+                        Ahmed Ali
+                    </div>
+                </td>
+                <td>{{ 'LOGS.ADMIN' | translate }}</td>
+                <td>{{ 'LOGS.ACTION_DELETE_USER' | translate }}</td>
+                <td>{{ 'LOGS.MODULE_USERS' | translate }}</td>
+                <td><span class="badge danger">{{ 'LOGS.CRITICAL' | translate }}</span></td>
+                <td>192.168.1.4</td>
+                <td><button>{{ 'LOGS.VIEW' | translate }}</button></td>
+            </tr>
+
+            <tr>
+                <td>10:10 AM</td>
+                <td>
+                    <div class="user-cell">
+                        <div class="avatar">S</div>
+                        Salma Hassan
+                    </div>
+                </td>
+                <td>{{ 'LOGS.STUDENT' | translate }}</td>
+                <td>{{ 'LOGS.ACTION_LOGIN' | translate }}</td>
+                <td>{{ 'LOGS.MODULE_AUTH' | translate }}</td>
+                <td><span class="badge info">{{ 'LOGS.INFO' | translate }}</span></td>
+                <td>192.168.1.33</td>
+                <td><button>{{ 'LOGS.VIEW' | translate }}</button></td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>

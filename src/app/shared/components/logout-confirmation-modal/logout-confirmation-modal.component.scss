@@ -1,0 +1,23 @@
+
+
+.btn-logout {
+    background-color: #fd625e; // theme danger color
+    border-color: #fd625e;
+    color: #fff;
+
+    &:hover {
+        background-color: #e05652;
+        border-color: #e05652;
+        color: #fff;
+    }
+}
+
+.btn-cancel {
+    border-color: #5156be; // theme primary color
+    color: #5156be;
+
+    &:hover {
+        background-color: #5156be;
+        color: #fff;
+    }
+}

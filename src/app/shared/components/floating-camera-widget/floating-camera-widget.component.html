@@ -1,0 +1,12 @@
+<div *ngIf="isVisible" class="camera-dialog">
+   <!--<button class="close-btn" (click)="close()">✕</button> -->
+
+  <!-- Embed capture component -->
+  <app-camera-capture-component></app-camera-capture-component>
+
+  <div class="controls">
+    <button (click)="toggleSilent()">
+      {{ !cameraService.silentMode ? 'إلغاء صوت الكاميرا' : 'تفعيل صوت الكاميرا' }}
+    </button>
+  </div>
+</div>

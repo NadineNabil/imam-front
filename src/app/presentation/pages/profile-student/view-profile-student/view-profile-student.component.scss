@@ -1,0 +1,49 @@
+.profile-img-wrapper {
+  position: relative;
+}
+.profile-img-wrapper .pencil-wrapper {
+  position: absolute;
+  top: 40%;
+  right: 0;
+
+  transform: translate(10%, 10%); 
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 50%;
+
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+  transition: 0.2s ease;
+}
+:dir(rtl).profile-img-wrapper .pencil-wrapper{
+    left: 0;
+    right: unset;
+}
+.profile-img-wrapper .pencil-wrapper:hover {
+  transform: scale(1.1);
+  background-color: #f8f9fa;
+}
+.btns-container{
+    display: flex;
+    gap: 16px;
+}
+.card {
+    margin-bottom: 1rem !important;
+}
+
+.modal.show {
+  display: block;
+}
+
+.ltr{
+  direction: ltr;
+}

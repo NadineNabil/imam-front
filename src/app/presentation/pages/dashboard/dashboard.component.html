@@ -1,0 +1,8 @@
+<!-- page title -->
+<!-- <app-pagetitle title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-pagetitle> -->
+
+<!-- Student view -->
+<app-student-dashboard *ngIf="isStudent"></app-student-dashboard>
+
+<!-- Admin / Teacher view -->
+<app-admin-dashboard *ngIf="!isStudent"></app-admin-dashboard>

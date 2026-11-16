@@ -1,0 +1,56 @@
+
+<!-- Preloader from preloader.scss -->
+<div class="pace" [class.pace-active]="loading" [class.pace-inactive]="!loading">
+  <div class="pace-progress"></div>
+  <div class="pace-activity"></div>
+</div>
+
+<div class="d-flex align-items-center mb-2 ">
+  <div class="col-6   title-page">
+    <h4 class="m-0">{{courseName}}</h4>
+  </div>
+  <div class="col text-end  btnstitle">
+   
+    <a (click)="addNewlearningUnit()" class="btn btn-light">
+      <i class="bx bx-plus me-1"></i> 
+      {{ 'LearningUnit.PAGE.ADD_NEW_LearningUnit' | translate }}</a>
+
+       <a (click)="openAddStudent()" class="btn btn-light  mstart">
+      <i class="bx bx-plus me-1"></i> 
+      {{ 'COURSE.ADD_STUDENT.BUTTON' | translate }}</a>
+
+       <!-- <a (click)="editCourse()" class="btn btn-light">
+      <i class="bx bx-plus me-1"></i> 
+      {{ 'COURSE.EDIT_COURSE.TITLE' | translate }}</a> -->
+  </div>
+
+</div>
+<div class="row">
+  <!-- Show message when no lessons 
+  <div class="col-12" *ngIf="!loading && lessons.length === 0">
+    <div class="text-center py-5">
+      <p class="text-muted mb-0">{{ 'LearningUnit.PAGE.NO_LearningUnit' | translate }}</p>
+    </div>
+  </div>
+-->
+  <!-- Show lessons when available -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4" *ngFor="let learningUnit of learningUnits">
+    <div class="card h-100">
+     
+
+      <div class="card-body d-flex flex-column">
+        <h4 class="card-title">{{learningUnit.learningUnitName}}</h4>
+        <p class="card-text flex-grow-1">
+          {{ courseName}} 
+        </p>
+
+        <a class="btn btn-primary waves-effect waves-light mt-auto"
+        
+        (click)="viewlearningUnitDetails(learningUnit.id)">
+          {{ 'LearningUnit.PAGE.VIEW_DETAILS' | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+  
+</div>

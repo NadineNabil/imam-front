@@ -1,0 +1,116 @@
+<div class="row mb-2 align-items-center" *ngIf="showPagination || statusOptions?.length || showSearch">
+
+  <!-- Left Side -->
+  <div class="col-md-6 d-flex gap-3 align-items-center">
+
+  <!-- Page Size -->
+  <div class="w-auto d-flex gap-1 align-items-center" *ngIf="showPagination">
+    <span>{{'COMMON.SHOW'|translate}}</span>
+    <ng-select
+      class="page-size-select"
+      [items]="pageSizes"
+      [clearable]="false"
+      [searchable]="false"
+      [(ngModel)]="selectedPageSize"
+      (change)="onPageSizeChange($event)">
+    </ng-select>
+    <span>{{'COMMON.ENTRIES'|translate}}</span>
+  </div>
+
+    <div class="col-md-4" *ngIf="statusOptions?.length">
+      <ng-select
+        [items]="statusOptions || []"
+        bindLabel="label"
+        bindValue="value"
+        [clearable]="true"
+        [placeholder]="'COMMON.STATUS_FILTER' | translate"
+        [formControl]="statusControl"
+        (change)="onStatusChange($event)"
+        (clear)="onStatusChange( '')">
+          <ng-template ng-label-tmp let-item="item">
+    {{ item.label|translate }}
+  </ng-template>
+
+  <ng-template ng-option-tmp let-item="item">
+    {{ item.label | translate }}
+  </ng-template>
+      </ng-select>
+    </div>
+
+  </div>
+
+  <!-- Right Side -->
+<div class="col-md-6 d-flex justify-content-end" *ngIf="showSearch">
+
+  <div class="search-wrapper w-50">
+    <input
+      type="text"
+      class="form-control form-control-sm "
+      [placeholder]="'HEADER.SEARCH' | translate"
+      (input)="onSearch($any($event.target).value)">
+  </div>
+
+</div>
+
+</div>
+<div class="table-responsive mb-3">
+<table class="table table-bordered table-striped ">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        [sortable]="col.sortable ? col.key : ''"
+        >
+        {{ col.label | translate }}
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (row of data$ | async; track $index) {
+      <tr [ngClass]="rowClass ? rowClass(row) : null">
+        @for (col of columns; track col.key) {
+      <td>
+  @if (col.key === 'actions' && actionsTemplate) {
+    <ng-container
+      *ngTemplateOutlet="actionsTemplate; context: { $implicit: row }">
+    </ng-container>
+  } @else {
+   <span
+      class="truncate-text"
+      [title]="getCellValue(row, col.key) | translate">
+      {{ getCellValue(row, col.key) | translate }}
+    </span>
+  }
+</td>
+        }
+      </tr>
+    }
+  @if ((data$ | async)?.length === 0) {
+    <tr>
+      <td [attr.colspan]="columns.length" class="text-center py-4 text-muted">
+        {{ 'COMMON.NO_DATA' | translate }}
+      </td>
+    </tr>
+  }
+    @if(isLoading) {
+      <tr>
+        <td [attr.colspan]="columns.length" class="text-center py-4">
+          <app-loading-spinner2></app-loading-spinner2>
+        </td>
+      </tr>
+    }
+  
+</tbody>
+
+</table>
+</div>
+
+<app-pagination
+  *ngIf="showPagination"
+  [ellipses]="true"
+  [collectionSize]="totalRecords"
+  [pageSize]="tableService.pageSize"
+  [(page)]="tableService.page"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

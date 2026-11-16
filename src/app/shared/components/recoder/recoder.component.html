@@ -1,0 +1,24 @@
+<div class="audio-recorder">
+  <div class="controls">
+    <button *ngIf="!startRecordFlag" (click)="togglePlay()">
+      <span *ngIf="!isPlaying"><img src="../../../assets/images/playsound.png"></span>
+      <span *ngIf="isPlaying"><img src="../../../assets/images/pause.png"></span>
+    </button>
+
+    <button *ngIf="startRecordFlag" (click)="stopRecording()">
+      <svg id="stoprecordIcon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" fill="white" stroke="currentColor" stroke-width="2" />
+        <rect x="9" y="9" width="6" height="6" fill="currentColor" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="waveform" #waveform style="width: 100%;"></div>
+  <div class="record_time ">{{ formattedRecordingTime }}</div>
+
+  <div class="controls pb-2">
+    <button (click)="deleteRecording()">
+      <img src="../../../assets/images/removesound.png">
+    </button>
+  </div>
+</div>

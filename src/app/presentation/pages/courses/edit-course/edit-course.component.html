@@ -1,0 +1,88 @@
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'COURSE.EDIT_COURSE.TITLE'|translate}}</h4>
+            <!--                 <p class="card-title-desc">{{'SUBJECT.CREATE_SUBJECT'|translate}}</p>
+ -->            </div>
+            <div class="card-body">
+                <form class="needs-validation" (ngSubmit)="CourseSubmit()" [formGroup]="Courseform">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="validationCustom01">{{'COURSE.COURSE_NAME'|translate}} <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="validationCustom01" formControlName="name" placeholder="{{'COURSE.COURSE_NAME'|translate}}" [ngClass]="{'is-invalid':submit &&Courseform.get('name')?.errors ,'is-valid':submit && Courseform.get('name')?.valid}" />
+                                <div class="invalid-feedback" *ngIf="submit && Courseform.get('name')?.invalid">
+                                  <span *ngIf="Courseform.get('name')?.errors?.required">{{'COURSE.COURSE_NAME_IS_REQUIRED'|translate}}</span>
+                                  <span *ngIf="Courseform.get('name')?.errors?.pattern">{{'COURSE.COURSE_NAME_INVALID_PATTERN'|translate}}</span>
+                                  <span *ngIf="Courseform.get('name')?.errors?.minlength">{{'COURSE.COURSE_NAME_MIN_LENGTH'|translate:{min:3} }}</span>
+                                  <span *ngIf="Courseform.get('name')?.errors?.maxlength">{{'COURSE.COURSE_NAME_MAX_LENGTH'|translate:{max:100} }}</span>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="validationCustom02">{{'COURSE.COURSE_DESCRIPTION'|translate}} <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="validationCustom02" formControlName="description" placeholder="{{'COURSE.COURSE_DESCRIPTION'|translate}}" [ngClass]="{'is-invalid': submit && Courseform.get('description')?.errors}">
+                                <div class="invalid-feedback" *ngIf="submit && Courseform.get('description')?.invalid">
+                                  <span *ngIf="Courseform.get('description')?.errors?.required">{{'COURSE.COURSE_DESCRIPTION_IS_REQUIRED'|translate}}</span>
+                                  <span *ngIf="Courseform.get('description')?.errors?.minlength">{{'COURSE.COURSE_DESCRIPTION_MIN_LENGTH'|translate:{min:3} }}</span>
+                                  <span *ngIf="Courseform.get('description')?.errors?.maxlength">{{'COURSE.COURSE_DESCRIPTION_MAX_LENGTH'|translate:{max:450} }}</span>
+                                 <span *ngIf="Courseform.get('description')?.errors?.pattern">{{'COURSE.COURSE_DESCRIPTION_INVALID_PATTERN'|translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                          <div class="row">
+        <!-- Category -->
+        <div class="mb-3 col-lg-6 col-md-6">
+          <label for="validationCustom03">{{'EXAMS.CATEGORY' | translate}} <span class="text-danger">*</span></label>
+          <ng-select
+          (change)="onCategoryChange($event)"
+            bindLabel="categoryName"
+            formControlName="category"
+            [items]="categories()"
+            [placeholder]="'EXAMS.SELECT_CATEGORY' | translate">
+          </ng-select>
+          <div class="text-danger font-size-12 mt-1" *ngIf="Courseform.get('category')?.touched && Courseform.get('category')?.invalid">
+            {{'EXAMS.ERRORS.CATEGORY_REQUIRED' | translate}}
+          </div>
+        </div>
+
+        <!-- Course -->
+
+                <!-- Sub-Category -->
+        <div class="mb-3 col-lg-6 col-md-6">
+          <label for="validationCustom04">{{'EXAMS.SUB_CATEGORY' | translate}}</label>
+          <ng-select
+            bindLabel="subCategoryName"
+            (change)="onSubCategoryChange($event)"
+            formControlName="subCategory"
+            [items]="subCategories()"
+            [placeholder]="'EXAMS.SELECT_SUB_CATEGORY' | translate">
+          </ng-select>
+          <!-- <div class="text-danger font-size-12 mt-1" *ngIf="Courseform.get('subCategory')?.touched && Courseform.get('subCategory')?.invalid">
+            {{'EXAMS.ERRORS.SUBCATEGORY_REQUIRED' | translate}}
+          </div> -->
+        </div>
+      </div>
+                    <div class="row">
+                    </div>
+                       <label for="validationCustom05">{{'COURSE.COURSE_IMAGE'|translate}}</label>
+                     <app-file-upload 
+                       #fileInput
+                     [fileType]="'image/png,image/jpeg,image/gif,image/webp,image/jpg'"
+                     [maxFiles]="1"
+                     [MaxFilesExceededMessageKey]="exceededMessage"
+                     [imageUrl]="Courseform.get('image')?.value"
+                      (fileAdded)="onAddingFile($event)"
+                      ></app-file-upload>
+
+                    <div>
+                        <button class="btn btn-primary mt-3" type="submit" [disabled]="loading">{{'COURSE.SUBMIT'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->

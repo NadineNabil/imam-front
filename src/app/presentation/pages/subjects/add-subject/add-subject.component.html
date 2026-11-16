@@ -1,0 +1,52 @@
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'COURSE.CREATE_COURSE'|translate}}</h4>
+<!--                 <p class="card-title-desc">{{'SUBJECT.CREATE_SUBJECT'|translate}}</p>
+ -->            </div>
+            <div class="card-body">
+                <form class="needs-validation" (ngSubmit)="addCourseSubmit()" [formGroup]="addCourseform">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="validationCustom01">{{'COURSE.COURSE_NAME'|translate}} <span class="required-astr">*</span></label>
+                                <input type="text" class="form-control" id="validationCustom01" formControlName="name" placeholder="{{'COURSE.COURSE_NAME'|translate}}" [ngClass]="{'is-invalid':submit &&addCourseform.get('name')?.errors ,'is-valid':submit && addCourseform.get('name')?.valid}" />
+                                @if(submit && addCourseform.get('name')?.errors){
+                                <div class="invalid-feedback">
+                                    @if(addCourseform.get('name')?.errors?.required){
+                                    <span>{{'COURSE.COURSE_NAME_IS_REQUIRED'|translate}}</span>}
+                                       @if(addCourseform.get('name')?.errors?.pattern){
+                                    <span>{{'COURSE.COURSE_NAME_CANNOT_BE_EMPTY'|translate}}</span>}
+                                </div>}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="validationCustom02">{{'COURSE.COURSE_DESCRIPTION'|translate}}</label>
+                                <input type="text" class="form-control" id="validationCustom02" formControlName="description" placeholder="{{'COURSE.COURSE_DESCRIPTION'|translate}}" [ngClass]="{'is-invalid': submit && addCourseform.get('description')?.errors}">
+                                @if(submit && addCourseform.get('description')?.errors){
+                                <div class="valid-feedback">
+                                    @if(addCourseform.get('description')?.errors?.required){
+                                    <span>{{'COURSE.LOOKS_GOOD'|translate}}</span>}
+                                </div>}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    </div>
+                       <label for="validationCustom02">{{'COURSE.COURSE_IMAGE'|translate}}</label>
+                     <app-file-upload 
+                     [fileType]="'image/png,image/jpeg,image/gif,image/webp'"
+                     [maxFiles]="1"
+                     [MaxFilesExceededMessageKey]="exceededMessage"
+                      (fileAdded)="onAddingFile($event)"
+                      ></app-file-upload>
+
+                    <div>
+                        <button class="btn btn-primary mt-3" type="submit" [disabled]="loading">{{'COURSE.SUBMIT'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end card -->
+    </div> <!-- end col -->

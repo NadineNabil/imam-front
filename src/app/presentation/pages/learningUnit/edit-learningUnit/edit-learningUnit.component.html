@@ -1,0 +1,294 @@
+<!-- Preloader from preloader.scss -->
+<div class="pace" [class.pace-active]="loading" [class.pace-inactive]="!loading">
+  <div class="pace-progress"></div>
+  <div class="pace-activity"></div>
+</div>
+
+
+<div class="container-fluid edit-learningUnit-page">
+
+  <!-- Page Title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-flex align-items-center justify-content-between">
+        <h4 class="mb-0">{{ 'LearningUnit.EDIT.PAGE_TITLE' | translate }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Information -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-3">{{ 'LearningUnit.EDIT.BASIC_INFORMATION' | translate }}</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">{{ 'WIZARD.LearningUnit_NAME' | translate }}</label>
+            <input type="text" class="form-control"    [(ngModel)]="learningUnitName"
+             [(value)]="learningUnitName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">{{ 'WIZARD.SUBJECT_NAME' | translate }}</label>
+            <input type="text" class="form-control" [value]="subjectName" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- learningUnit Content -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-3">{{ 'LearningUnit.EDIT.LearningUnit_CONTENT' | translate }}</h5>
+
+      <div class="contentOflearningUnit">
+        <div *ngIf="fileSources.length; else noFileSources" class="row g-3">
+          <div class="col-md-6" *ngFor="let src of fileSources">
+            <div class="card h-100">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h6 class="card-title mb-1 sourceName" [title]="src.name">{{ src.name }}</h6>
+                    <span
+                    class="badge"
+                    [ngClass]="{
+                      'bg-success': src.file_status === FileStatus.SUCCESS,
+                      'bg-warning': src.file_status === FileStatus.PROCESSING,
+                      'bg-danger': src.file_status === FileStatus.FAILED
+                    }"
+                  >
+                    {{ src.file_status }}
+                  </span>
+                  </div>
+                  
+                  <div  >
+                    <a 
+                       class="btn btn-danger w-100"
+                       (click)="Delete(src.id)"
+                       target="_blank"
+                       rel="noopener">
+                      {{ 'LearningUnit.EDIT.Delete' | translate }}
+                    </a>
+                  </div>
+                </div>
+                <p class="mb-2"><small>{{ src.time_stamp | date:'medium' }}</small></p>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noFileSources>
+          <div class="alert alert-info mb-0">{{ 'LearningUnit.EDIT.NO_FILE_SOURCES' | translate }}</div>
+        </ng-template>
+      </div>
+     
+      <hr>
+
+       <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onAddContentClick()">
+          {{ 'WIZARD.STEP2.ADD_CONTENT' | translate }}
+        </button>
+      </div>
+
+      <div *ngFor="let dz of dropzones" class="dropzone-wrapper mb-3">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <label class="form-label small mb-1">{{ 'WIZARD.STEP2.SELECT_LANGUAGE' | translate }}</label>
+            <select
+              class="form-select form-select-sm"
+              [(ngModel)]="dz.lang"
+              [disabled]="dz.hasFile"
+              (change)="onLangChange(dz, dz.lang)"
+              [attr.data-dz-id]="dz.id">
+              <option value="null">{{ 'WIZARD.STEP2.SELECT_LANGUAGE' | translate }}</option>
+              <option *ngFor="let l of languages" [value]="l.code">{{ l.label | translate }}</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            <div style="position:relative"  [class.hide-dz-message-dz-text]="!dz.lang || dz.lang == 'null'">
+              <dropzone
+                [config]="dz.config"
+                (addedFile)="onContentAdded($event, dz)"
+                [message]="'WIZARD.STEP2.DROPZONE_MESSAGE' | translate">
+              </dropzone>
+
+              <div *ngIf="!dz.lang || dz.lang == 'null'" class="dz-uploader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;">
+                <div class="text-center">
+                  <div class="mb-2">{{ 'WIZARD.STEP2.SELECT_FILE_LANGUAGE' | translate }}</div>
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="focusLangSelect(dz.id)">
+                    {{ 'WIZARD.STEP2.SELECT_LANGUAGE' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Sources -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-3">{{ 'LearningUnit.EDIT.QUESTION_SOURCES' | translate }}</h5>
+    
+      <div class="d-flex flex-wrap gap-3 align-items-center">
+          <div class="d-flex flex-column gap-3" style="width: 100%;">
+            <div>
+              <button class="btn btn-outline-primary" type="button" (click)="downloadTemplate()">
+                <i class="bx bx-download me-1"></i> {{ 'WIZARD.STEP3.DOWNLOAD_TEMPLATE' | translate }}
+              </button>
+            </div>
+
+            
+
+            <div>
+              <dropzone
+                [config]="questionDropzoneConfig"
+                (addedFile)="onQuestionFileAdded($event)"
+              
+                [message]="'WIZARD.STEP3.DROPZONE_MESSAGE' | translate">
+              </dropzone>
+
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Questions -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-4">{{ 'WIZARD.STEP3.MANUAL_ENTRY_TITLE' | translate }}</h5>
+
+      <form (ngSubmit)="addManualQuestion()">
+        <div class="row">
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">{{ 'WIZARD.STEP3.QUESTION_TYPE' | translate }} <span
+              class="text-danger">*</span></label>
+            <select class="form-select" [(ngModel)]="newQuestion.type" name="qtype">
+              <option value="">{{ 'WIZARD.STEP3.SELECT_QUESTION_TYPE' | translate }}</option>
+              <option [value]="QuestionTypeEnum.multiple_choice">{{ 'WIZARD.STEP3.QUESTION_TYPES.MULTIPLE_CHOICE' | translate }}</option>
+              <option [value]="QuestionTypeEnum.true_false">{{ 'WIZARD.STEP3.QUESTION_TYPES.TRUE_FALSE' | translate }}</option>
+              <option [value]="QuestionTypeEnum.short_answer">{{ 'WIZARD.STEP3.QUESTION_TYPES.SHORT_ANSWER' | translate }}</option>
+              <option [value]="QuestionTypeEnum.essay">{{ 'WIZARD.STEP3.QUESTION_TYPES.ESSAY' | translate }}</option>
+              <option [value]="QuestionTypeEnum.fill_blank">{{ 'WIZARD.STEP3.QUESTION_TYPES.FILL_BLANK' | translate }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <label class="form-label">{{ 'WIZARD.STEP3.QUESTION_TEXT' | translate }} <span
+              class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="newQuestion.question" name="qtext">
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <label class="form-label">{{ 'WIZARD.STEP3.QUESTION_MEASURES' | translate }}</label>
+            <input type="text" class="form-control" [(ngModel)]="newQuestion.measure" name="qmeasure" placeholder="{{ 'WIZARD.STEP3.MEASURE_PLACEHOLDER' | translate }}">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">{{ 'WIZARD.STEP3.REQUIREMENT_TYPE' | translate }} <span
+              class="text-danger">*</span></label>
+            <select class="form-select"
+                    [(ngModel)]="newQuestion.requirementType" name="qreq">
+              <option value="">{{ 'WIZARD.VALIDATION.SELECT_REQUIREMENT' | translate }}</option>
+              <option value="mandatory">{{ 'WIZARD.STEP3.MANDATORY' | translate }}</option>
+              <option value="optional">{{ 'WIZARD.STEP3.OPTIONAL' | translate }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-8 mb-3" *ngIf="newQuestion.type === QuestionTypeEnum.multiple_choice">
+            <label class="form-label">{{ 'WIZARD.STEP3.OPTIONS_LABEL' | translate }} <span
+              class="text-danger">*</span></label>
+            <div class="row g-2">
+              <div class="col-6">
+                <input class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_1' | translate }}"
+                       [(ngModel)]="newQuestion.option1" name="o1">
+              </div>
+              <div class="col-6">
+                <input class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_2' | translate }}"
+                       [(ngModel)]="newQuestion.option2" name="o2">
+              </div>
+              <div class="col-6">
+                <input class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_3' | translate }}"
+                       [(ngModel)]="newQuestion.option3" name="o3">
+              </div>
+              <div class="col-6">
+                <input class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_4' | translate }}"
+                       [(ngModel)]="newQuestion.option4" name="o4">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-success">
+              <i class="bx bx-plus"></i> {{ 'WIZARD.STEP3.ADD_QUESTION' | translate }}
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Questions Table -->
+     <div *ngIf="questionSourceFailed" class="alert alert-danger">
+        {{ questionSourceFailedMsg }}
+      </div>
+  <div class="card border-0" *ngIf="manualQuestions.length > 0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>{{ 'WIZARD.STEP3.TABLE.QUESTION_TYPE' | translate }}</th>
+              <th>{{ 'WIZARD.STEP3.TABLE.QUESTION_TEXT' | translate }}</th>
+              <th>{{ 'WIZARD.STEP3.TABLE.MEASURE' | translate }}</th>
+              <th>{{ 'WIZARD.STEP3.REQUIREMENT_TYPE' | translate }}</th>
+              <th>{{ 'WIZARD.STEP3.TABLE.OPTIONS' | translate }}</th>
+              <th>{{ 'LearningUnit.EDIT.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let q of manualQuestions; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ q.type }}</td>
+              <td>{{ q.question }}</td>
+              <td>{{ q.measure }}</td>
+              <td>{{ q.requirementType }}</td>
+              <td>
+                <div *ngIf="q.option1">{{ q.option1 }}</div>
+                <div *ngIf="q.option2">{{ q.option2 }}</div>
+                <div *ngIf="q.option3">{{ q.option3 }}</div>
+                <div *ngIf="q.option4">{{ q.option4 }}</div>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger"
+                        (click)="removeManualQuestion(i)">
+                  <i class="bx bx-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save -->
+  <div class="text-end px-20" [ngClass]="{'pt-0':manualQuestions.length>0}">
+    <button class="btn btn-primary btn-lg" (click)="saveChanges()">
+      <i class="bx bx-save me-1"></i> {{ 'LearningUnit.EDIT.SAVE_CHANGES' | translate }}
+    </button>
+  </div>
+
+</div>

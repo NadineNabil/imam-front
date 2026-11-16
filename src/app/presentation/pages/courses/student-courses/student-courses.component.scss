@@ -1,0 +1,281 @@
+// Student Courses Styles
+
+.active-layout {
+  background-color: rgba(81, 86, 190, 0.12) ;
+  color: #5156be ;
+  border-color: rgba(81, 86, 190, 0.25) ;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+}
+
+// Circular image wrappers matching the user's mockup style
+.course-img-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f1f5f9;
+  transition: transform 0.3s ease;
+
+  .course-img-full {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.course-placeholder-svg {
+  width: 100%;
+  height: 100%;
+  padding: 0px; // Spans edge to edge just like in mockup
+}
+
+.course-placeholder-svg-sm {
+  width: 100%;
+  height: 100%;
+}
+
+// Grid Card Styles
+.course-card-header {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.course-card-img-header {
+  height: 140px;
+}
+
+.course-list-img-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none ;
+}
+
+// Grid Card Styles
+.course-browse-card {
+ 
+ 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(81, 86, 190, 0.1) ;
+    border-color: rgba(81, 86, 190, 0.4) ;
+
+    .course-img-circle {
+      transform: scale(1.05);
+    }
+  }
+
+  .course-title {
+    font-size: 1.15rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .course-desc {
+    font-size: 0.85rem;
+    height: 38px;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+}
+
+// List View Card Styles
+.course-browse-list-card {
+  border: 1px solid rgba(81, 86, 190, 0.1) ;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(81, 86, 190, 0.06) ;
+    border-color: rgba(81, 86, 190, 0.3) ;
+  }
+
+  .course-list-img-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .course-img-full {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .course-title {
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .course-desc {
+    font-size: 0.825rem;
+  }
+}
+
+// Line clamping utility for multi-line descriptions
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Icon sizes
+.icon-sm {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-xs {
+  width: 14px;
+  height: 14px;
+}
+
+// Dark Mode Support
+// body[data-bs-theme=dark] {
+//   .course-browse-card, .course-browse-list-card {
+//     background-color: #1f1f2e;
+//     border-color: rgba(255, 255, 255, 0.05) ;
+
+//     &:hover {
+//       border-color: rgba(81, 86, 190, 0.4) ;
+//     }
+
+//     .course-title {
+//       color: #f1f5f9 ;
+//     }
+//   }
+
+//   .course-img-circle, .course-list-img-circle {
+//     background-color: #1a1a24;
+//     border-color: rgba(255, 255, 255, 0.1);
+//   }
+
+//   .btn-light {
+//     background-color: #1f1f2e;
+//     border-color: rgba(255, 255, 255, 0.1);
+//     color: #94a3b8;
+
+//     &:hover {
+//       background-color: #2a2a3d;
+//       color: #f1f5f9;
+//     }
+//   }
+// }
+.main-container{
+display: flex;
+flex-direction: column;
+/* align-items: center;
+ */}
+.card{
+margin: 0;
+}
+.cards-container{
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+.card-img-top {
+  width: 100%;
+  height: 280px;       /* choose one height */
+  object-fit: cover;  /* important */
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+
+  img {
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+  }
+
+  h4 {
+    color: #5156be;
+    font-weight: 600;
+    margin-top: 16px;
+  }
+
+  p {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+  }
+}
+.pagination-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+      margin-top: 16px;
+    align-self: flex-start;
+}
+.text-truncate-2{
+  display: -webkit-box;
+  -webkit-line-clamp: 2; // number of lines to show
+  line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+}
+.btn-primary{
+  margin-top: auto;
+}
+.card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(81, 86, 190, 0.25);
+}
+.pagination-wrapper {
+  width: 100%;
+  padding: 12px 8px;
+  overflow-x: auto;          /* allow horizontal scroll if needed */
+}
+
+/* Prevent pagination from breaking */
+.pagination-wrapper app-pagination {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pagination-wrapper {
+    padding: 10px 5px;
+  }
+
+  .pagination-wrapper app-pagination {
+    transform: scale(0.9);       /* slightly smaller */
+    transform-origin: start;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .pagination-wrapper app-pagination {
+    transform: scale(0.8);
+  }
+}

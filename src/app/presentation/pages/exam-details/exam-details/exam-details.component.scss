@@ -1,0 +1,21 @@
+/* ::ng-deep .nav-tabs-custom .nav-item .nav-link.active{
+    background-color: #fbfaff;
+} */
+::ng-deep .nav-tabs-custom .nav-link {
+  color: #9AA1AE; 
+}
+
+.nav-tabs-custom .nav-link.active {
+  color: #5156be; }
+  .exam-info{
+    display: flex;
+    justify-content: space-between;
+  }
+.save{
+  margin-top: 16px;
+  width: 100%;
+  max-width: 200px;
+}
+svg{
+    margin-top: -2px;
+}

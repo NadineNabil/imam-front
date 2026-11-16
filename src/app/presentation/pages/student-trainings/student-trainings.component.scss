@@ -1,0 +1,108 @@
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card-body p {
+  margin-bottom: 0.5rem;
+}
+
+// Horizontal Scrollable Purple Cards
+.exams-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(81, 86, 190, 0.08);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--bs-primary);
+    border-radius: 10px;
+  }
+}
+.btn{
+  white-space: nowrap;
+}
+.purple-exam-card {
+  width: 290px;
+  background: #5156be;
+  border-radius: 20px;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .bell-badge {
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s;
+    color: #5156be;
+
+    ::ng-deep svg {
+      stroke: #5156be !important;
+      color: #5156be !important;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .exam-title-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+  }
+}
+
+// Buttons
+.btn-white {
+  background-color: #ffffff;
+  color: #5156be !important;
+  font-weight: 700;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Date input wrapper with clear icon
+.date-input-wrapper {
+  position: relative;
+
+  .form-control {
+    padding-inline-end: 1.8rem;
+  }
+
+  .date-clear-icon {
+    position: absolute;
+    inset-inline-end: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+    transition: color 0.15s ease;
+    user-select: none;
+
+    &:hover {
+      color: #555;
+    }
+  }
+}

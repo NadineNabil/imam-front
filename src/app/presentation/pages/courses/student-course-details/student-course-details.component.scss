@@ -1,0 +1,173 @@
+// ── Row 1: Horizontal Scrollable Purple Exam Cards ───────────────────────────
+.exams-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(81, 86, 190, 0.08);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--bs-primary);
+    border-radius: 10px;
+  }
+}
+
+.purple-exam-card {
+  width: 290px;
+  background: #5156be;
+  border-radius: 20px;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .bell-badge {
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s;
+    ::ng-deep svg {
+      stroke: #5156be !important;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .exam-title-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+  }
+}
+
+// Buttons
+.btn-white {
+  background-color: #ffffff;
+  color: #5156be !important;
+  font-weight: 700;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+}
+
+.btn-purple {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  transition: all 0.2s ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+// ── Row 2: Metrics Cards ─────────────────────────────────────────────────────
+.icon-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-warning-soft {
+  background-color: rgba(255, 191, 83, 0.12) !important;
+}
+
+.bg-primary-soft {
+  background-color: rgba(81, 86, 190, 0.12) !important;
+}
+
+// ── Row 3: Assistant Card with Speech Bubble ─────────────────────────────────
+.assistant-banner-card {
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  background-color: var(--bs-card-bg, #ffffff);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+}
+
+.speech-bubble {
+  position: relative;
+  background: var(--bs-light, #f8f9fa);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 7px 0 7px 7px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--bs-light, #f8f9fa);
+    display: block;
+    width: 0;
+  }
+
+  [dir="rtl"] & {
+    &::after {
+      right: auto;
+      left: -7px;
+      border-width: 7px 7px 7px 0;
+      border-color: transparent var(--bs-light, #f8f9fa) transparent transparent;
+    }
+  }
+}
+
+.dot-typing {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #74788d;
+  animation: typing 1.4s infinite ease-in-out both;
+
+  &:nth-child(2) { animation-delay: .2s; }
+  &:nth-child(3) { animation-delay: .4s; }
+}
+
+@keyframes typing {
+  0%, 100% { transform: translateY(0px); opacity: .2; }
+  50% { transform: translateY(-4px); opacity: 1; }
+}
+
+.robot-avatar-img {
+  img {
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+  }
+}
+
+.assistant-text-section {
+  h4 {
+    letter-spacing: 0.1px;
+  }
+}
+
+@media screen and (max-width:575px) {
+  .robot-container{
+    width: 100%;
+  }
+}

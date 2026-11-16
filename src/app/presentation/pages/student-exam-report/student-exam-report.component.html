@@ -1,0 +1,215 @@
+<div class="container-fluid py-4" *ngIf="!isLoading; else loadingTpl">
+
+  <div class="card shadow-sm border-0 report-card" *ngIf="report; else noReportTpl">
+    <div class="card-body p-4 p-md-5">
+
+      <!-- Header: Student Report Title & Back Button -->
+      <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+        <div class="student-name boldtxt d-flex align-items-center gap-2 flex-wrap">
+          <span>🎯 {{ (reportTitleKey | translate) }}
+            <!-- : <span class="text-primary">{{ studentName }}</span> -->
+          </span>
+          <span class="badge px-3 py-1 fw-bold text-xs ms-2" [ngClass]="report.isPassed ? 'bg-success-soft text-success border border-success' : 'bg-danger-soft text-danger border border-danger'">
+            {{ (report.isPassed ? 'EXAM_REPORT.PASSED' : 'EXAM_REPORT.FAILED') | translate }}
+          </span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+    
+
+          <button (click)="goBack()" class="btn btn-outline-primary btn-sm fw-semibold d-flex align-items-center gap-1">
+            <i-feather name="arrow-left" class="icon-xs rtl-flip"></i-feather>
+            <span>{{ (requestedAttemptId ? 'training.BACK_TO_TRAININGS' : 'EXAM_REPORT.BACK_TO_DASHBOARD') | translate }}</span>
+          </button>
+        </div>
+      </div>
+
+      <hr class="first-divider mb-4" />
+
+      <!-- Intro Summary Text -->
+      <div class="report-txt mb-3">
+        {{ 'EXAM_REPORT.REPORT_SUMMARY_INTRO' | translate:{ count: report.totalQuestions, word: getQuestionTextGrammar(report.totalQuestions) } }}
+      </div>
+
+      <!-- General Summary Section -->
+      <div class="report-result row align-items-center mb-4">
+        <div class="col-sm-8 col-12 mb-3 mb-sm-0">
+          <div class="start-exam-txt boldtxt mb-2">
+            {{ 'EXAM_REPORT.GENERAL_SUMMARY' | translate }} :
+          </div>
+          <div class="report-txt">
+            <ul class="list-unstyled ps-0 mb-0 space-y-1">
+              <li>
+                <span class="bullet-dot"></span>
+                {{ 'EXAM_REPORT.TOTAL_QUESTIONS' | translate }} : <span class="fw-bold">{{ report.totalQuestions }}</span>
+              </li>
+              <li class="green">
+                <span class="bullet-dot green-dot"></span>
+                {{ 'EXAM_REPORT.CORRECT_ANSWERS' | translate }} : <span class="fw-bold">{{ report.correctAnswers }}</span>
+              </li>
+              <li class="red">
+                <span class="bullet-dot red-dot"></span>
+                {{ 'EXAM_REPORT.WRONG_ANSWERS' | translate }} : <span class="fw-bold">{{ report.wrongAnswers }}</span>
+              </li>
+              <li class="yellow">
+                <span class="bullet-dot yellow-dot"></span>
+                {{ 'EXAM_REPORT.SKIPPED' | translate }} : <span class="fw-bold">{{ report.skippedAnswers }}</span>
+              </li>
+              <li *ngIf="report.timeTakenFormatted || (report.durationSeconds && report.durationSeconds !== 'None')">
+                <span class="bullet-dot"></span>
+                {{ 'EXAM_REPORT.TIME_TAKEN' | translate }} : <span class="fw-bold">{{ report.timeTakenFormatted || report.durationSeconds }}</span>
+              </li>
+              <li [ngClass]="report.isPassed ? 'green' : 'red'">
+                <span class="bullet-dot" [ngClass]="report.isPassed ? 'green-dot' : 'red-dot'"></span>
+                {{ 'EXAM_REPORT.STUDENT_STATUS' | translate }} : <span class="fw-bold">{{ (report.isPassed ? 'EXAM_REPORT.PASSED' : 'EXAM_REPORT.FAILED') | translate }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- General Gauge SVG Circle -->
+        <div class="col-sm-4 col-12 d-flex justify-content-center justify-content-sm-end">
+          <div class="gauge-wrapper position-relative d-inline-block">
+            <svg viewBox="0 0 122 122" width="100%" height="100%">
+              <circle stroke="#eaeaea" fill="transparent" [attr.stroke-width]="stroke" [attr.r]="normalizedRadius" cx="61" cy="61"></circle>
+              <circle [attr.stroke]="getScoreColor(report.scorePercent)" fill="transparent" [attr.stroke-width]="stroke" [attr.stroke-dasharray]="circumference + ' ' + circumference" [attr.stroke-dashoffset]="getOffset(report.scorePercent)" stroke-linecap="round" [attr.r]="normalizedRadius" cx="61" cy="61" transform="rotate(-90 61 61)"></circle>
+            </svg>
+            <div class="position-absolute top-50 start-50 translate-middle fw-bold gauge-text">
+              {{ report.scorePercent }}%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="second-divider my-4" />
+
+      <!-- Detailed Review Intro Section -->
+      <div class="reviewtxt mb-4">
+        {{ 'EXAM_REPORT.DETAILED_REVIEW_INTRO' | translate }}
+      </div>
+
+      <!-- Objectives Review Section -->
+      <div *ngIf="report.objectives && report.objectives.length > 0">
+        <div *ngFor="let obj of report.objectives; let i = index" class="objective-block mb-5">
+          
+          <!-- Objective Title & Summary Row -->
+          <div class="start-exam-txt boldtxt mb-2">
+            {{ 'EXAM_REPORT.OBJECTIVE' | translate }} {{ i + 1 }} : <span class="question-label">{{ obj.objectiveName }}</span>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-sm-8 col-12 mb-3 mb-sm-0">
+              <div class="report-txt">
+                <ul class="list-unstyled ps-0 mb-0 space-y-1">
+                  <li>
+                    <span class="bullet-dot"></span>
+                    {{ 'EXAM_REPORT.TOTAL_QUESTIONS' | translate }} : <span class="fw-bold">{{ obj.totalQuestions }}</span>
+                  </li>
+                  <li class="green">
+                    <span class="bullet-dot green-dot"></span>
+                    {{ 'EXAM_REPORT.CORRECT_ANSWERS' | translate }} : <span class="fw-bold">{{ obj.correctAnswers }}</span>
+                  </li>
+                  <li class="red">
+                    <span class="bullet-dot red-dot"></span>
+                    {{ 'EXAM_REPORT.WRONG_ANSWERS' | translate }} : <span class="fw-bold">{{ obj.wrongAnswers }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Objective Gauge Circle -->
+            <div class="col-sm-4 col-12 d-flex justify-content-center justify-content-sm-end">
+              <div class="gauge-wrapper position-relative d-inline-block">
+                <svg viewBox="0 0 122 122" width="100%" height="100%">
+                  <circle stroke="#eaeaea" fill="transparent" [attr.stroke-width]="stroke" [attr.r]="normalizedRadius" cx="61" cy="61"></circle>
+                  <circle [attr.stroke]="getScoreColor(obj.percent)" fill="transparent" [attr.stroke-width]="stroke" [attr.stroke-dasharray]="circumference + ' ' + circumference" [attr.stroke-dashoffset]="getOffset(obj.percent)" stroke-linecap="round" [attr.r]="normalizedRadius" cx="61" cy="61" transform="rotate(-90 61 61)"></circle>
+                </svg>
+                <div class="position-absolute top-50 start-50 translate-middle fw-bold gauge-text">
+                  {{ obj.percent }}%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Questions List -->
+          <div *ngFor="let q of obj.questions; let qIndex = index" class="question-block mb-4">
+            
+            <div class="start-exam-txt Ques mb-2">
+              <span class="q-num">{{ 'EXAM_REPORT.QUESTION' | translate }} {{ qIndex + 1 }}:</span>
+              <span class="question-label font-normal  ms-1">{{ q.questionText }}</span>
+            </div>
+
+            <div class="answers-review ps-md-3">
+
+              <!-- Case 1: Wrong Answer -->
+              <div *ngIf="q.status === 'wrong'" class="wrongAns mb-2">
+                <i-feather name="x-circle" class="icon-sm text-danger me-1 align-middle"></i-feather>
+                <span class="align-middle red">{{ 'EXAM_REPORT.YOUR_ANSWER_INCORRECT' | translate }}</span>
+                <div *ngIf="q.userAnswer" class="user-given-ans text-muted text-sm mt-1 ps-4">
+                  {{ 'EXAM_REPORT.YOUR_ANSWER' | translate }}: {{ q.userAnswer }}
+                </div>
+              </div>
+
+              <!-- Case 2: Skipped / No Answer -->
+              <div *ngIf="q.status === 'skipped'" class="wrongAns mb-2">
+                <i-feather name="alert-circle" class="icon-sm text-warning me-1 align-middle"></i-feather>
+                <span class="align-middle text-warning fw-semibold">{{ 'EXAM_REPORT.NO_ANSWER' | translate }}</span>
+              </div>
+
+              <!-- Correct Answer Display -->
+              <div class="rightAns mb-2" [ngClass]="{'d-none': !q.correctAnswer}">
+                <!-- <i-feather name="check-circle" class="icon-sm text-success me-1 align-middle"></i-feather> -->
+                <span class="align-middle  fw-semibold">
+                  {{ 'EXAM_REPORT.CORRECT_ANSWER' | translate }}: {{ q.correctAnswer }}
+                </span>
+              </div>
+
+              <!-- Explanation Display -->
+              <div class="explanation-txt mb-2 text-dark" *ngIf="q.explanation">
+                <strong class="text-primary">{{ 'EXAM_REPORT.EXPLANATION' | translate }} :</strong> {{ q.explanation }}
+              </div>
+
+              <!-- Video Explanation Display -->
+              <div *ngIf="q.videoUrl" class="video-explanation mt-3 mb-2">
+                <div class="response-audio-text mb-2 text-primary fw-bold">
+                  🎥 {{ 'EXAM_REPORT.WATCH_VIDEO' | translate }}
+                </div>
+                <video class="video w-100 rounded-3 border" controls style="max-width: 540px; background-color: #000;">
+                  <source [src]="q.videoUrl" type="video/mp4" />
+                  Your browser does not support HTML5 video.
+                </video>
+              </div>
+
+            </div>
+
+            <hr class="question-divider my-3" />
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingTpl>
+  <div class="d-flex flex-column align-items-center justify-content-center py-5 my-5">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted fw-semibold">Loading exam report details...</p>
+  </div>
+</ng-template>
+
+<!-- Empty Report Template -->
+<ng-template #noReportTpl>
+  <div class="text-center py-5 my-5">
+    <i-feather name="file-text" class="icon-lg text-muted mb-3" style="width: 48px; height: 48px;"></i-feather>
+    <h5 class="fw-bold text-dark">{{ 'EXAM_REPORT.NO_REPORTS_FOUND' | translate }}</h5>
+    <button (click)="goBack()" class="btn btn-primary btn-sm mt-3">
+      {{ (requestedAttemptId ? 'training.BACK_TO_TRAININGS' : 'EXAM_REPORT.BACK_TO_DASHBOARD') | translate }}
+    </button>
+  </div>
+</ng-template>

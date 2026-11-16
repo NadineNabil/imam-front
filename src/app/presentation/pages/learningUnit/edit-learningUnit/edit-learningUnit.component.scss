@@ -1,0 +1,32 @@
+.card{margin-bottom: 0rem;}
+.px-20{
+   padding: 20px;
+}
+::ng-deep .hide-dz-message-dz-text dropzone .dz-message .dz-text {
+  opacity: 0.1;
+}
+::ng-deep .dropzone .dz-preview .dz-remove{
+  display: flex !important;
+    justify-content: end;
+    padding: 16px 20px;
+    color: #dc3545;
+    font-weight: 600;
+    position: relative;
+    z-index: 1000;
+}
+::ng-deep .dz-cancel {
+  display: none !important;
+}
+.sourceName {
+  max-width: 180px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media(max-width:475px){
+  .sourceName {
+      max-width:90px;
+  }
+}

@@ -1,0 +1,82 @@
+<form [formGroup]="profileForm">
+  <div class="row">
+    <!-- Left Side: Profile Photo -->
+    <div class="col-xl-3">
+      <div class="card">
+        <div class="card-body text-center">
+
+      <!-- Profile Photo -->
+       <img [src]="profileForm.get('imageUrl')?.value || 'assets/images/profile.png'"
+     alt="profile"
+      onerror="this.onerror=null;this.src='assets/images/profile.png'"
+     class="rounded-circle avatar-xl mb-3">
+
+          <h5 class="mb-1">{{ profileForm.get('studentName')?.value }}</h5>
+          <p class="text-muted">{{ 'PROFILE.ROLE' | translate }}</p>
+      <input type="file"
+       #fileInput
+       hidden
+       (change)="onFileChange($event)" accept="image/png, image/jpeg">
+          <button class="btn btn-primary w-100" 
+          (click)="fileInput.click()"
+            >
+            
+            {{ 'PROFILE.UPDATE_IMAGE' | translate }}
+          </button>
+
+
+        </div>
+      </div>
+    </div>
+  <div class="card col-xl-9">
+    <div class="card-body">
+
+      <h5 class="card-title mb-4">
+        {{ 'PROFILE.EDITABLE_FIELDS' | translate }}
+      </h5>
+
+
+      <!-- Phone -->
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'PROFILE.PHONE' | translate }}
+        </label>
+
+    <app-phone-input
+  label="Phone Number"
+   formControlName="phoneNumber"
+  >
+</app-phone-input>
+      </div>
+
+      <!-- Language -->
+<!--       <div class="mb-3">
+        <label class="form-label">
+          {{ 'PROFILE.LANGUAGE' | translate }}
+        </label>
+
+<ng-select
+  formControlName="preferredLanguage"
+  [items]="languages"
+  placeholder="Select language">
+</ng-select>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+  <!-- Buttons -->
+  <div class="text-end mt-3">
+    <button class="btn btn-secondary me-2"
+            routerLink="/profile-student">
+      {{    'PROFILE.CANCEL' | translate }}
+    </button>
+
+    <button class="btn btn-primary"
+    [disabled]="!profileChanged"
+            (click)="applyChanges()">
+      {{ 'PROFILE.APPLY' | translate }}
+    </button>
+  </div>
+</form>

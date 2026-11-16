@@ -1,0 +1,287 @@
+<div class="container-fluid" *ngIf="student  as student"  >
+<form [formGroup]="profileForm">
+  <!-- Page Title -->
+  <div class="row">
+    <div class="col-12">
+      <h4 class="mb-4">{{ 'PROFILE.TITLE' | translate }}</h4>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!-- Left Side: Profile Photo -->
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body ">
+<div class="d-flex gap-3 align-items-center">
+  <div class="profile-img-wrapper">
+    
+         <img 
+         [src]="imageControl.value"
+     alt="profile"
+      onerror="this.onerror=null;this.src='assets/images/profile.png'"
+     class="rounded-circle avatar-xl mb-3">
+<div class="pencil-wrapper" (click)="fileInput.click()"><i class="mdi mdi-pencil-outline"></i></div>
+     </div>
+<div>
+          <h5 class="mb-1">{{ student.fullName }}</h5>
+          <p class="text-muted">{{ student.email }}</p>
+          </div>
+</div>
+        <input type="file"
+       #fileInput
+       hidden
+       (change)="onFileChange($event)" accept="image/png, image/jpeg">
+
+       <div class="btns-container">
+          <button class="btn btn-primary " (click)="applyChanges()" [disabled]="!profileChanged">
+            
+          {{ 'PROFILE.APPLYCHANGES' | translate }}
+
+          </button>
+                    <button class="btn  btn-outline-secondary"
+                  (click)="openPasswordModal()">
+            {{ 'PROFILE.CHANGE_PASSWORD' | translate }}
+          </button>
+          </div>
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav nav-tabs-custom card-header-tabs border-top mt-4">
+                    <li [ngbNavItem]="1" class="nav-item">
+                        <a ngbNavLink class="nav-link px-3">
+                              {{ 'PROFILE.PERSONAL_INFO' | translate }}
+                        </a>
+                        <ng-template ngbNavContent>
+                            <div class="tab-pane active" id="overview" role="tabpanel">
+                                 <!-- Personal Information -->
+      <div class="card">
+<div class="card-header ">
+
+          <h5 class="card-title  m-0">
+            {{ 'PROFILE.PERSONAL_INFO' | translate }}
+          </h5>
+</div>
+        <div class="card-body">
+
+          <div class="row mb-3">
+            <label class="col-md-3 col-form-label">
+              {{ 'PROFILE.REG_DATE' | translate }}
+            </label>
+            <div class="col-md-9">
+              <p class="form-control-plaintext">{{ student.registrationDate | date }}</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="col-md-3 col-form-label">
+              {{ 'PROFILE.LAST_LOGIN' | translate }}
+            </label>
+            <div class="col-md-9">
+              <p class="form-control-plaintext">{{ student.lastLogin | date }}</p>
+            </div>
+          </div>
+<!-- Phone -->
+<div class="row mb-3" >
+
+  <label class="col-md-3 col-form-label">
+    {{ 'PROFILE.PHONE' | translate }}
+  </label>
+
+  <div class="col-md-9">
+
+    <!-- View Mode -->
+    <div *ngIf="!editPhone"
+         class="d-flex align-items-center gap-2">
+
+      <p class="form-control-plaintext mb-0 ltr" >
+        {{profileForm.get('phoneNumber')?.value?.countryCode }}
+        {{ getDisplayPhone()  }} 
+        
+         
+      </p>
+
+      <button type="button"
+              class="btn btn-sm btn-light"
+              (click)="editPhoneNumber();">
+
+        <i class="mdi mdi-pencil-outline"></i>
+
+      </button>
+
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="editPhone">
+
+      <app-phone-input
+        formControlName="phoneNumber">
+      </app-phone-input>
+
+      <div class="mt-2 d-flex gap-2">
+
+        <button type="button"
+                class="btn btn-sm btn-primary"
+                (click)="savePhoneNumber()">
+          {{'PROFILE.SAVE'|translate}}
+        </button>
+
+        <button type="button"
+                class="btn btn-sm btn-light"
+                (click)="cancelPhoneEdit()">
+          {{'PROFILE.CANCEL'|translate}}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Preferred Language -->
+<div class="row mb-3" >
+
+  <label class="col-md-3 col-form-label">
+    {{ 'PROFILE.LANGUAGE' | translate }}
+  </label>
+
+  <div class="col-md-9">
+
+    <!-- View Mode -->
+    <div *ngIf="!editLanguage"
+         class="d-flex align-items-center gap-2">
+
+      <p class="form-control-plaintext mb-0">
+
+        {{
+          profileForm.get('preferredLanguage')?.value === 'ar'
+            ? 'العربية'
+            : 'English'
+        }}
+
+      </p>
+
+      <!-- Edit Icon -->
+      <button type="button"
+              class="btn btn-sm btn-light"
+              (click)="editLanguage = true">
+
+        <i class="mdi mdi-pencil-outline"></i>
+
+      </button>
+
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="editLanguage">
+
+      <ng-select
+        [items]="languages"
+        bindLabel="label"
+        bindValue="value"
+        formControlName="preferredLanguage"
+        [clearable]="false">
+      </ng-select>
+
+      <div class="mt-2 d-flex gap-2">
+
+        <button type="button"
+                class="btn btn-sm btn-primary"
+                (click)="saveLanguage()">
+          {{'PROFILE.SAVE'|translate}}
+        </button>
+
+        <button type="button"
+                class="btn btn-sm btn-light"
+                (click)="cancelLanguageEdit()">
+        {{'PROFILE.CANCEL'|translate}}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div> 
+
+        </div>
+      </div>
+
+                  
+                              
+                            </div>
+                        </ng-template>
+                    </li>
+
+                    <li [ngbNavItem]="2" class="nav-item">
+                        <a ngbNavLink class="nav-link px-3">
+                           {{ 'PROFILE.PROGRESS' | translate }}
+                        </a>
+                        <ng-template ngbNavContent>
+                            <div class="tab-pane" id="about" role="tabpanel">
+                                  <!-- Progress Section -->
+      <div class="card">
+<div class="card-header ">
+          <h5 class="card-title m-0 ">
+            {{ 'PROFILE.PROGRESS' | translate }}
+          </h5>
+          </div>
+        <div class="card-body">
+
+          <div class="row text-center">
+
+            <div class="col-md-3 col-sm-3 ">
+              <h4>{{ student.enrollmentsCount }}</h4>
+              <p class="text-muted">{{ 'PROFILE.COURSES' | translate }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 ">
+              <h4>{{ 0 }}</h4>
+              <p class="text-muted">{{ 'PROFILE.EXAMS' | translate }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 ">
+              <h4>{{ 0 }}%</h4>
+              <p class="text-muted">{{ 'PROFILE.AVG_SCORE' | translate }}</p>
+            </div>
+
+           <div class="col-md-3 col-sm-3 ">
+              <h4>{{ 0 }}</h4>
+              <p class="text-muted">{{ 'PROFILE.CERTIFICATES' | translate }}</p>
+            </div> 
+
+          </div>
+
+        </div>
+      </div>
+                               
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+        </div>
+       
+      </div>
+        
+    </div>
+
+    <!-- Right Side -->
+    <div class="col-xl-12">
+
+ <div [ngbNavOutlet]="nav" class="mt-3"></div>
+
+ 
+
+      <!-- Security -->
+<!--       <div class="card">
+        <div class="card-body text-end">
+
+
+
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+  </form>
+</div>

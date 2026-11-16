@@ -1,0 +1,222 @@
+.minia-tree {
+  font-size: 14.5px;
+  padding-left: 0;
+  text-align: start;
+}
+
+.tree-node-wrapper {
+  position: relative;
+}
+
+.tree-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+
+.tree-item:hover {
+  background-color: #f8f9fa;
+  border-color: #e5e7eb;
+}
+
+:host-context(body[data-sidebar="dark"]), :host-context(body.theme-dark) {
+  .tree-item:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.course-label {
+  cursor: pointer;
+  color: #4b5563;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.course-label:hover {
+  color: #111827;
+}
+
+.folder {
+  cursor: pointer;
+}
+
+.folder-icon {
+  color: #D97500; /* Minia primary or custom orange */
+  font-size: 1.15rem;
+}
+
+.file {
+  color: #6c757d;
+}
+
+.file-icon {
+  color: #6366f1;
+  font-size: 1.15rem;
+}
+
+.actions {
+  background: none;
+  padding: 0;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Show actions on hover of the tree item */
+.tree-item:hover .actions {
+  opacity: 1;
+}
+
+/* Ensure actions are always visible on touch devices or smaller screens if handled by CSS */
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+  }
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+.action-btn.edit-btn:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+.action-btn.delete-btn:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+.action-btn.add-folder-btn:hover {
+  background-color: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+.action-btn.add-file-btn:hover {
+  background-color: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+}
+
+/* nested list styling */
+.nested-list {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+:dir(rtl) .nested-list {
+  padding: 0;
+  margin: 0;
+}
+
+/* vertical line */
+.tree-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.arrow-icon {
+  color: #9ca3af;
+  width: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+.arrow-icon.static {
+  opacity: 0.5;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #374151;
+  padding-left: 0;
+  letter-spacing: 0.2px;
+}
+
+:host-context(body[data-sidebar="dark"]), :host-context(body.theme-dark) {
+  .item-name { color: #f3f4f6; }
+  .course-label { color: #d1d5db; }
+  .course-label:hover { color: #ffffff; }
+  .tree-line { background: rgba(255, 255, 255, 0.1); }
+  .action-btn { color: #9ca3af; }
+  .action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+}
+
+.type-badge {
+  font-size: 11px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+}
+
+:dir(rtl) .type-badge {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+:host-context(body[data-sidebar="dark"]), :host-context(body.theme-dark) {
+  .type-badge { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: #9ca3af;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .actions.d-none.d-sm-flex {
+    display: none !important;
+  }
+  .d-flex.d-sm-none {
+    display: flex !important;
+  }
+
+  .tree-item .item-name {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+ul.minia-tree, ul.minia-tree ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.delete-confirm {
+  width: 100%;
+}

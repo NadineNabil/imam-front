@@ -1,0 +1,107 @@
+<div [formGroup]="examForm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>{{'EXAMS.LEARNING_OBJECTIVES' | translate}} <span class="text-danger">*</span></h5>
+        <!--         <button *ngIf="!showObjectiveInput && examForm.get('objectives')?.value.length>0" type="button"
+            class="btn btn-primary  button" (click)="openNewObjective()"> <i class="fas fa-plus"></i></button> -->
+    </div>
+    <ngb-alert *ngIf="totalWeight !== 100 && hasanyweight" [dismissible]="false" type="danger">
+        <i class="mdi mdi-block-helper me-2"></i>
+        {{ 'EXAMS.WEIGHT_NOTE' | translate:{ value: totalWeight } }}
+    </ngb-alert>
+    <div *ngIf="examForm.get('objectives')?.value.length>0" class="main-container">
+        <div [hidden]="!showObjectiveInput" class="mt-3">
+            <input type="text" class="form-control" formControlName="newObjectiveText"
+                [placeholder]="'EXAMS.ENTER_OBJECTIVE_TEXT' | translate" />
+            <div *ngIf="examForm.get('newObjectiveText')?.touched && examForm.get('newObjectiveText')?.invalid"
+                class="text-danger font-size-12 mt-1">
+                {{ 'EXAMS.NEW_OBJECTIVE_TEXT_REQUIRED' | translate }}
+            </div>
+            <button type="button" class="btn btn-primary  mb-3 mt-2"
+                (click)="addObjectiveFromInput(examForm.get('newObjectiveText')?.value)"
+                [disabled]="examForm.get('newObjectiveText')?.invalid"> {{'EXAMS.ADD_OBJECTIVE' |
+                translate}}</button>
+            <button type="button" class="btn btn-danger mb-3 mt-2 ms-2" (click)="cancelAddObjective()"> {{'EXAMS.CANCEL'
+                |
+                translate}}</button>
+        </div>
+        <div formArrayName="objectives">
+
+            <div *ngFor="let objCtrl of ObjectivesFormArray.controls; let i = index let lastindex = last "
+                [formGroupName]="i" [ngClass]="{ 'lastindex': lastindex }" class="objectives-container">
+                <div class="title-container">
+                    <label class="m-0">{{i+1}}.</label>
+                    <span class="close-btn" (click)="removeObjective(i)">
+                        <i class="mdi mdi-close-thick"></i>
+                    </span>
+                </div>
+                <!--checkbox-->
+                <div class="form-check">
+                    <label [id]="'objectiveCheck' + i" class="d-flex cursor-pointer w-100 justify-content-center align-items-center gap-2">
+                    <input type="checkbox" class="form-check-input" [id]="'objectiveCheck' + i"
+                        formControlName="selected">
+                    <input type="text" class="form-control disabledobjective " formControlName="objectiveText"
+                        [placeholder]="'EXAMS.ENTER_OBJECTIVE_TEXT' | translate" />
+                        </label>
+                </div>
+                <div *ngIf="objCtrl.get('objectiveText')?.touched && objCtrl.get('objectiveText')?.invalid && objCtrl.get('selected')?.value"
+                    class="text-danger font-size-12 mt-1">
+                    {{ 'EXAMS.OBJECTIVE_TEXT_REQUIRED' | translate }}
+                </div>
+                <!-- Cognitive style & weight, shown only if selected -->
+                <div *ngIf="objCtrl.get('selected')?.value"
+                    class="select-input-container mb-3 d-flex flex-lg-row  flex-column mt-3">
+                    <div  [ngClass]="examForm.get('examSource')?.value === examSource.GENERATED ? 'col-12 col-lg-6' : 'col-12'">
+                        <label class="form-label font-size-13 text-muted">{{'EXAMS.COGNITIVE_STYLE'|translate}} <span
+                                class="text-danger">*</span></label>
+                        <ng-select bindLabel="cognitiveStyle" [placeholder]="'EXAMS.SELECT_COGNITIVE_STYLE' | translate"
+                            formControlName="cognitiveStyle">
+                            <ng-option *ngFor="let style of ConginiveStyles" [value]="style">
+                                {{('ENUM.COGNITIVE_STYLE.'+style)|translate}}
+                            </ng-option>
+                        </ng-select>
+                        <div *ngIf="objCtrl.get('cognitiveStyle')?.touched && objCtrl.get('cognitiveStyle')?.invalid && objCtrl.get('selected')?.value"
+                            class="text-danger font-size-12 mt-1">
+                            {{ 'EXAMS.COGNITIVE_STYLE_REQUIRED' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6"  *ngIf="examForm.get('examSource')?.value===examSource.GENERATED">
+                        <label class="form-label font-size-13 text-muted">{{'EXAMS.WEIGHT'|translate}} <span
+                                class="text-danger">*</span></label>
+                        <div class="input-group w-100">
+                            <input type="number" class="form-control" step="1" min="1" max="100"
+                                formControlName="weight" [placeholder]="'EXAMS.ENTER_WEIGHT' | translate">
+                            <span class="input-group-text">%</span>
+                        </div>
+                        <div *ngIf="objCtrl.get('weight')?.touched && objCtrl.get('weight')?.errors?.['required'] && objCtrl.get('selected')?.value"
+                            class="text-danger font-size-12 mt-1">
+                            {{ 'EXAMS.WEIGHT_REQUIRED' | translate }}
+                        </div>
+                        <div class="text-danger font-size-12 mt-1"
+                            *ngIf="examForm.get('objectives')?.errors?.['totalWeightExceeded'] && ObjectivesFormArray.controls[i].get('weight')?.dirty">
+                            {{'EXAMS.TOTAL_WEIGHT_EXCEEDED'|translate}}
+                        </div>
+                        <div *ngIf="objCtrl.get('weight')?.touched && objCtrl.get('weight')?.errors?.['pattern'] && objCtrl.get('selected')?.value"
+                            class="text-danger font-size-12 mt-1">
+                            {{ 'EXAMS.WEIGHT_INTEGER_ONLY' | translate }}
+                        </div>
+                        <div *ngIf="objCtrl.get('weight')?.touched 
+       && objCtrl.get('weight')?.errors?.['min'] 
+       && objCtrl.get('selected')?.value" class="text-danger font-size-12 mt-1">
+                            {{ 'EXAMS.WEIGHT_MIN_1' | translate }}
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Cognitive style & weight -->
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="objectives().loading" class="main-container">
+        <app-loading-spinner [loadingText]="'EXAMS.LOADING_OBJECTIVE'"></app-loading-spinner>
+    </div>
+    <div *ngIf="!objectives().loading && !objectives().data.length">
+        <p class="noobjevticetext">{{'EXAMS.NO_OBJECTIVES_AVAILABLE'|translate}}</p>
+    </div>
+</div>

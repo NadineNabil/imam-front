@@ -1,0 +1,394 @@
+/* Minia Theme Colors & Styling for Exam Journey Page */
+$minia-primary: #5156be;
+$minia-primary-hover: #4549a2;
+$minia-primary-soft: rgba(81, 86, 190, 0.1);
+$minia-primary-soft-border: rgba(81, 86, 190, 0.2);
+
+$minia-success: #2ab57d;
+$minia-success-soft: rgba(42, 181, 125, 0.12);
+
+$minia-warning: #f1b44c;
+$minia-warning-soft: rgba(241, 180, 76, 0.12);
+
+$minia-secondary: #74788d;
+$minia-secondary-soft: rgba(116, 120, 141, 0.12);
+
+$minia-dark: #495057;
+$minia-title-color: #495057;
+$minia-card-bg: #ffffff;
+$minia-border: #e9e9ef;
+$minia-body-bg: #f8f8fb;
+
+.journey-page {
+  margin: 0 auto;
+  padding: 24px 100px;
+  color: $minia-dark;
+  background: rgba(81, 86, 190, 0.1);
+}
+
+/* Minia Styled Progress Header Card */
+.journey-header {
+  background: $minia-card-bg;
+  border-radius: 1rem;
+  padding: 24px;
+  border: 1px solid $minia-border;
+
+   box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+
+
+  .journey-subtitle {
+    display: block;
+    color: $minia-secondary;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .journey-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $minia-title-color;
+    margin: 0;
+    position: relative;
+
+    &.has-underline::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: $minia-primary;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+  }
+
+  .counter {
+    .count-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: $minia-title-color;
+      line-height: 1;
+      padding: 0px;
+    }
+
+    .count-total {
+      font-size: 18px;
+      font-weight: 500;
+      color: #99A1AF;
+    }
+  }
+
+  .counter-label {
+    font-size: 14px;
+    color: #99A1AF;
+    margin-top: 4px;
+  }
+
+  .progress-track {
+    height: 8px;
+    border-radius: 4px;
+    background: #eff0f2;
+    margin-top: 16px;
+    overflow: hidden;
+
+    .progress-fill {
+      height: 100%;
+      background: $minia-primary;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+  }
+
+  .header-bottom {
+    margin-top: 10px;
+
+    .progress-text-left,
+    .progress-text-center {
+      font-size: 14px;
+      color: $minia-secondary;
+    }
+  }
+}
+
+/* Minia Styled Stepper Component */
+.journey-stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0 36px;
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    .circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      background: $minia-card-bg;
+      border: 2px solid $minia-border;
+      color: $minia-secondary;
+      transition: all 0.3s ease;
+
+      svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        transition: all 0.3s ease;
+      }
+    }
+
+    .step-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: $minia-secondary;
+      transition: color 0.3s ease;
+      text-align: center;
+    }
+
+    &.done {
+      .circle {
+        background: $minia-primary;
+        border-color: $minia-primary;
+        color: #ffffff;
+      }
+      .step-label {
+        color: $minia-primary;
+      }
+    }
+
+    &.active {
+      .circle {
+        border-color: $minia-primary;
+        color: $minia-primary;
+        background: $minia-card-bg;
+      }
+      .step-label {
+        color: $minia-primary;
+      }
+    }
+
+    &.locked {
+      .circle {
+        background: #F8FAFC;
+        border: 2px solid #E2E8F0;
+        color: #CBD5E1;
+      }
+      .step-label {
+        color: #CBD5E1;
+      }
+    }
+  }
+
+  .step-line {
+    flex: 1;
+    max-width: 140px;
+    min-width: 60px;
+    height: 2px;
+    background: #dce0e8;
+    margin: 0 12px;
+    margin-bottom: 26px;
+    transition: background 0.3s ease;
+
+    &.active {
+      background: $minia-primary;
+    }
+  }
+}
+
+/* Minia Styled Exam Cards List */
+.exam-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exam-card {
+  background: $minia-card-bg;
+  border-radius: 1rem;
+  padding: 24px;
+  border: 1px solid $minia-border;
+  box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+  transition: all 0.25s ease;
+
+  
+
+  &.locked {
+    opacity: 0.55;
+    background: var(--02---Dark-Color---White, #FFFFFF);
+    border: 1px solid #E5E7EB
+
+  }
+
+  .icon-box {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: $minia-primary-soft;
+    color: $minia-primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    flex-shrink: 0;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
+    &.locked-icon {
+      background: #eff0f2;
+      color: $minia-secondary;
+    }
+  }
+
+  .title-meta {
+    .exam-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: $minia-title-color;
+      margin: 0 0 2px;
+    }
+
+    .exam-subtitle {
+      font-size: 16px;
+      color: $minia-secondary;
+      display: block;
+    }
+
+    .exam-desc {
+      font-size: 16px;
+      color: $minia-dark;
+      margin: 6px 0 0;
+    }
+
+    .exam-duration {
+      font-size: 14px;
+      color: $minia-secondary;
+      margin-top: 8px;
+    }
+  }
+
+  .status-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+
+    /* Active/Available = bold solid green */
+    &.ready {
+      background: $minia-success;
+      color: #ffffff;
+      border: 1px solid $minia-success;
+      white-space: nowrap;
+    }
+
+    /* Completed = light soft green */
+    &.done {
+      background: rgba(42, 181, 125, 0.12);
+      color: $minia-success;
+      border: 1px solid rgba(42, 181, 125, 0.25);
+    }
+
+    &.lock {
+      background: rgba(116, 120, 141, 0.12);
+      color: $minia-secondary;
+      border: 1px solid rgba(116, 120, 141, 0.18);
+    }
+  }
+
+  .btn-start {
+    width: 100%;
+    height: 44px;
+    background: $minia-primary;
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: $minia-primary-hover;
+    }
+  }
+
+  .locked-banner {
+    width: 100%;
+    padding: 12px;
+    background: #F9FAFB;
+   
+    border: 1px solid #F3F4F6;
+    border-radius: 14px;
+    color: $minia-secondary;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .btn-report {
+    width: 100%;
+    height: 44px;
+   background: transparent;
+    border: 1px solid $minia-primary-soft-border;
+    color: $minia-primary;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(81, 86, 190, 0.18);
+    }
+  }
+}
+
+.state-switcher {
+  .btn-outline-secondary {
+    border-color: $minia-border;
+    color: $minia-secondary;
+    border-radius: 0.25rem;
+    font-size: 12px;
+    padding: 4px 12px;
+
+    &.active, &:hover {
+      background: $minia-primary;
+      color: #ffffff;
+      border-color: $minia-primary;
+    }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .journey-page {
+    padding: 24px 80px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .journey-page {
+    padding: 24px;
+  }
+
+
+
+}
+
+  .navbar-brand-box{
+    background: white!important;
+    box-shadow: none;
+  }
+
+  .bg-light-subtle{
+    background-color: white!important;
+    border:none;
+  }
+
+
+  

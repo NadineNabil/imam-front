@@ -1,0 +1,38 @@
+table{
+    font-size: 0.7rem;
+
+    tr{
+        th,td{
+            padding: 0.2rem 0.5rem;
+        }
+    }
+    tr{
+        th{
+            align-content: space-evenly;
+        }
+    }
+
+}
+
+.reponsive-table{
+    overflow: auto;
+}
+
+.resend{
+    color:#2ab57d;
+    font-size:0.7rem;
+
+    text-align: center;
+}
+
+.cancel{
+    color:#fd625e;
+    font-size:0.7rem;
+    text-align: center;
+}
+
+.dropdown-menu{
+    a{
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,141 @@
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">{{ 'USERS.ADD_USER_TITLE' | translate }}</h4>
+            <p class="card-title-desc">
+                {{ 'USERS.ADD_USER_SUBTITLE' | translate }}
+            </p>
+        </div>
+
+        <div class="card-body">
+            <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">{{ 'USERS.FULL_NAME' | translate }} <span
+                            class="text-danger">*</span></label>
+                    <input id="fullName" type="text" class="form-control" formControlName="fullName"
+                        placeholder="{{ 'USERS.FULL_NAME_PLACEHOLDER' | translate }}"
+                        [ngClass]="{ 'is-invalid': submitted && f['fullName'].errors }">
+                    <div *ngIf="submitted && f['fullName'].errors" class="invalid-feedback">
+                        <span *ngIf="f['fullName'].errors?.required">{{ 'USERS.FULL_NAME_REQUIRED' | translate }}</span>
+                        <span *ngIf="f['fullName'].errors?.minlength">
+                            {{ 'USERS.FULL_NAME_MIN_LENGTH' | translate }}
+                        </span>
+
+                        <span *ngIf="f['fullName'].errors?.maxlength">
+                            {{ 'USERS.FULL_NAME_MAX_LENGTH' | translate }}
+                        </span>
+
+                        <span *ngIf="f['fullName'].errors?.pattern && !f['fullName'].errors?.['whitespace']">
+                            {{ 'USERS.FULL_NAME_INVALID' | translate }}
+                        </span>
+                        <span *ngIf="f['fullName'].errors?.['whitespace']">
+  {{ 'USERS.FULL_NAME_WHITESPACE' | translate }}
+</span>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ 'USERS.EMAIL' | translate }} <span
+                            class="text-danger">*</span></label>
+                    <input id="email" type="email" class="form-control" formControlName="email"
+                        placeholder="{{ 'USERS.EMAIL_PLACEHOLDER' | translate }}"
+                        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                        <span *ngIf="f['email'].errors?.required">{{ 'USERS.EMAIL_REQUIRED' | translate }}</span>
+                        <span *ngIf="f['email'].errors?.email">{{ 'USERS.EMAIL_INVALID' | translate }}</span>
+                    </div>
+                </div>
+
+                <!-- Role -->
+                <div class="mb-3">
+                    <label for="role" class="form-label">{{ 'USERS.ROLE' | translate }} <span
+                            class="text-danger">*</span></label>
+                    <ng-select id="role" formControlName="role" [items]="roles" bindLabel="label" bindValue="value"
+                        placeholder="{{ 'USERS.ROLE_PLACEHOLDER' | translate }}" [clearable]="false"
+                        [searchable]="false" [ngClass]="{ 'is-invalid': submitted && f['role'].errors }">
+                    </ng-select>
+                    <div *ngIf="submitted && f['role'].errors" class="invalid-feedback d-block">
+                        <span *ngIf="f['role'].errors?.required">{{ 'USERS.ROLE_REQUIRED' | translate }}</span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">{{ 'USERS.PASSWORD' | translate }} <span
+                            class="text-danger">*</span></label>
+
+                    <div class="password-panel">
+                        <div class="password-panel__header">
+                            <div>
+                                <h6 class="mb-1">{{ 'USERS.SUGGESTED_PASSWORD' | translate }}</h6>
+                                <p class="mb-0 text-muted small">{{ 'USERS.PASSWORD_HINT' | translate }}</p>
+                            </div>
+                            <div class="password-panel__actions">
+                                <button type="button" class="btn btn-sm btn-primary me-2"
+                                    (click)="switchToManualPassword()">
+                                    <i class="mdi mdi-pencil me-1"></i>{{ 'USERS.USE_MANUAL_PASSWORD' | translate }}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-primary me-2"
+                                    (click)="regeneratePassword()">
+                                    <i class="mdi mdi-refresh me-1"></i>{{ 'USERS.REGENERATE' | translate }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="input-group password-input-group" [attr.dir]="currentDirection">
+                            <span class="input-group-text"><i class="mdi mdi-lock-outline"></i></span>
+                            <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-control"
+                                formControlName="password"
+                                [readonly]="addUserForm.get('useAutoGeneratedPassword')?.value"
+                                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+                            <button type="button" class="btn btn-outline-secondary password-toggle-btn"
+                                (click)="showPassword = !showPassword">
+                                <i [class]="showPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"></i>
+                            </button>
+                        </div>
+
+                        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback d-block mt-2">
+                            <span *ngIf="f['password'].errors?.required">{{ 'USERS.PASSWORD_REQUIRED' | translate
+                                }}</span>
+                            <span *ngIf="f['password'].errors?.pattern">{{ 'USERS.PASSWORD_REQUIREMENTS' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="isTeacherRole">
+                    <div class="mb-3">
+                        <label for="assignedCategories" class="form-label">{{ 'USERS.CATEGORIES' | translate
+                            }} <span class="text-danger">*</span></label>
+                        <ng-select id="assignedCategories" formControlName="assignedCategories" [items]="categories()"
+                            bindLabel="categoryName" bindValue="id" [multiple]="true"
+                            placeholder="{{ 'USERS.ASSIGNED_CATEGORIES_PLACEHOLDER' | translate }}">
+                        </ng-select>
+                        <div *ngIf="submitted && f['assignedCategories'].errors" class="invalid-feedback d-block mt-2">
+                            <span *ngIf="f['assignedCategories'].errors?.required">{{
+                                'USERS.ASSIGNED_CATEGORIES_REQUIRED' | translate
+                                }}</span>
+
+                        </div>
+                    </div>
+
+                    <!-- Can Create Exams -->
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="canCreateExams"
+                            formControlName="canCreateExams">
+                        <label class="form-check-label" for="canCreateExams">{{ 'USERS.CAN_CREATE_EXAMS' | translate
+                            }}</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                    {{ 'USERS.SUBMIT' | translate }}
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<ng-stepper [linear]="true" class="responsive-stepper">
+  <cdk-step *ngFor="let step of steps; let i = index" [optional]="step.optional">
+
+    <div cdkStepLabel>
+      <i [class]="step.labelIcon"></i>
+    </div>
+
+    <ng-container *ngTemplateOutlet="step.content"></ng-container>
+
+    <div class="d-flex justify-content-between mt-3">
+      
+      <button *ngIf="!step.hidePrevious"
+              mat-raised-button
+              class="btn btn-primary w-sm"
+              cdkStepperPrevious>
+        {{'Previous'|translate}}
+      </button>
+
+      <button *ngIf="!step.hideNext"
+              mat-raised-button
+              class="btn btn-primary w-sm"
+              [disabled]="step.nextDisabled"
+              cdkStepperNext>
+        {{'Next'|translate}}
+      </button>
+
+    </div>
+
+  </cdk-step>
+</ng-stepper>

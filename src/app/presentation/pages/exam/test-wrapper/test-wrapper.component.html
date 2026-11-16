@@ -1,0 +1,59 @@
+<div *ngIf="!isAgree" class="exam-container">
+
+  <div class="exam-card">
+
+    <!-- Header -->
+    <div class="exam-header text-dark">
+      <img class="helloImg" src="../../assets/images/robotchat.png">
+
+      <h2>{{ "exam.exam_intro_title" | translate }}</h2>
+
+      <p class="exam-intro-text text-dark">
+        {{ "exam.exam_intro_paragraph" | translate }}
+      </p>
+    </div>
+
+    <!-- Body -->
+    <div class="exam-body">
+
+      <ul class="rules-list text-dark">
+        <li>{{ "exam.exam_rule_once_only" | translate }}</li>
+        <li>{{ "exam.exam_rule_camera_on" | translate }}</li>
+        <li>{{ "exam.exam_rule_ai_monitoring" | translate }}</li>
+        <li>{{ "exam.exam_rule_screenshots" | translate }}</li>
+        <li>{{ "exam.exam_rule_no_switch_tabs" | translate }}</li>
+        <li>{{ "exam.exam_rule_fullscreen" | translate }}</li>
+        <li>{{ "exam.exam_rule_no_copy_paste" | translate }}</li>
+        <li>{{ "exam.exam_rule_violation_logged" | translate }}</li>
+        <li>{{ "exam.exam_rule_max_violations" | translate }}</li>
+        <li>{{ "exam.exam_rule_user_responsibility" | translate }}</li>
+      </ul>
+
+      <div class="agree-box purple-radio">
+        <label>
+          <input type="radio"
+                 name="terms"
+                 (change)="isTermsAccepted = true">
+
+          <span>{{ "exam.exam_agree_button_text" | translate }}</span>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="exam-footer">
+      <button class="primary-btn"
+              (click)="start()"
+              [disabled]="!isTermsAccepted">
+        {{ "exam.start_button_text" | translate }}
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<app-identity-verificationn *ngIf="!verified && isAgree"
+    (verificationCompleted)="onVerificationCompleted($event)"></app-identity-verificationn>
+
+<router-outlet *ngIf="verified"></router-outlet>

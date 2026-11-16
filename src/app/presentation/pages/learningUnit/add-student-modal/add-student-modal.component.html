@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'COURSE.ADD_STUDENT.TITLE' | translate }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="modal-loading" *ngIf="loading">
+    <app-loading-spinner2></app-loading-spinner2>
+  </div>
+  <!-- Email -->
+  <div class="mb-2">
+    <label class="form-label">
+      {{ 'COURSE.ADD_STUDENT.EMAIL' | translate }}
+    </label>
+
+    <input
+      type="email"
+      class="form-control"
+      [(ngModel)]="email"
+      #emailCtrl="ngModel"
+      required
+      email
+  [placeholder]="('COURSE.ADD_STUDENT.PLACEHOLDER_EMAIL' | translate)"
+    />
+
+    <div
+      class="text-danger mt-1"
+      *ngIf="emailCtrl.invalid && emailCtrl.touched"
+    >
+      <small *ngIf="emailCtrl.errors?.['required']">
+        {{ 'COURSE.ADD_STUDENT.VALIDATION_EMAIL_REQUIRED' | translate }}
+      </small>
+
+      <small *ngIf="emailCtrl.errors?.['email']">
+        {{ 'COURSE.ADD_STUDENT.VALIDATION_EMAIL_INVALID' | translate }}
+      </small>
+    </div>
+  </div>
+
+  <!-- Full Name -->
+  <div class="mb-2">
+    <label class="form-label">
+      {{ 'COURSE.ADD_STUDENT.FULL_NAME' | translate }}
+    </label>
+
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="fullName"
+      #fullNameCtrl="ngModel"
+      required
+      minlength="3"
+  [placeholder]="('COURSE.ADD_STUDENT.PLACEHOLDER_FULL_NAME' | translate)"
+       pattern="^[a-zA-Zأ-ي]+( [a-zA-Zأ-ي]+)*$"
+    />
+
+    <div
+      class="text-danger mt-1"
+      *ngIf="fullNameCtrl.invalid && fullNameCtrl.touched"
+    >
+      <small *ngIf="fullNameCtrl.errors?.['required']">
+        {{ 'COURSE.ADD_STUDENT.VALIDATION_FULLNAME_REQUIRED' | translate }}
+      </small>
+
+      <small *ngIf="fullNameCtrl.errors?.['minlength']">
+        {{ 'COURSE.ADD_STUDENT.VALIDATION_FULLNAME_MIN' | translate }}
+      </small>
+      <small *ngIf="fullNameCtrl.errors?.['pattern']">
+        {{ 'COURSE.ADD_STUDENT.VALIDATION_FULLNAME_PATTERN' | translate }}
+      </small>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="emailCtrl.invalid || fullNameCtrl.invalid || loading"
+    (click)="confirm()"
+  >
+    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+    {{ 'COURSE.ADD_STUDENT.BUTTON' | translate }}
+  </button>
+  
+  <button
+    type="button"
+    class="btn btn-light"
+    (click)="cancel()"
+  >
+    {{ 'COURSE.ADD_STUDENT.CANCEL' | translate }}
+  </button>
+
+
+</div>

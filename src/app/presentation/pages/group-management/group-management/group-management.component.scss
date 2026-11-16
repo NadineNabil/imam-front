@@ -1,0 +1,45 @@
+.status-badge {
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+}
+
+.v_align{
+  vertical-align: middle;
+}
+
+.status-active {
+  background-color: #5ec868;
+  color: white;
+  padding: 0.5rem;
+  font-weight:bold;
+}
+
+.status-pending {
+  background-color: #f5d567;
+  color: black;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+.status-revoked {
+  background-color: #fee2e2;
+  color: #dc2626;
+  font-weight: bold;
+}
+.logos-container{
+    white-space: nowrap;
+}
+.responsive-btn {
+  width: auto;
+}
+
+@media (max-width:767px) {
+  .responsive-btn {
+    width: 100%;
+  }
+}

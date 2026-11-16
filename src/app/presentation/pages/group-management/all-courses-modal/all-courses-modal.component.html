@@ -1,0 +1,103 @@
+<div class="modal fade"
+     id="AllCoursesGroupModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content border-0">
+
+            <!-- Header -->
+            <div class="modal-header border-0 pb-0">
+
+                <div>
+                    <h4 class="fw-bold mb-1">
+                        {{'GROUP_MANAGEMENT.ASSIGN_TO_COURSE' | translate}}
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        {{  'GROUP_MANAGEMENT.SELECT_COURSES' | translate }}
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <!-- Search -->
+                <div class="position-relative mb-3">
+
+                    <i class="ri-search-line search-icon"></i>
+
+                    <input type="text"
+                           class="form-control search-input"
+                            [(ngModel)]="searchTerm"
+                           placeholder="{{ 'GROUP_MANAGEMENT.SEARCH_BY_COURSE_NAME' | translate }}" />
+
+                </div>
+
+                <!-- Courses -->
+                <div class="courses-list">
+
+                    <div class="course-item"
+                         *ngFor="let course of courses | ItemSearch: searchTerm">
+
+                        <div class="d-flex align-items-center gap-3">
+
+                            <input type="checkbox"
+                                   [checked]="selectedCourses.includes(course.id)"
+                                   class="form-check-input"
+                                   (change)="onCourseSelectionChange(course.id, $event)">
+
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">
+                                    {{course.name}}
+                                </div>
+
+                                <small class="text-muted d-block">
+                                    {{course.description}}
+                                </small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer border-0">
+
+                <p class="text-muted me-auto mb-0">
+                    {{'GROUP_MANAGEMENT.TOTAL_TO_ADD' | translate}}:
+                    {{selectedCourses.length}}
+                    {{'GROUP_MANAGEMENT.COURSES' | translate}}
+                </p>
+
+                <button class="btn btn-light border"
+                        data-bs-dismiss="modal">
+
+                    {{'GROUP_MANAGEMENT.CANCEL' | translate}}
+
+                </button>
+
+                <button class="btn btn-primary"
+                        [disabled]="selectedCourses.length === 0"
+                        (click)="assignGroupToCourse()">
+
+                    {{'GROUP_MANAGEMENT.ASSIGN_TO_COURSE' | translate}}
+                    ({{selectedCourses.length}})
+
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

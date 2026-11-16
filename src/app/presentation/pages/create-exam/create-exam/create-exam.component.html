@@ -1,0 +1,160 @@
+<div class="row" [formGroup]="examForm">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="card-title">{{'EXAMS.CREATE_EXAM'|translate}}</h4>
+        </div>
+
+        <p class="card-title-desc">{{'EXAMS.DESC'|translate}}</p>
+      </div>
+
+      <!-- end card header -->
+      <div class="stepper-scroll">
+        <ng-stepper #stepper [linear]="true" class="responsive-stepper">
+          <!-- Step 1 -->
+          <cdk-step [optional]="false">
+            <ng-template cdkStepLabel>
+              <i class="bx bx-list-ul"></i>
+            </ng-template>
+
+            <app-exam-basic-info [examForm]="examForm" [categories]="categories" [courses]="courses"
+              [learningUnits]="learningUnits" [subCategories]="subCategories"
+              (categoryChanged)="onCategorySelected($event)" (subCategoryChanged)="onSubCategorySelected($event)"
+              (CourseChanged)="onCourseSelected($event)"
+             (learningUnitsChanged)="onUnitsSelected($event)"
+              >
+            </app-exam-basic-info>
+
+            <div class="d-flex justify-content-end mt-3">
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm" [disabled]="!IsMainSectionValid()"
+                cdkStepperNext>{{'EXAMS.NEXT' | translate}}</button>
+            </div>
+          </cdk-step>
+          <!-- Step 2 -->
+          <cdk-step [optional]="false" *ngIf="examForm.get('examSource')?.value===ExamSourceEnum.GENERATED">
+            <ng-template cdkStepLabel>
+              <i class="bx bx-book-bookmark"></i>
+            </ng-template>
+
+            <app-source-ratio-step [examForm]="examForm" >
+            </app-source-ratio-step>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                cdkStepperPrevious>{{'EXAMS.PREVIOUS' | translate}}</button>
+                <button mat-raised-button color="primary" class="btn btn-primary w-sm" [disabled]="!IsMainSectionValid()"
+                cdkStepperNext>{{'EXAMS.NEXT' | translate}}</button>
+            </div>
+          </cdk-step>
+          <!-- Step 3 -->
+          <cdk-step [optional]="false">
+            <ng-template cdkStepLabel>
+              <i class="bx bx-book-bookmark"></i>
+            </ng-template>
+
+            <app-exam-objectives (openedNewObjective)="isAddingNewObjective=$event" 
+              [ObjectivesFormArray]="objectivesFormArray" [examForm]="examForm" [objectives]="objectives"
+              [totalWeight]="totalweight">
+            </app-exam-objectives>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                cdkStepperPrevious>{{'EXAMS.PREVIOUS' | translate}}</button>
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                [disabled]="objectivesFormArray.invalid||isAddingNewObjective || (examForm.get('examSource')?.value === examSource.GENERATED && totalweight !== 100)"
+                cdkStepperNext (click)="onObjectivesNext()">{{'EXAMS.NEXT' | translate}}</button>
+            </div>
+          </cdk-step>
+          <!-- Step 4 -->
+          <cdk-step [optional]="false">
+            <ng-template cdkStepLabel>
+              <i class="bx bx-book-bookmark"></i>
+            </ng-template>
+
+            <app-question-types *ngIf="examForm.get('examSource')?.value===ExamSourceEnum.GENERATED" [questionTypesFormArray]="questionTypesArray" [parentForm]="examForm">
+            </app-question-types>
+            <app-xlsx-question-upload *ngIf="examForm.get('examSource')?.value===ExamSourceEnum.MANUAL" 
+            (fileChanged)="onFileChange($event)"
+            ></app-xlsx-question-upload>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                cdkStepperPrevious>{{'EXAMS.PREVIOUS' | translate}}</button>
+              <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                [disabled]="questionTypesArray.invalid  && examForm.get('examSource')?.value===ExamSourceEnum.GENERATED " cdkStepperNext>{{'EXAMS.NEXT' | translate}}</button>
+            </div>
+          </cdk-step>
+          <!-- Step 5 -->
+        <!-- Step 5 - Questions -->
+<cdk-step [optional]="false" *ngIf="examForm.get('examSource')?.value === ExamSourceEnum.MANUAL">
+
+  <ng-template cdkStepLabel>
+    <i class="bx bx-question-mark"></i>
+  </ng-template>
+
+  <app-questions-form
+    *ngIf="examForm.get('examSource')?.value === ExamSourceEnum.MANUAL"
+    [examForm]="examForm"
+    [jsonFileData]="jsonFileData">
+  </app-questions-form>
+
+  <div class="d-flex justify-content-between mt-3"  *ngIf="examForm.get('examSource')?.value === ExamSourceEnum.MANUAL">
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn btn-primary w-sm"
+      cdkStepperPrevious>
+      {{ 'EXAMS.PREVIOUS' | translate }}
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="this.examForm.get('questions')?.invalid || this.loading"
+      class="btn btn-primary w-sm"
+      cdkStepperNext>
+      {{ 'EXAMS.NEXT' | translate }}
+    </button>
+
+  </div>
+
+</cdk-step>
+
+<!-- Step 6 - Response Types -->
+<cdk-step [optional]="false">
+
+  <ng-template cdkStepLabel>
+    <i class="bx bx-check-circle"></i>
+  </ng-template>
+
+  <app-response-types
+    [parentForm]="examForm"
+    [responseTypesFormArray]="responseTypesArray">
+  </app-response-types>
+
+  <div class="d-flex justify-content-between mt-3">
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn btn-primary w-sm"
+      cdkStepperPrevious>
+      {{ 'EXAMS.PREVIOUS' | translate }}
+    </button>
+
+                  <button mat-raised-button color="primary" class="btn btn-primary w-sm"
+                [disabled]="disableCreate || this.responseTypesArray.invalid || this.loading" (click)="createExam()" cdkStepperNext>{{'EXAMS.CREATE_EXAM' |
+                translate}}</button>
+
+  </div>
+
+</cdk-step>
+        </ng-stepper>
+      </div>
+      <!-- end card body -->
+    </div>
+    <!-- end card -->
+  </div>
+  <!-- end col -->
+</div>

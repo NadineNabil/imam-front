@@ -1,0 +1,26 @@
+// Date input wrapper with ng-select-style clear icon
+.date-input-wrapper {
+  position: relative;
+
+  .form-control {
+    padding-inline-end: 1.8rem;
+  }
+
+  .date-clear-icon {
+    position: absolute;
+    inset-inline-end: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+    transition: color 0.15s ease;
+    user-select: none;
+
+    &:hover {
+      color: #555;
+    }
+  }
+}

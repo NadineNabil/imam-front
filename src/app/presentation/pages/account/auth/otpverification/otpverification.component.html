@@ -1,0 +1,115 @@
+<div class="auth-page">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-xxl-4 col-lg-5 col-md-6">
+                <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                    <div class="w-100">
+                        <div class="d-flex flex-column h-100">
+                            <div class="mb-4 mb-md-5 text-center">
+                                                            <a routerLink="/" class="d-block auth-logo">
+                                    <img *ngIf="isDarkMode; else lightLogo" src="assets/images/logoLight.svg"
+                                        height="50">
+
+                                    <ng-template #lightLogo>
+                                        <img src="assets/images/Moga_Edu.svg" height="50">
+                                    </ng-template>
+                                </a>
+                            </div>
+                            <div class="auth-content my-auto">
+                                <div class="text-center">
+                                    @if(error){
+                                    <div class="alert alert-danger" role="alert">
+                                        {{error}}
+                                    </div>
+                                    }
+                                    @if(successmsg){
+                                    <div class="alert alert-success" role="alert">
+                                        {{successmsg}}
+                                    </div>
+                                    }
+                                    <div class="avatar-lg mx-auto">
+                                        <div class="avatar-title rounded-circle bg-light">
+                                            <i class="bx bxs-envelope h2 mb-0 text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="p-2 mt-4">
+
+                                        <h4>{{'VERIFICATION.ENTER_THE_CODE_SENT_TO_YOUR_EMAIL' | translate}}</h4>
+                                        <p class="mb-5">
+                                            {{'VERIFICATION.PLEASE_ENTER_THE_6_DIGIT_CODE_SENT_TO_YOUR_EMAIL' |
+                                            translate}} <span class="fw-bold">{{email}}</span></p>
+
+                                        <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+                                            <div class="row">
+                                                <ng-otp-input [config]="config" formControlName="otp"
+                                                    [ngClass]="{ 'is-invalid': (f['otp'].touched || f['otp'].dirty || submitted) && f['otp'].errors }"></ng-otp-input>
+                                                @if((f['otp'].touched || f['otp'].dirty || submitted) &&
+                                                f['otp'].errors){
+                                                <div class="invalid-feedback">
+                                                    @if(f['otp'].errors['required'] || f['otp'].errors['minlength'] ||
+                                                    f['otp'].errors['maxlength']){
+                                                    <div>{{'VERIFICATION.PLEASE_ENTER_THE_6_DIGIT_CODE' | translate}}
+                                                    </div>}
+                                                </div>}
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                    type="submit">
+                                                    @if(loading){
+                                                    <span class="spinner-border spinner-border-sm me-1"></span>
+                                                    }
+                                                    {{'VERIFICATION.CONFIRM' | translate}}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 text-center">
+                                    @if(loading1){
+                                    <p class="text-muted mb-0">{{'VERIFICATION.DIDNT_RECEIVE_AN_EMAIL' | translate}}
+                                        <span class="spinner-border spinner-border-sm me-1"></span>
+                                        }
+                                        @else {
+                                    <p class="text-muted mb-0">{{'VERIFICATION.DIDNT_RECEIVE_AN_EMAIL' | translate}} <a
+                                            href="javascript:void(0);" (click)="resendOtp()" 
+                                            [class.disabled]="!canResend" class="text-primary fw-semibold"> {{'VERIFICATION.RESEND' | translate}} </a>
+                                            <span *ngIf="!canResend">  {{ 'VERIFICATION.RESEND_IN' | translate:{ seconds: countdown } }}</span>
+                                    </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end auth full page content -->
+            </div>
+            <!-- end col -->
+            <div class="col-xxl-8 col-lg-7 col-md-6">
+                <div class="auth-bg auth-bg-regional pt-md-5 p-4 d-flex"
+                     [style.backgroundImage]="'url(' + regionBgImage + ')'"
+                     [class.image-loaded]="regionImageLoaded"
+                     role="img"
+                     aria-label="Regional landmark background image">
+                    <div class="bg-overlay"></div>
+                    <ul class="bg-bubbles">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container fluid -->
+</div>

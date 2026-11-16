@@ -1,0 +1,194 @@
+<div class="auth-page">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-xxl-3 col-lg-4 col-md-5">
+                <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                    <div class="w-100">
+                        <div class="d-flex flex-column h-100">
+                            
+                          <div class="mb-4 mb-md-5 text-center">
+                                                        <a routerLink="/" class="d-block auth-logo">
+                                    <img *ngIf="isDarkMode; else lightLogo" src="assets/images/logoLight.svg"
+                                        height="50">
+
+                                    <ng-template #lightLogo>
+                                        <img src="assets/images/Moga_Edu.svg" height="50">
+                                    </ng-template>
+                                </a>
+                            </div>
+                      
+                            <div class="auth-content my-auto">
+                                <div class="text-center">
+                                    <h5 class="mb-0">{{'REGISTER.REGISTER_ACCOUNT' | translate}}</h5>
+                                    
+                                </div>
+
+                                @if(successmsg){
+                                <div class="alert alert-success" role="alert">
+                                        {{'REGISTER.REGISTRATION_SUCCESSFUL' | translate}}
+                                </div>
+                                }
+
+                                @if(error){
+                                <div class="alert alert-danger" role="alert">
+                                    {{error}}
+                                </div>
+                                }
+
+                                <!--
+                                    Anti-autofill measures:
+                                    - form autocomplete="off" (browsers may ignore but helps)
+                                    - hidden dummy username/password fields with standard autocomplete values so password managers fill them instead
+                                    - real password inputs set to autocomplete="new-password" and have autocorrect/autocapitalize/spellcheck disabled
+                                -->
+                                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+                                    <!-- Hidden dummy fields to catch password managers/autofill -->
+                                    <input type="text" name="fake-username" autocomplete="username" style="position:absolute;opacity:0;height:0;width:0;border:0;padding:0;margin:0;overflow:hidden;" tabindex="-1" aria-hidden="true">
+                                    <input type="password" name="fake-password" autocomplete="current-password" style="position:absolute;opacity:0;height:0;width:0;border:0;padding:0;margin:0;overflow:hidden;" tabindex="-1" aria-hidden="true">
+                                    @if(submitted && signupForm.errors){
+                                    <div class="alert alert-danger" role="alert">
+                                        {{'REGISTER.ALL_FIELDS_ARE_REQUIRED' | translate}}
+                                    </div>
+                                    }
+
+                                    <div class="mb-3">
+                                        <label for="fullname">{{'REGISTER.FULL_NAME' | translate}}</label>
+                                        <input type="text" formControlName="fullname" class="form-control" id="fullname" [ngClass]="{ 'is-invalid': (f['fullname'].touched || f['fullname'].dirty || submitted) && f['fullname'].errors }" placeholder="{{'REGISTER.ENTER_FULL_NAME' | translate}}">
+                                        @if((f['fullname'].touched || f['fullname'].dirty || submitted) && f['fullname'].errors){
+                                        <div class="invalid-feedback">
+                                            @if(f['fullname'].errors['required'] || f['fullname'].errors['minlength']){
+                                            <div>{{'REGISTER.PLEASE_ENTER_YOUR_FULL_NAME_AT_LEAST_3_CHARACTERS' | translate}}</div>}
+                                            @if(f['fullname'].errors['maxlength']){
+                                            <div>{{'REGISTER.FULL_NAME_MUST_NOT_EXCEED_100_CHARACTERS' | translate}}</div>}
+                                            @if(f['fullname'].errors['pattern']){
+                                            <div>{{'REGISTER.FULL_NAME_CAN_ONLY_CONTAIN_LETTERS_AND_SPACES' | translate}}</div>}
+                                        </div>}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="useremail">{{'REGISTER.EMAIL' | translate}}</label>
+                                        <input type="email" formControlName="email" name="signup-email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" [ngClass]="{ 'is-invalid': (f['email'].touched || f['email'].dirty || submitted) && f['email'].errors }" class="form-control" id="useremail" placeholder="{{'REGISTER.ENTER_EMAIL' | translate}}">
+                                        @if((f['email'].touched || f['email'].dirty || submitted) && f['email'].errors){
+                                        <div class="invalid-feedback">
+                                            @if(f['email'].errors['required'] || f['email'].errors['email']){
+                                            <div>{{'REGISTER.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' | translate}}</div>}
+                                        </div>}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="userpassword">{{'REGISTER.PASSWORD' | translate}}</label>
+                                        <div class="input-group auth-pass-inputgroup">
+                                            <input [type]="fieldTextType ? 'text' : 'password'" formControlName="password" name="signup-pwd" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false" [ngClass]="{ 'is-invalid': (f['password'].touched || f['password'].dirty || submitted) && f['password'].errors }" class="form-control" id="userpassword" placeholder="{{'REGISTER.ENTER_PASSWORD' | translate}}" aria-label="Password" aria-describedby="password-addon">
+                                            <button class="btn btn-light" type="button" id="password-addon">
+                                                <i class="mdi" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType}" (click)="toggleFieldTextType()"></i>
+                                            </button>
+                                            @if((f['password'].touched || f['password'].dirty || submitted) && f['password'].errors){
+                                            <div class="invalid-feedback">
+                                                @if(f['password'].errors['required'] || f['password'].errors['minlength'] || f['password'].errors['passwordStrength']){
+                                                <div>{{'REGISTER.PASSWORD_MUST_BE_AT_LEAST_8_CHARACTERS_AND_INCLUDE_UPPERCASE_LOWERCASE_NUMBER_AND_SPECIAL_CHARACTER' | translate}}</div>}
+                                            </div>}
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="confirmpassword">{{'REGISTER.CONFIRM_PASSWORD' | translate}}</label>
+                                        <div class="input-group auth-pass-inputgroup">
+                                            <input [type]="confirmFieldTextType ? 'text' : 'password'" formControlName="confirmPassword" name="signup-confirm-pwd" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false" [ngClass]="{ 'is-invalid': (f['confirmPassword'].touched || f['confirmPassword'].dirty || submitted) && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch']) }" class="form-control" id="confirmpassword" placeholder="{{'REGISTER.ENTER_CONFIRM_PASSWORD' | translate}}" aria-label="Confirm Password" aria-describedby="confirm-password-addon">
+                                            <button class="btn btn-light" type="button" id="confirm-password-addon">
+                                                <i class="mdi" [ngClass]="{'mdi-eye-off-outline': !confirmFieldTextType, 'mdi-eye-outline': confirmFieldTextType}" (click)="toggleConfirmFieldTextType()"></i>
+                                            </button>
+                                            @if((f['confirmPassword'].touched || f['confirmPassword'].dirty || submitted) && f['confirmPassword'].errors){
+                                            <div class="invalid-feedback">
+                                                @if(f['confirmPassword'].errors['required']){
+                                                <div>{{'REGISTER.ENTER_CONFIRM_PASSWORD' | translate}}</div>}
+                                            </div>}
+                                            @if((f['confirmPassword'].touched || f['confirmPassword'].dirty || submitted) && signupForm.errors?.['passwordMismatch'] && !f['confirmPassword'].errors){
+                                            <div class="invalid-feedback" style="display: block;">
+                                                {{'REGISTER.PASSWORDS_DO_NOT_MATCH' | translate}}
+                                            </div>}
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" formControlName="agreeTerms" class="form-check-input" id="agreeTerms" [ngClass]="{ 'is-invalid': (f['agreeTerms'].touched || f['agreeTerms'].dirty || submitted) && f['agreeTerms'].errors }">
+                                            <label class="form-check-label" for="agreeTerms">
+                                                {{'REGISTER.I_AGREE_TO_THE_PRIVACY_AND_SECURITY_POLICY' | translate}} <a href="javascript: void(0);" class="text-primary">{{'REGISTER.PRIVACY_AND_SECURITY_POLICY' | translate}}</a>
+                                            </label>
+                                            @if((f['agreeTerms'].touched || f['agreeTerms'].dirty || submitted) && f['agreeTerms'].errors){
+                                            <div class="invalid-feedback" style="display: block;">
+                                                {{'REGISTER.YOU_MUST_AGREE_TO_THE_PRIVACY_AND_SECURITY_POLICY' | translate}}
+                                            </div>}
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 d-grid">
+                                        <button class="btn btn-primary btn-block" type="submit" [disabled]="loading">
+                                            @if(loading){
+                                            <span class="spinner-border spinner-border-sm me-1"></span>
+                                            }
+                                            {{'REGISTER.REGISTER' | translate}}
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="mt-5 text-center">
+                                    <p class="text-muted mb-0">{{'REGISTER.ALREADY_HAVE_AN_ACCOUNT' | translate}} <a routerLink="/account/login" class="text-primary fw-semibold"> {{'REGISTER.Signin' | translate}} </a> </p>
+                                </div>
+                            </div>
+                            <!-- <div class="mt-4 mt-md-5 text-center">
+                                <p class="mb-0"> {{'REGISTER.COPYRIGHT' | translate}} Moga edu © {{year}}</p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-9 col-lg-8 col-md-7">
+                <div class="auth-bg auth-bg-regional pt-md-5 p-4 d-flex"
+                     [style.backgroundImage]="'url(' + regionBgImage + ')'"
+                     [class.image-loaded]="regionImageLoaded"
+                     role="img"
+                     aria-label="Regional landmark background image">
+                    <div class="bg-overlay"></div>
+                    <ul class="bg-bubbles">
+                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li>
+                    </ul>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-xl-7">
+                            <div class="p-0 p-sm-4 px-xl-0">
+                                <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <ngb-carousel [showNavigationArrows]="false" [showNavigationIndicators]="false">
+                                            <ng-template ngbSlide>
+                                                <div class="carousel-item active">
+                                                    <div class="testi-contain text-white">
+                                                        <h4 class="mt-4 fw-medium lh-base text-white">{{'REGISTER.JOIN_MOGA_EDU_TODAY_AND_START_YOUR_LEARNING_JOURNEY_WITH_US' | translate}}</h4>
+                                                       <!--
+                                                        <div class="mt-4 pt-3 pb-5">
+                                                            <div class="d-flex align-items-start">
+                                                                <div class="flex-shrink-0">
+                                                                    <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3 mb-4">
+                                                                    <h5 class="font-size-18 text-white">{{'REGISTER.ADMIN' | translate}}</h5>
+                                                                    <p class="mb-0 text-white-50">{{'REGISTER.PLATFORM_ADMINISTRATOR' | translate}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    -->
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngb-carousel>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

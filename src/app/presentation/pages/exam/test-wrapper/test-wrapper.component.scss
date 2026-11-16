@@ -1,0 +1,126 @@
+.exam-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.exam-card {
+  width: 100%;
+  max-width: 750px;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px var(--bs-focus-ring-color);
+  overflow: hidden;
+  background-color:var(--bs-tertiary-bg);
+}
+
+.exam-header {
+  text-align: center;
+  padding: 28px 24px 10px;
+}
+
+.helloImg {
+  width: 110px;
+  margin-bottom: 10px;
+}
+
+.exam-header h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.exam-intro-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.exam-body {
+  padding: 20px 26px;
+}
+
+.rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rules-list li {
+  background: rgb(81 86 190 / 5%);
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border-right: 4px solid var(--bs-primary);
+  font-size: 14px;
+}
+:dir(rtl) .rules-list li {
+    border-left: 4px solid var(--bs-primary);
+    border-right: unset;
+
+}
+
+.agree-box {
+  margin-top: 18px;
+  padding: 12px;
+  background: var(--bs-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.exam-footer {
+  padding: 18px 26px 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.primary-btn {
+  width: 100%;
+  max-width: 420px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--bs-primary);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RADIO */
+.purple-radio input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--bs-primary);
+  margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.purple-radio input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--bs-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.purple-radio label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bs-sidebar-menu-item-active-color);
+  font-weight: 600;
+}

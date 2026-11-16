@@ -1,0 +1,51 @@
+<ul class="list-unstyled activity-wid mb-0">
+    @for (data of recentActivity; track $index) {
+    <li class="activity-list activity-border">
+        <div class="activity-icon avatar-md">
+            <span
+                class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                <i class="{{ data.icon }}"></i>
+            </span>
+        </div>
+
+        <div class="timeline-list-item">
+            <div class="d-flex">
+
+                <div class="flex-grow-1 overflow-hidden me-4">
+          
+
+                    <p class="text-truncate text-muted font-size-13">
+                        {{ data.content | translate }}
+                    </p>
+                </div>
+
+                <div class="flex-shrink-0 text-end me-3">
+                    <h6 class="mb-1">
+                        {{ data.coine | translate }}
+                    </h6>
+
+                    <div class="font-size-13">
+                        {{ data.price | translate }}
+                    </div>
+                </div>
+
+                <div class="flex-shrink-0 text-end">
+                    <div class="dropdown" ngbDropdown>
+
+
+                        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                            <a class="dropdown-item" href="javascript:void(0)">
+                                {{ 'View Details' | translate }}
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)">
+                                {{ 'Open' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </li>
+    }
+</ul>

@@ -1,0 +1,195 @@
+<div id="TopOfMain">
+      <!-- Overlay -->
+  <div
+    *ngIf="IsExamFinish && !sentReportToServer  && pendingCorrections > 0"
+    class="loader-overlay">
+    <div class="spinner-border text-primary" role="status"></div>
+    <div class="mt-2">{{'exam.correcting_answers'|translate}}</div>
+  </div>
+
+    <div id="main">
+      <app-violation-popup  
+        [violations]="violations"
+        [isBlocked]="isBlocked"
+        [show]="showViolationPopup"
+        [counterViolation]="counterViolation"
+        (return)="onReturn()"
+        (end)="onEnd()"
+      >
+      </app-violation-popup>
+
+    <div class="chat-container" id="chat-container">
+        <div id="chat-log">
+
+            
+            <div class="icon-with-title" >
+                <img src="../../../assets/images/avatar.png" class="chatlogtopImg" >
+
+                <div class="row title" >
+                    <div class="col-5">
+                        <div  id="chatheader" class="translatedtxtheader boldtxt" >
+                            اللغة العربية
+                        </div>
+                        <div class="typingNow" id="typingNow" *ngIf="isTyping" >
+                            يكتب 
+                        </div>
+                    </div>
+                    <div class="col flx_end">
+                    <button class="btn  closeBtn btn-danger" (click)="showDialog = true"
+                    [disabled]="IsExamFinish">{{'exam.finish_exam'|translate}} </button>
+                    </div>
+                </div>
+        
+        </div>
+
+       <div class="Monitoring-bar">
+        <div class="tools">
+            <div class="d-flex gap-2 align-items-center monitoring-status">
+  <svg   width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L4 5.5V12C4 15.5 7.5 20 12 22C16.5 21 20 15.5 20 12V5.5L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+                <p class="m-0 title">{{'exam.monitoring_mode_is_active'|translate}}</p><svg class="line" width="2" height="40" viewBox="0 0 2 40" xmlns="http://www.w3.org/2000/svg">
+  <line x1="1" y1="0" x2="1" y2="40" stroke="#d8b4b4" stroke-width="2"/>
+</svg>
+</div>
+
+            <div class="violation-info">
+                <p class="violation camera-indicator m-0" [class.ok]="cameraOn" [class.err]="!cameraOn">
+                 
+         
+                   
+
+                    <svg width="25px" height="25px" [attr.fill]="cameraOn ? 'green' : 'red'" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-dot">
+                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                    </svg>
+
+                        <span class="text-camera">{{'exam.camera'|translate}}</span></p>
+
+                <p class="violation page m-0"><svg style="margin-bottom:-6px" width="20px" height="20px"  fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pc</title> <path d="M1.844 5.281h18.688c1.031 0 1.875 0.813 1.875 1.844v11.938c0 1.031-0.844 1.906-1.875 1.906h-7.281v3.094h5.313c0.781 0 0.844 2.563 0.938 2.656h-16.594s0-2.656 0.938-2.656h5.313v-3.094h-7.313c-1.031 0-1.844-0.875-1.844-1.906v-11.938c0-1.031 0.813-1.844 1.844-1.844zM1.844 19.063h18.688v-11.938h-18.688v11.938z"></path> </g></svg> {{getVisibilityViolationsCount}} {{'exam.switch_tab'|translate}}</p>
+
+                <p class="violation  m-0 number"> <span class="icon">⚠</span> {{counterViolation}} {{'exam.violation'|translate}}</p>
+            </div>
+        </div>
+
+        <div class="d-flex gap-1 clickable align-items-center fullSC" (click)="requestFullscreen()">
+            <svg  width="20px" height="20px"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="2"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22 14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> <path d="M10 22C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> <path d="M10 2C6.22876 2 4.34315 2 3.17157 3.17157C2 4.34315 2 6.22876 2 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> <path d="M14 2C17.7712 2 19.6569 2 20.8284 3.17157C22 4.34315 22 6.22876 22 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+        <p class="m-0 title">{{'exam.request_fullscreen'|translate}}</p>
+        </div>
+    </div>
+
+        <div id="Chathere" >
+
+                
+         
+              
+            
+              
+
+        <div id="chat-content" #Chat_box>
+            <app-floating-camera-widget [hidden]="!isExamActive"></app-floating-camera-widget>
+
+            <div id="prepareExamLoading" *ngIf="loading">
+<div class="spinner-border text-primary" role="status">            </div>
+            <div [hidden]="IsExamFinish">  {{'exam.test_is_being_prepared'|translate}} </div>
+            
+           
+            
+
+        </div>  
+
+        
+        </div>
+
+        
+    
+    </div>
+    <div id="chat-input">
+
+        <div style="position: absolute; bottom: 25px;left:0px"  *ngIf="isTyping"> 
+            <div id="loading"   #load>
+                <img src="../../../assets/images/Frame1.png">
+               
+                <div class="message bot-message" id="typingdotsdiv" style="padding: 0.3rem;">
+                    <img src="../../../assets/images/icons8-dots-loading.gif" style="width: 2rem; height: 1.5rem;">
+                </div>
+            </div>   
+            </div>
+        
+
+
+
+        <div class="input-wrapper">
+    
+                <!-- audio-recorder.component.html -->
+                    <div class="input-with-icon" [hidden]="!thereIsRecord">
+                        <app-recoder
+                            (recordingCompleted)="onRecordingCompleted($event)"
+                            (recordingDeleted)="onRecordingDeleted()">
+                        </app-recoder>
+
+                    </div>
+
+            <textarea 
+            *ngIf="!thereIsRecord" 
+            id="question-input" 
+            #txtarea
+            [disabled]="disabledinput"
+            class="form-control w-100 rounded-4 shadow-sm"
+            [placeholder]="'exam.placeholder' | translate"
+            style="width: 100%;" 
+            wrap="hard"
+            rows="1" 
+            (input)="TypingQuestionChange()"
+            (keydown)="handleKeyDown($event)"
+            ></textarea>
+
+
+            <svg 
+            *ngIf="!thereIsRecord"
+             [ngClass]="{'disabled-icon':isTyping}"
+            class="input-icon" id="recordIcon" 
+            (click)="startRecord()"
+            width="44" height="44" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 16.5C13.1931 16.4988 14.337 16.0243 15.1806 15.1806C16.0243 14.337 16.4988 13.1931 16.5 12V6C16.5 4.80653 16.0259 3.66193 15.182 2.81802C14.3381 1.97411 13.1935 1.5 12 1.5C10.8065 1.5 9.66193 1.97411 8.81802 2.81802C7.97411 3.66193 7.5 4.80653 7.5 6V12C7.50124 13.1931 7.97575 14.337 8.81939 15.1806C9.66303 16.0243 10.8069 16.4988 12 16.5ZM9 6C9 5.20435 9.31607 4.44129 9.87868 3.87868C10.4413 3.31607 11.2044 3 12 3C12.7956 3 13.5587 3.31607 14.1213 3.87868C14.6839 4.44129 15 5.20435 15 6V12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12V6ZM12.75 19.4625V22.5C12.75 22.6989 12.671 22.8897 12.5303 23.0303C12.3897 23.171 12.1989 23.25 12 23.25C11.8011 23.25 11.6103 23.171 11.4697 23.0303C11.329 22.8897 11.25 22.6989 11.25 22.5V19.4625C9.40091 19.2743 7.68728 18.4072 6.44048 17.0288C5.19368 15.6504 4.50228 13.8586 4.5 12C4.5 11.8011 4.57902 11.6103 4.71967 11.4697C4.86032 11.329 5.05109 11.25 5.25 11.25C5.44891 11.25 5.63968 11.329 5.78033 11.4697C5.92098 11.6103 6 11.8011 6 12C6 13.5913 6.63214 15.1174 7.75736 16.2426C8.88258 17.3679 10.4087 18 12 18C13.5913 18 15.1174 17.3679 16.2426 16.2426C17.3679 15.1174 18 13.5913 18 12C18 11.8011 18.079 11.6103 18.2197 11.4697C18.3603 11.329 18.5511 11.25 18.75 11.25C18.9489 11.25 19.1397 11.329 19.2803 11.4697C19.421 11.6103 19.5 11.8011 19.5 12C19.4977 13.8586 18.8063 15.6504 17.5595 17.0288C16.3127 18.4072 14.5991 19.2743 12.75 19.4625Z"
+                    fill="current" />
+            </svg>
+
+          
+          
+
+        </div>
+    <!--if (!isDisabled)  [disabled]="Question.type != 3" -->
+        <button id="askLink"
+                (click)="displayAnswer()"
+                #sendAns
+                style="border:none;"
+                [disabled]="(isDisabled  && !thereIsRecord) || loading"
+            >
+            
+<svg width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 13L25 25L0.999999 13L25 1L21 13ZM21 13H13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        </button>
+
+        
+        <button id="recordButton" style="padding: 5px 15px;display: none;">Record</button>
+        <button id="stopButton" style="padding: 5px 15px; display: none;" disabled>Stop</button>
+
+    </div>
+    </div>
+
+
+
+    </div>
+</div>
+<app-confirm-dialog *ngIf="showDialog" 
+[message]="'exam.leave_exam_confirm'|translate"
+[note]="'exam.leave_exam_note'|translate"
+[confimMsg]="'exam.end_exam'|translate"
+[cancelMsg]="'exam.cancel'|translate"
+
+(action)="handleDialogAction($event)"
+(closed)="showDialog = false"></app-confirm-dialog>

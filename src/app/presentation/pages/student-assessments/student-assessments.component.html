@@ -1,0 +1,160 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">{{ 'EXAMS.MY_EXAMS' | translate }}</h4>
+
+        <!-- Top Active Exams (Purple Scrollable Cards matching student-course-details) -->
+        <div class="card shadow-sm border rounded-4 mb-4 overflow-hidden" *ngIf="(activeExams$ | async)?.length">
+          <div class="card-body p-4">
+            <div class="exams-scroll-wrapper pb-2">
+              <div class="d-flex flex-row flex-nowrap gap-3">
+                <div class="purple-exam-card p-4 d-flex flex-column justify-content-between flex-shrink-0" *ngFor="let exam of activeExams$ | async">
+                  <!-- Top section: notification badge (bell icon) and Exam Title -->
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="bell-badge rounded-circle bg-white bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0">
+                      <i-feather name="bell" class="icon-xs"></i-feather>
+                    </div>
+                    <div class="exam-title-text text-white fw-bold text-truncate" [title]="exam.exam_name">
+                      {{ exam.exam_name }}
+                    </div>
+                  </div>
+
+                  <!-- CTA Start Exam Button -->
+                  <div class="text-center mt-3">
+                    <button class="btn btn-white px-4 py-2 fw-bold text-purple text-xs border-0 w-100" (click)="startExam(exam.exam_id)">
+                      {{ 'EXAMS.START_EXAM' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Form with Minia UI Dropdowns (ngbDropdown) and Flatpickr Date Pickers -->
+        <form class="row g-3 mb-4">
+          <div class="col-md-3">
+            <label class="form-label">{{ 'EXAMS.COURSE' | translate }}</label>
+            <div class="dropdown w-100" ngbDropdown>
+              <button
+                class="form-control d-flex align-items-center justify-content-between dropdown-toggle"
+                type="button"
+                ngbDropdownToggle>
+                <span class="text-truncate me-2">
+                  {{ getSelectedCourseName(filterForm.controls.courseId.value) || ('COMMON.ALL' | translate) }}
+                </span>
+                <i class="mdi mdi-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu w-100" ngbDropdownMenu>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  [class.active]="filterForm.controls.courseId.value === null"
+                  (click)="filterForm.controls.courseId.setValue(null)">
+                  {{ 'COMMON.ALL' | translate }}
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  *ngFor="let course of courses$ | async"
+                  [class.active]="filterForm.controls.courseId.value === course.id"
+                  (click)="filterForm.controls.courseId.setValue(course.id)">
+                  {{ course.name }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">{{ 'EXAMS.STATUS' | translate }}</label>
+            <div class="dropdown w-100" ngbDropdown>
+              <button
+                class="form-control d-flex align-items-center justify-content-between dropdown-toggle"
+                type="button"
+                ngbDropdownToggle>
+                <span class="me-2">
+                  {{ ('EXAMS.STATUS_OPTIONS.' + getSelectedStatusLabel(filterForm.controls.status.value)) | translate }}
+                </span>
+                <i class="mdi mdi-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu w-100" ngbDropdownMenu>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  *ngFor="let option of statuses"
+                  [class.active]="filterForm.controls.status.value === option.value"
+                  (click)="filterForm.controls.status.setValue(option.value)">
+                  {{ ('EXAMS.STATUS_OPTIONS.' + option.label) | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">{{ 'COMMON.FROM' | translate }}</label>
+            <div class="date-input-wrapper">
+              <input
+                type="text"
+                class="form-control"
+                mwlFlatpickr
+                [convertModelValue]="true"
+                [dateFormat]="'Y-m-d'"
+                [formControl]="filterForm.controls.fromDate"
+                [placeholder]="'COMMON.FROM' | translate" />
+              <span
+                *ngIf="filterForm.controls.fromDate.value"
+                class="date-clear-icon"
+                (click)="clearDate('fromDate')"
+                title="Clear">
+                &#x2715;
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">{{ 'COMMON.TO' | translate }}</label>
+            <div class="date-input-wrapper">
+              <input
+                type="text"
+                class="form-control"
+                mwlFlatpickr
+                [convertModelValue]="true"
+                [dateFormat]="'Y-m-d'"
+                [formControl]="filterForm.controls.toDate"
+                [placeholder]="'COMMON.TO' | translate" />
+              <span
+                *ngIf="filterForm.controls.toDate.value"
+                class="date-clear-icon"
+                (click)="clearDate('toDate')"
+                title="Clear">
+                &#x2715;
+              </span>
+            </div>
+          </div>
+        </form>
+
+        <ng-template #actions let-row>
+          <button class="btn btn-outline-primary btn-sm" *ngIf="canPerformAction(row.status); else statusOnlyTpl" (click)="isSubmitted(row.status) ? viewResult(row.exam_id) : startExam(row.exam_id)">
+            {{ ('EXAMS.' + getActionLabel(row.status)) | translate }}
+          </button>
+          <ng-template #statusOnlyTpl>
+            <span class="text-muted">
+              {{ ('EXAMS.STATUS_OPTIONS.' + getStatusLabel(row.status)) | translate }}
+            </span>
+          </ng-template>
+        </ng-template>
+
+        <app-data-table
+          [columns]="columns"
+          [data$]="assessments$"
+          [totalRecords]="totalAssessments"
+          [tableService]="tableService"
+          [actionsTemplate]="actions"
+          [isLoading]="isLoading"
+          [showSearch]="false">
+        </app-data-table>
+      </div>
+    </div>
+  </div>
+</div>

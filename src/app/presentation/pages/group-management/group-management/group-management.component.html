@@ -1,0 +1,87 @@
+<main>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <div >
+                    <div class=" d-flex flex-column flex-md-row justify-content-between border-bottom pb-2 align-items-center">
+        <div>
+            <h5>{{ 'GROUP_MANAGEMENT.GROUPS_MANAGEMENT' | translate }}</h5>
+            <p class="m-0">
+                {{ 'GROUP_MANAGEMENT.GROUPS_MANAGEMENT_DESC' | translate }}
+            </p>
+        </div>
+<button
+  data-bs-toggle="modal"
+  data-bs-target="#createGroupModal"
+  class="btn btn-primary mt-2 mt-md-0 responsive-btn">
+  
+  {{'GROUP_MANAGEMENT.CREATE_GROUP'|translate}}
+  <i class="bi bi-plus-lg"></i>
+
+</button>
+
+    </div>
+    <app-create-group-modal  (groupCreated)="onGroupCreated($event )"></app-create-group-modal>
+         <h6 class="mt-4">{{'GROUP_MANAGEMENT.ALLGROUPS'|translate}}</h6>
+         <div> <!--  <span>{{ count }}</span> -->
+  <span class="text-muted">{{ 'GROUP_MANAGEMENT.GROUPS_TOTAL' | translate }}</span></div>
+  
+ <div class="row">
+  <div class="col-lg-4 col-md-6 mt-3" *ngFor="let group of allGroups">
+
+    <div class="card h-100 shadow-sm">
+      <div class="card-body d-flex flex-column">
+                        <h4 class="card-title">{{ group.name }}</h4>
+
+        <p class="card-text text-muted mb-1">
+          {{ group.description || 'GROUP_MANAGEMENT.DESCRIPTION_EMPTY' | translate }}
+        </p>
+        <div class="mt-2 mb-2 logos-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+  <circle cx="9" cy="7" r="4"></circle>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+</svg><span class="me-2 v_align"> {{group.studentsCount}}</span> 
+
+<ng-container *ngIf="getStudentStatus(group.id) as studentStatus">
+  <span class="status-badge status-active  me-2">
+  {{ studentStatus.Active }}   {{'Active'|translate}}
+  </span>
+  <span class="status-badge status-pending" >
+     {{ studentStatus.Pending }} {{'Pending'|translate}}
+  </span>
+</ng-container>
+</div> 
+        <p class="card-text text-muted mt-1 mb-1">
+          {{'GROUP_MANAGEMENT.CREATED'|translate}}: {{ group.CreatedDate | date }}
+        </p>
+
+        <div class="mt-auto">
+          <button (click)="viewGroup(group.id)" class="btn btn-primary w-100">
+            {{ 'GROUP_MANAGEMENT.VIEW_GROUP' | translate }}
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div><!-- end col -->
+         </div>
+        </div>
+    </div>
+   
+        <div class="pagination-wrapper">
+        <app-pagination 
+ *ngIf="allGroups.length > 0 && !isLoading"
+[collectionSize]="totalGroups"
+                [page]="page"
+                [pageSize]="pageSize"
+                [rotate]="true"
+                [ellipses]="true"
+                [boundaryLinks]="true"
+                (pageChange)="onPageChange($event)">
+</app-pagination>
+</div>
+</main>

@@ -1,0 +1,95 @@
+<main>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between gap-2 flex-column flex-md-row mb-3">
+                <div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <ng-container *ngIf="!isEditMode; else editName">
+                            <h3 class="m-0">{{ group?.name }}</h3>
+                        </ng-container>
+
+                        <ng-template #editName>
+                            <input type="text" class="form-control" [(ngModel)]="editableGroup.name">
+                        </ng-template>
+                        <div class="student-number-wrapper d-flex gap-2 align-items-center"><svg
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg><span class="fw-bold"> {{group?.studentsCount}}</span></div>
+                    </div>
+                    <ng-container *ngIf="!isEditMode; else editDesc">
+                        <p class="text-muted mt-2 mb-0">{{group?.description}}</p>
+
+                    </ng-container>
+
+                    <ng-template #editDesc>
+                        <input type="text" class="form-control mt-3 mb-1" [(ngModel)]="editableGroup.description">
+                    </ng-template>
+                </div>
+                <div class="d-flex gap-2 align-self-start mb-3 mb-md-0">
+                    <button *ngIf="isEditMode" class="btn btn-primary fw-bold" (click)="saveGroup()">
+                        {{'GROUP_MANAGEMENT.SAVE'|translate}}
+                    </button>
+                    <button class="btn btn-transparent fw-bold" (click)="toggleEditMode()">
+
+                        <i *ngIf="!isEditMode" class="bi bi-pencil me-1">
+                        </i>
+
+                        {{isEditMode
+                        ? ('GROUP_MANAGEMENT.CANCEL'|translate)
+                        : ('GROUP_MANAGEMENT.EDIT'|translate)}}
+
+                    </button>
+                    <button *ngIf="!isEditMode" (click)="deleteGroup(group.id)"
+                        class="btn btn-danger fw-bold"> <i class="bi bi-trash me-1"></i>  {{'GROUP_MANAGEMENT.DELETE'|translate}}</button>
+                </div>
+            </div>
+
+            <span class="text-muted me-3">{{'GROUP_MANAGEMENT.CREATED'|translate}}: {{group?.CreatedDate | date}}</span>
+            <span class="text-muted">{{'GROUP_MANAGEMENT.CREATED_BY'|translate}}: {{group?.createdBy}}</span>
+            <div class="d-flex justify-content-between gap-2 flex-column flex-md-row mt-4">
+                <div>
+                    <h5>{{'GROUP_MANAGEMENT.GROUP_MEMBERS'|translate}}</h5>
+                    <p class="m-0">{{'GROUP_MANAGEMENT.MANAGE_STUDENT_IN_THIS_GROUP'|translate}}</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button
+                      data-bs-toggle="modal"
+            data-bs-target="#AddStudentsGroupModal"
+             (click)="selectedGroup = group"
+                        class="btn btn-transparent fw-bold btn-max-height"><i class="bi bi-person-plus me-2"></i> {{'GROUP_MANAGEMENT.ADD_STUDENTS'|translate}}</button>
+                    <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#AllCoursesGroupModal"
+                          (click)="selectedGroup = group"
+                        class="btn btn-primary fw-bold btn-max-height"><i class="bi bi-journal-plus me-2"></i> {{'GROUP_MANAGEMENT.ASSIGN_TO_COURSE'|translate}}</button>
+                </div>
+            </div>    <app-add-students-modal [group]="selectedGroup"  (studentAdded)="onStudentAdded($event )"></app-add-students-modal>
+                <app-all-courses-modal  [group]="selectedGroup"></app-all-courses-modal>
+
+
+            <div class="d-flex flex-column gap-3 mt-4">
+                <div *ngFor="let student of group?.students" class="block-student">
+                    <div class="d-flex  flex-column  align-items-center  gap-2  flex-md-row ">
+                        <span class="me-2 fw-bold">{{student.user.email}}</span>
+
+                        <span class="status-badge align-self-start align-self-md-center" [ngClass]="{
+    'status-active': student.status === studentStatus.Active,
+    'status-pending': student.status === studentStatus.Pending,
+    'status-revoked': student.status === studentStatus.Revoked
+  }">{{'ENUM.STUDENT_STATUS.'+ (student.status | titlecase)|translate}}</span>
+                    </div>
+                    <div class="d-flex  flex-column align-items-center justify-content-between flex-md-row ">
+                        <span class="me-2 text-muted">{{student.registration_date | date}}</span>
+                        <button class="btn btn-danger" (click)="removeMember(student.id,group.id)">{{'GROUP_MANAGEMENT.REMOVE'|translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

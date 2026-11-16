@@ -1,0 +1,97 @@
+.main-container{
+display: flex;
+flex-direction: column;
+/* align-items: center;
+ */}
+.card{
+margin: 0;
+}
+.cards-container{
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+.card-img-top {
+  width: 100%;
+  height: 280px;       /* choose one height */
+  object-fit: cover;  /* important */
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+
+  img {
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+  }
+
+  h4 {
+    color: #5156be;
+    font-weight: 600;
+    margin-top: 16px;
+  }
+
+  p {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+  }
+}
+.pagination-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+      margin-top: 16px;
+    align-self: flex-start;
+}
+.text-truncate-2{
+  display: -webkit-box;
+  -webkit-line-clamp: 2; // number of lines to show
+  line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+}
+.btn-primary{
+  margin-top: auto;
+}
+.card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(81, 86, 190, 0.25);
+}
+.pagination-wrapper {
+  width: 100%;
+  padding: 12px 8px;
+  overflow-x: auto;          /* allow horizontal scroll if needed */
+}
+
+/* Prevent pagination from breaking */
+.pagination-wrapper app-pagination {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pagination-wrapper {
+    padding: 10px 5px;
+  }
+
+  .pagination-wrapper app-pagination {
+    transform: scale(0.9);       /* slightly smaller */
+    transform-origin: start;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .pagination-wrapper app-pagination {
+    transform: scale(0.8);
+  }
+}

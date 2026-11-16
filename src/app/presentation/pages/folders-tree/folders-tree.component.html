@@ -1,0 +1,236 @@
+
+    <h4 *ngIf="level === 0" class="card-title mb-3">
+          {{ 'MENUITEMS.SYSTEMSTRUCTURE.TEXT' | translate }}
+        </h4>
+
+<div *ngIf="level === 0" class="d-flex justify-content-end mb-3">
+  <button class="btn btn-primary btn-sm w-auto text-start d-flex align-items-center gap-1" (click)="addCategory()">
+    <i class="bx bx-plus"></i> {{ 'FOLDERS_TREE.ADD_CATEGORY' | translate }}
+  </button>
+</div>
+<ul class="list-unstyled minia-tree ">
+  <li *ngFor="let node of displayNodes">
+
+    <!-- FOLDER -->
+    <div *ngIf="node.type === 'folder'"
+          class="tree-item folder d-flex align-items-center"
+          [style.padding-left]="!isRtl ? (12 + level * 36) + 'px' : '12px'"
+          [style.padding-right]="isRtl ? (12 + level * 36) + 'px' : '12px'"
+          (click)="toggleFolder($event, node.id)">
+
+      <!-- chevron that indicates expand/collapse -->
+    <i class="fas me-2 arrow-icon"
+      *ngIf="node?.children?.length;else emptyIcon"
+      [ngClass]="isExpanded(node.id) ? 'fa-chevron-down' : (isRtl ? 'fa-chevron-left' : 'fa-chevron-right')"></i>
+
+      <ng-template #emptyIcon>
+        <i class="fas me-2 arrow-icon invisible"></i>
+      </ng-template>
+
+    <i class="far fa-folder me-2 folder-icon"
+      [ngClass]="isExpanded(node.id) ? 'fa-folder-open' : 'fa-folder'"
+      [class.fa-flip-horizontal]="isRtl"></i>
+
+  <span class="item-name" [title]="node.name">{{ node.name }}</span>
+
+  <small class="type-badge ms-2">{{ (level === 0 ? 'FOLDERS_TREE.CATEGORY' : 'FOLDERS_TREE.SUBCATEGORY') | translate }}</small>
+      <!-- Actions for folder: visible on sm+ -->
+      <div class="ms-auto actions d-none d-sm-flex align-items-center">
+        <button *ngIf="level === 0 && pendingDelete?.id !== node.id" (click)="$event.stopPropagation();addSubCategory(node.id)" type="button" class="action-btn add-folder-btn" [title]="'FOLDERS_TREE.ADD_SUBCATEGORY' | translate">
+          <i class="bx bx-folder-plus font-size-18"></i>
+        </button>
+        <button *ngIf="pendingDelete?.id !== node.id" (click)="$event.stopPropagation();addCourse(node)" type="button" class="action-btn add-file-btn" [title]="'FOLDERS_TREE.ADD_COURSE' | translate">
+          <i class="bx bx-file-blank font-size-18"></i>
+        </button>
+
+        <button *ngIf="pendingDelete?.id !== node.id" (click)="$event.stopPropagation();editCategory(node.id,level)" type="button" class="action-btn edit-btn" [title]="'FOLDERS_TREE.EDIT' | translate">
+          <i class="far fa-edit font-size-16"></i>
+        </button>
+        <button *ngIf="pendingDelete?.id !== node.id" (click)="$event.stopPropagation();deleteCategory(node,level)" type="button" class="action-btn delete-btn" [title]="'FOLDERS_TREE.DELETE' | translate">
+          <i class="far fa-trash-alt font-size-16"></i>
+        </button>
+      </div>
+
+      <!-- Overflow actions for xs: a single button that opens a small menu -->
+      <div class="ms-auto d-flex d-sm-none align-items-center" *ngIf="pendingDelete?.id !== node.id">
+  <div ngbDropdown  [container]="'body'" class="d-inline-block">
+    <button
+      class="btn btn-link p-0"
+      id="dropdownMenuButton"
+      ngbDropdownToggle
+      (click)="$event.stopPropagation()"
+    >
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+
+    <ul ngbDropdownMenu class="dropdown-menu-end">
+      <li *ngIf="level === 0">
+        <button class="dropdown-item" (click)="addSubCategory(node.id)">
+          <i class="bx bx-plus me-1"></i> {{ 'FOLDERS_TREE.ADD_SUBCATEGORY' | translate }}
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item" (click)="addCourse(node)">
+          <i class="bx bx-plus me-1"></i> {{ 'FOLDERS_TREE.ADD_COURSE' | translate }}
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item" (click)="editCategory(node.id,level)">
+          {{ 'FOLDERS_TREE.EDIT' | translate }}
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item text-danger" (click)="deleteCategory(node,level)">
+          {{ 'FOLDERS_TREE.DELETE' | translate }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+      <div *ngIf="pendingDelete?.id === node.id" class="delete-confirm mt-2" (click)="$event.stopPropagation()">
+        <div class="alert alert-warning py-2 mb-2">
+          <strong>{{ 'FOLDERS_TREE.DELETE_CONFIRM_TITLE' | translate }}</strong>
+          <div>{{ 'FOLDERS_TREE.DELETE_CONFIRM_DESC' | translate:{ name: node.name } }}</div>
+          <div *ngIf="pendingDelete?.hasChildren">{{ (pendingDelete?.warningKey || 'FOLDERS_TREE.DELETE_CONFIRM_BLOCKED_CHILDREN') | translate }}</div>
+        </div>
+        <div class="d-flex flex-column flex-sm-row gap-2 align-items-start">
+          <div class="d-flex align-items-center gap-2">
+            <span class="text-muted">{{ 'FOLDERS_TREE.DELETE_CONFIRM_CODE_LABEL' | translate }}</span>
+            <span class="badge bg-secondary">{{ pendingDelete?.code }}</span>
+          </div>
+          <input type="text"
+                 class="form-control"
+                 [placeholder]="'FOLDERS_TREE.DELETE_CONFIRM_INPUT_PLACEHOLDER' | translate"
+                 (input)="pendingDelete!.input = ($any($event.target).value || '')"
+                 [value]="pendingDelete?.input" />
+          <div class="d-flex gap-2">
+            <button type="button"
+                    class="btn btn-danger"
+                    [disabled]="deleteInProgress || pendingDelete?.input !== pendingDelete?.code"
+                    (click)="confirmDelete()">
+              {{ 'FOLDERS_TREE.DELETE_CONFIRM_DELETE' | translate }}
+            </button>
+            <button type="button" class="btn btn-light" (click)="cancelDelete()">
+              {{ 'FOLDERS_TREE.DELETE_CONFIRM_CANCEL' | translate }}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="pendingDelete?.showError && pendingDelete?.input !== pendingDelete?.code" class="text-danger mt-1">
+          {{ 'FOLDERS_TREE.DELETE_CONFIRM_ERROR_CODE' | translate }}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHILDREN -->
+    <ul *ngIf="node?.children?.length && isExpanded(node.id)"
+        class="nested-list">
+      <div class="tree-line" 
+           [style.left]="!isRtl ? (20 + level * 36) + 'px' : 'auto'"
+           [style.right]="isRtl ? (20 + level * 36) + 'px' : 'auto'"></div>
+      <app-folders-tree
+        [nodes]="node.children"
+        [level]="level + 1"
+        [sharedExpandedIds]="expandedSet"
+        (refreshTree)="onRefreshTree()">
+      </app-folders-tree>
+    </ul>
+
+    <!-- FILE -->
+    <div *ngIf="node.type === 'file'"
+         class="tree-item file d-flex align-items-center"
+         [style.padding-left]="!isRtl ? (12 + level * 36) + 'px' : '12px'"
+         [style.padding-right]="isRtl ? (12 + level * 36) + 'px' : '12px'">
+
+      <i class="fas me-2 arrow-icon invisible"></i>
+      <i class="far fa-file me-2 file-icon"></i>
+  <span class="item-name course-label" [title]="node.name" (click)="goToCourse(node.id, node.name)">{{ node.name }}</span>
+
+      <!-- Actions for file: visible on sm+ -->
+      <div class="ms-auto actions d-none d-sm-flex align-items-center">
+        <button *ngIf="pendingDelete?.id !== node.id" (click)="editCourse(node.id)" type="button" class="action-btn edit-btn" [title]="('FOLDERS_TREE.EDIT' | translate)">      
+          <i class="far fa-edit font-size-16"></i>
+        </button>
+        <button *ngIf="pendingDelete?.id !== node.id" (click)="deleteCourse(node)" type="button" class="action-btn delete-btn" [title]="('FOLDERS_TREE.DELETE' | translate)">
+          <i class="far fa-trash-alt font-size-16"></i>
+        </button>
+      </div>
+
+      <!-- Overflow actions for xs: single menu button -->
+      <div class="ms-auto d-flex d-sm-none align-items-center" *ngIf="pendingDelete?.id !== node.id">
+  <div ngbDropdown class="d-inline-block">
+    <button
+      class="btn btn-link p-0"
+      id="dropdownMenuButton"
+      ngbDropdownToggle
+      (click)="$event.stopPropagation()"
+    >
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+
+    <ul ngbDropdownMenu  class="dropdown-menu-end">
+      <li *ngIf="level === 0">
+        <button class="dropdown-item" (click)="addSubCategory(node.id)">
+          <i class="bx bx-plus me-1"></i> {{ 'FOLDERS_TREE.ADD_SUBCATEGORY' | translate }}
+        </button>
+      </li>
+     
+      <li>
+        <button class="dropdown-item v" (click)="editCourse(node.id)">
+          {{ 'FOLDERS_TREE.EDIT' | translate }}
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item text-danger" (click)="deleteCourse(node)">
+          {{ 'FOLDERS_TREE.DELETE' | translate }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Delete confirmation for file
+
+      <div *ngIf="pendingDelete?.id === node.id" class="delete-confirm mt-2">
+        <div class="alert alert-warning py-2 mb-2">
+          <strong>{{ 'FOLDERS_TREE.DELETE_CONFIRM_TITLE' | translate }}</strong>
+          <div>{{ 'FOLDERS_TREE.DELETE_CONFIRM_DESC' | translate:{ name: node.name } }}</div>
+          <div *ngIf="pendingDelete?.hasChildren">{{ (pendingDelete?.warningKey || 'FOLDERS_TREE.DELETE_CONFIRM_BLOCKED_CHILDREN') | translate }}</div>
+        </div>
+        <div class="d-flex flex-column flex-sm-row gap-2 align-items-start">
+          <div class="d-flex align-items-center gap-2">
+            <span class="text-muted">{{ 'FOLDERS_TREE.DELETE_CONFIRM_CODE_LABEL' | translate }}</span>
+            <span class="badge bg-secondary">{{ pendingDelete?.code }}</span>
+          </div>
+          <input type="text"
+                 class="form-control"
+                 [placeholder]="'FOLDERS_TREE.DELETE_CONFIRM_INPUT_PLACEHOLDER' | translate"
+                 (input)="pendingDelete!.input = ($any($event.target).value || '')"
+                 [value]="pendingDelete?.input" />
+          <div class="d-flex gap-2">
+            <button type="button"
+                    class="btn btn-danger"
+                    [disabled]="deleteInProgress || pendingDelete?.input !== pendingDelete?.code"
+                    (click)="confirmDelete()">
+              {{ 'FOLDERS_TREE.DELETE_CONFIRM_DELETE' | translate }}
+            </button>
+            <button type="button" class="btn btn-light" (click)="cancelDelete()">
+              {{ 'FOLDERS_TREE.DELETE_CONFIRM_CANCEL' | translate }}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="pendingDelete?.showError && pendingDelete?.input !== pendingDelete?.code" class="text-danger mt-1">
+          {{ 'FOLDERS_TREE.DELETE_CONFIRM_ERROR_CODE' | translate }}
+        </div>
+      </div>
+   -->
+
+    </div>
+
+  </li>
+</ul>
+
+

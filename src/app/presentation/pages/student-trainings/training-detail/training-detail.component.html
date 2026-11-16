@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-12">
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="card">
+      <div class="card-body text-center py-5">
+        <app-loading-spinner2></app-loading-spinner2>
+      </div>
+    </div>
+
+    <!-- Detail Container -->
+    <ng-container *ngIf="trainingDetail$ | async as detail; else emptyOrError">
+      <div *ngIf="!isLoading">
+
+        <div class="card training-summary-card mb-4">
+          <div class="card-body p-4">
+            <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+              <div>
+                <h4 class="mb-2 fw-semibold text-dark">{{ detail.exam_name }}</h4>
+                <div class="training-course-meta text-muted d-flex align-items-center gap-2">
+                  <i-feather name="book-open" class="icon-xs"></i-feather>
+                  <span>{{ detail.course_name }}</span>
+                </div>
+              </div>
+
+              <button
+                class="training-back-button btn btn-outline-primary btn-sm fw-semibold d-flex align-items-center gap-1"
+                (click)="goBack()">
+                <i-feather name="arrow-right" class="icon-xs rtl-flip"></i-feather>
+                {{ 'training.BACK_TO_TRAININGS' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <i-feather name="clock" class="icon-sm text-primary"></i-feather>
+                <h5 class="mb-0 fw-semibold">{{ 'training.ATTEMPT_HISTORY' | translate }}</h5>
+              </div>
+              <div class="text-muted small">
+                {{ 'training.TOTAL_ATTEMPTS_LABEL' | translate: { count: detail.total_attempts } }}
+              </div>
+            </div>
+
+            <div *ngIf="detail.attempts.length === 0" class="text-center py-5 text-muted">
+              <i-feather name="inbox" class="icon-lg mb-3 opacity-50"></i-feather>
+              <p class="mb-0">{{ 'training.NO_ATTEMPTS_YET' | translate }}</p>
+            </div>
+
+            <ng-template #attemptActions let-attempt>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                [disabled]="!attempt.exam_attempt_id"
+                (click)="viewAttemptDetail(attempt)">
+                {{ 'training.VIEW_DETAILS' | translate }}
+              </button>
+            </ng-template>
+
+            <app-data-table
+              *ngIf="detail.attempts.length > 0"
+              [columns]="attemptColumns"
+              [data$]="attempts$"
+              [totalRecords]="totalAttemptRecords"
+              [tableService]="tableService"
+              [actionsTemplate]="attemptActions"
+              [isLoading]="isLoading"
+              [showSearch]="false"
+              [showPagination]="false"
+              [rowClass]="attemptRowClass">
+            </app-data-table>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <!-- Error / Empty State -->
+    <ng-template #emptyOrError>
+      <div *ngIf="!isLoading" class="card">
+        <div class="card-body text-center py-5 text-muted">
+          <i-feather name="alert-circle" class="icon-lg mb-3 opacity-50"></i-feather>
+          <p>{{ 'training.NO_TRAININGS' | translate }}</p>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

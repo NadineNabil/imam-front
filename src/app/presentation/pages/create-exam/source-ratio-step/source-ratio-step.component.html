@@ -1,0 +1,89 @@
+<div [formGroup]="examForm" *ngIf="!loading">
+  <div class="source-ratio-step">
+    <h5>{{ 'EXAMS.SOURCE_RATIO_STEP.TITLE' | translate }}</h5>
+    <p class="text-muted">{{ 'EXAMS.SOURCE_RATIO_STEP.DESCRIPTION' | translate }}</p>
+
+    <div class="mt-3 ">
+      <input type="range" class="form-range" min="0" max="100"  [disabled]="!hasKnowledgeSource" step="1" [value]="aiQuestionRatio"
+        [style.--ratio-percent.%]="aiQuestionRatio"
+        (input)="onRatioInput('aiQuestionRatio', $any($event.target).value)">
+    </div>
+    <div class="w-100 d-flex justify-content-between mb-2">
+      <span class="ai-text">{{aiQuestionRatio}}% {{ 'EXAMS.SOURCE_RATIO_STEP.AI' | translate }}</span>
+      <span  class="source-text text-muted">{{sourceMaterialRatio}}% {{ 'EXAMS.SOURCE_RATIO_STEP.SOURCE' | translate }}</span>
+    </div>
+
+    <div class="row g-3 align-items-start">
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex gap-2 align-items-center  mb-2">
+              <div class="icon-container">
+<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.21063 9.68766C6.15483 9.47136 6.04209 9.27397 5.88414 9.11602C5.72619 8.95807 5.5288 8.84533 5.3125 8.78953L1.47813 7.80078C1.41271 7.78221 1.35513 7.74281 1.31413 7.68856C1.27314 7.6343 1.25095 7.56816 1.25095 7.50016C1.25095 7.43215 1.27314 7.36601 1.31413 7.31175C1.35513 7.2575 1.41271 7.2181 1.47813 7.19953L5.3125 6.21016C5.52872 6.15441 5.72606 6.04176 5.884 5.88393C6.04195 5.7261 6.15473 5.52884 6.21063 5.31266L7.19938 1.47828C7.21776 1.4126 7.25712 1.35474 7.31145 1.31353C7.36579 1.27231 7.43211 1.25 7.50031 1.25C7.56851 1.25 7.63484 1.27231 7.68918 1.31353C7.74351 1.35474 7.78287 1.4126 7.80125 1.47828L8.78938 5.31266C8.84517 5.52895 8.95791 5.72634 9.11586 5.88429C9.27382 6.04224 9.47121 6.15498 9.6875 6.21078L13.5219 7.19891C13.5878 7.21709 13.646 7.25641 13.6874 7.31083C13.7288 7.36525 13.7513 7.43176 13.7513 7.50016C13.7513 7.56855 13.7288 7.63507 13.6874 7.68948C13.646 7.7439 13.5878 7.78322 13.5219 7.80141L9.6875 8.78953C9.47121 8.84533 9.27382 8.95807 9.11586 9.11602C8.95791 9.27397 8.84517 9.47136 8.78938 9.68766L7.80063 13.522C7.78225 13.5877 7.74289 13.6456 7.68855 13.6868C7.63421 13.728 7.56789 13.7503 7.49969 13.7503C7.43149 13.7503 7.36516 13.728 7.31083 13.6868C7.25649 13.6456 7.21713 13.5877 7.19875 13.522L6.21063 9.68766Z" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.5 1.875V4.375" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.75 3.125H11.25" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.5 10.625V11.875" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.125 11.25H1.875" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+            <h5 class="card-title m-0">{{ 'EXAMS.SOURCE_RATIO_STEP.AI_GENERATED_QUESTIONS' | translate }}</h5></div>
+            <p class="card-text mb-2" style="font-size: 12px">
+              {{ 'EXAMS.SOURCE_RATIO_STEP.AI_GENERATED_QUESTIONS_DESC' | translate }}
+            </p>
+
+
+            <div class="input-group w-100">
+              <input type="number" class="form-control" step="1" min="0" max="100"  formControlName="aiQuestionRatio"
+                (input)="onRatioInput('aiQuestionRatio', $any($event.target).value)">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex gap-2 align-items-center mb-2"><div class="icon-container">
+<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.5 4.375V13.125" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.875 11.25C1.70924 11.25 1.55027 11.1842 1.43306 11.0669C1.31585 10.9497 1.25 10.7908 1.25 10.625V2.5C1.25 2.33424 1.31585 2.17527 1.43306 2.05806C1.55027 1.94085 1.70924 1.875 1.875 1.875H5C5.66304 1.875 6.29893 2.13839 6.76777 2.60723C7.23661 3.07607 7.5 3.71196 7.5 4.375C7.5 3.71196 7.76339 3.07607 8.23223 2.60723C8.70107 2.13839 9.33696 1.875 10 1.875H13.125C13.2908 1.875 13.4497 1.94085 13.5669 2.05806C13.6842 2.17527 13.75 2.33424 13.75 2.5V10.625C13.75 10.7908 13.6842 10.9497 13.5669 11.0669C13.4497 11.1842 13.2908 11.25 13.125 11.25H9.375C8.87772 11.25 8.40081 11.4475 8.04917 11.7992C7.69754 12.1508 7.5 12.6277 7.5 13.125C7.5 12.6277 7.30246 12.1508 6.95083 11.7992C6.59919 11.4475 6.12228 11.25 5.625 11.25H1.875Z" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+            <h5 class="card-title m-0">{{ 'EXAMS.SOURCE_RATIO_STEP.FROM_SOURCE_MATERIAL' | translate }}</h5></div>
+            <p class="card-text  mb-2" style="font-size: 12px">
+              {{ 'EXAMS.SOURCE_RATIO_STEP.FROM_SOURCE_MATERIAL_DESC' | translate }}
+            </p>
+
+
+            <div class="input-group w-100">
+              <input type="number" class="form-control" step="1" min="0" max="100"   formControlName="sourceMaterialRatio"
+                (input)="onRatioInput('sourceMaterialRatio', $any($event.target).value)">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<div class="example-container"     [style.background-color]="aiQuestionRatio === 0 ? 'var(--bs-light)' : 'var(--bs-sidebar-bg)'"  [style.color]="aiQuestionRatio === 0 ? 'inherit' : 'var(--bs-sidebar-menu-item-active-color)'">
+  <p class="m-0" *ngIf="aiQuestionRatio !== 100 && aiQuestionRatio !== 0">
+     <strong>{{ 'EXAMS.SOURCE_RATIO_STEP.EXAMPLE' | translate }}</strong>
+    {{ 'EXAMS.SOURCE_RATIO_STEP.EXAMPLE_FOR_AN_OBJECTIVE_WITH' | translate }}
+   {{totalQuestions}} {{ 'EXAMS.SOURCE_RATIO_STEP.QUESTIONS' | translate }}
+    —
+    <strong> {{ aiQuestions }} {{ 'EXAMS.SOURCE_RATIO_STEP.WILL_BE_AI_GENERATED' | translate }}</strong> {{ 'EXAMS.SOURCE_RATIO_STEP.AND' | translate }}
+    <strong> {{ sourceQuestions }} {{ 'EXAMS.SOURCE_RATIO_STEP.WILL_COME_FROM_SOURCE_MATERIAL' | translate }}</strong>
+  </p>
+  <p class="m-0" *ngIf="aiQuestionRatio === 100">
+    {{ 'EXAMS.SOURCE_RATIO_STEP.ALL_QUESTIONS_WILL_BE' | translate }}<strong> {{ 'EXAMS.SOURCE_RATIO_STEP.FULLY_AI_GENERATED' | translate }}</strong> {{ 'EXAMS.SOURCE_RATIO_STEP.NO_SOURCE_MATERIAL_IS_REQUIRED' | translate }}
+  </p>
+  <p class="m-0" *ngIf="aiQuestionRatio === 0">{{ 'EXAMS.SOURCE_RATIO_STEP.ALL_QUESTIONS_WILL_BE_DRAWN' | translate }} <strong> {{ 'EXAMS.SOURCE_RATIO_STEP.ENTIRELY_FROM_SOURCE_MATERIAL' | translate }}</strong> {{ 'EXAMS.SOURCE_RATIO_STEP.AI_WILL_NOT_GENERATE_ANY_QUESTIONS' | translate }}
+</p>
+</div>
+
+</div>
+<div *ngIf="loading" class="d-flex justify-content-center align-items-center py-5">
+<app-loading-spinner [loadingText]="'EXAMS.LOADING_OBJECTIVE'"></app-loading-spinner>
+</div>

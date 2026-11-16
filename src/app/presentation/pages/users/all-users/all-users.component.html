@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">{{ 'USERS.ALL_USERS_TITLE' | translate }}</h4>
+    <p class="card-title-desc">{{ 'USERS.ALL_USERS_SUBTITLE' | translate }}</p>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3 mb-3">
+      <div class="col-md-3">
+        <label class="form-label small">{{ 'USERS.ROLE' | translate }}</label>
+        <ng-select [formControl]="roleFilter" [items]="roleOptions" bindLabel="label" bindValue="value" [clearable]="true" [searchable]="false" [placeholder]="'USERS.ROLE' | translate">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">{{ 'USERS.STATUS' | translate }}</label>
+        <ng-select [formControl]="statusFilter" [items]="statusOptions" bindLabel="label" bindValue="value" [multiple]="true" [clearable]="true" [searchable]="false" [placeholder]="'USERS.STATUS' | translate">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">{{ 'USERS.CATEGORY' | translate }}</label>
+        <ng-select [formControl]="categoryFilter" [items]="categoryOptions" bindLabel="label" bindValue="value" [clearable]="true" [searchable]="false" [placeholder]="'USERS.CATEGORY' | translate">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.label | translate }}
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button type="button" class="btn btn-outline-secondary w-100" (click)="resetFilters()">
+          {{ 'COMMON.RESET' | translate }}
+        </button>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">{{ 'USERS.JOINED_FROM' | translate }}</label>
+        <div class="date-input-wrapper">
+        <input
+          type="text"
+          class="form-control flatpickr-input"
+          mwlFlatpickr
+          [convertModelValue]="true"
+          [dateFormat]="'Y-m-d'"
+          [formControl]="dateFromFilter"
+          [placeholder]="'USERS.JOINED_FROM' | translate" />
+              <span
+                *ngIf="dateFromFilter.value"
+                class="date-clear-icon"
+                (click)="clearDate(dateFromFilter)"
+                title="Clear">
+                &#x2715;
+              </span>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small">{{ 'USERS.JOINED_TO' | translate }}</label>
+                <div class="date-input-wrapper">
+
+        <input
+          type="text"
+          class="form-control flatpickr-input"
+          mwlFlatpickr
+          [convertModelValue]="true"
+          [dateFormat]="'Y-m-d'"
+          [formControl]="dateToFilter"
+          [placeholder]="'USERS.JOINED_TO' | translate" />
+                        <span
+                *ngIf="dateToFilter.value"
+                class="date-clear-icon"
+                (click)="clearDate(dateToFilter)"
+                title="Clear">
+                &#x2715;
+              </span>
+                </div>
+      </div>
+    </div>
+
+    <app-data-table
+      [columns]="columns"
+      [data$]="users$"
+      [tableService]="tableService"
+      [totalRecords]="totalUsers"
+      [isLoading]="isLoading"
+      [showSearch]="true"
+      [showPagination]="true"
+      [actionsTemplate]="actionsTemplate">
+    </app-data-table>
+
+    <ng-template #actionsTemplate let-user>
+      <div class="d-flex gap-2">
+<!--         <button
+          type="button"
+           *ngIf="user.status?.toLowerCase() === 'active'"
+          class="btn btn-sm btn-outline-primary"
+          [ngbTooltip]="'COMMON.VIEW' | translate"
+          [title]="'COMMON.VIEW' | translate"
+          placement="top"
+          (click)="viewUser(user)">
+          <i class="bx bx-show font-size-16 align-middle"></i>
+        </button> -->
+        <button
+          type="button"
+          class="btn btn-sm"
+          *ngIf="user.status?.toLowerCase() === 'active'"
+          
+          [ngClass]="user.status?.toLowerCase() === 'inactive' ? 'btn-outline-success' : 'btn-outline-warning'"
+          [ngbTooltip]="user.status?.toLowerCase() === 'inactive' ? ('COMMON.REACTIVATE' | translate) : ('COMMON.DEACTIVATE' | translate)"
+          [title]="user.status?.toLowerCase() === 'inactive' ? ('COMMON.REACTIVATE' | translate) : ('COMMON.DEACTIVATE' | translate)"
+          placement="top"
+          (click)="toggleUserStatus(user)">
+          <i class="bx" [ngClass]="user.status?.toLowerCase() === 'inactive' ? 'bx-user-check' : 'bx-user-x'" style="font-size: 16px; vertical-align: middle;"></i>
+        </button>
+     <button type="button" *ngIf="user.status?.toLowerCase() === 'revoked'" class="btn btn-sm btn-outline-success" [ngbTooltip]="'COMMON.ACTIVATE' | translate" [title]="'COMMON.ACTIVATE' | translate" placement="top" (click)="toggleUserStatus(user)">
+       <i class="bx bx-check-circle font-size-16 align-middle"></i> 
+      </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

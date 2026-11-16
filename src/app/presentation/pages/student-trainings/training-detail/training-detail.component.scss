@@ -1,0 +1,151 @@
+// ── Header Card ──────────────────────────────────────────────────────────────
+.training-header-card {
+  display: none;
+}
+
+.training-summary-card {
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.training-course-meta,
+.training-back-button {
+  line-height: 1.25;
+
+  i-feather {
+    display: block;
+    flex: 0 0 auto;
+  }
+}
+.training-course-meta span{
+  margin-bottom: -4px;
+}
+.training-back-button {
+  white-space: nowrap;
+}
+
+.status-badge {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+// ── Attempts List ─────────────────────────────────────────────────────────────
+.attempts-header {
+  background: #f8f9fa;
+  border-radius: 0;
+}
+
+.attempts-list {
+  .attempt-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: background 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: #f8f9ff;
+    }
+
+    &.attempt-latest {
+      background: linear-gradient(90deg, rgba(81, 86, 190, 0.05) 0%, transparent 100%);
+      border-inline-start: 4px solid #5156be;
+
+      &:hover {
+        background: linear-gradient(90deg, rgba(81, 86, 190, 0.08) 0%, transparent 100%);
+      }
+    }
+  }
+}
+
+:host ::ng-deep tr.attempt-latest {
+  background: rgba(81, 86, 190, 0.07) !important;
+  border-inline-start: 4px solid #5156be;
+}
+
+:host-context([dir="rtl"]) .attempts-list .attempt-row.attempt-latest {
+  background: linear-gradient(270deg, rgba(81, 86, 190, 0.05) 0%, transparent 100%);
+
+  &:hover {
+    background: linear-gradient(270deg, rgba(81, 86, 190, 0.08) 0%, transparent 100%);
+  }
+}
+
+:host ::ng-deep tr.attempt-latest td:first-child {
+  font-weight: 700;
+  color: #5156be;
+}
+
+// ── Attempt Number Circle ─────────────────────────────────────────────────────
+.attempt-number-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  background: #e9ecef;
+  color: #6c757d;
+  flex-shrink: 0;
+  transition: background 0.2s;
+
+  &.attempt-number-latest {
+    background: #5156be;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(81, 86, 190, 0.35);
+  }
+}
+
+.attempt-title {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.latest-badge {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+// ── Metrics ───────────────────────────────────────────────────────────────────
+.metric-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #adb5bd;
+  margin-bottom: 2px;
+}
+
+.metric-value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.icon-xs {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-lg {
+  width: 48px;
+  height: 48px;
+}
+
+// ── Score colours ─────────────────────────────────────────────────────────────
+.score-high  { color: #28a745; }
+.score-mid   { color: #fd7e14; }
+.score-low   { color: #dc3545; }
+
+// ── Badge helpers ─────────────────────────────────────────────────────────────
+.bg-primary-subtle { background-color: rgba(81, 86, 190, 0.12) !important; }
+.text-purple       { color: #5156be !important; }

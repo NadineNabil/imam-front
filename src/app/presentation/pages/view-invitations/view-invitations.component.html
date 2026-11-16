@@ -1,0 +1,148 @@
+
+<!-- Preloader from preloader.scss -->
+<div class="pace" [class.pace-active]="loading" [class.pace-inactive]="!loading">
+  <div class="pace-progress"></div>
+  <div class="pace-activity"></div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h4 class="mb-3">{{ 'COURSE.INVITATIONS.TITLE' | translate }}</h4>
+
+    <!--
+    <div class="mb-3 d-flex align-items-center">
+   
+
+      <label class="ms-3 me-2 mb-0">{{ 'COURSE.INVITATIONS.FILTER_STATUS' | translate }}</label>
+      <select class="form-select form-select-sm w-auto" 
+       (change)="onStatusChange($any($event.target).value)"
+       >
+        <option value="">{{ 'COURSE.INVITATIONS.FILTER_STATUS_ALL' | translate }}</option>
+        <option [value]="InvitationStatusEnum.PENDING">{{ 'INVITATIONS.INVITATION_STATUS.pending' | translate }}</option>
+        <option [value]="InvitationStatusEnum.ACCEPTED">{{ 'INVITATIONS.INVITATION_STATUS.accepted' | translate }}</option>
+    <embed src="" type="">    <option [value]="InvitationStatusEnum.FAILED">{{ 'INVITATIONS.INVITATION_STATUS.failed' | translate }}</option>
+        <option [value]="InvitationStatusEnum.EXPIRED">{{ 'INVITATIONS.INVITATION_STATUS.expired' | translate }}</option>
+        <option [value]="InvitationStatusEnum.CANCELED">{{ 'INVITATIONS.INVITATION_STATUS.canceled' | translate }}</option>
+    
+      </select>
+    </div>
+    
+    <input
+  type="text"
+  class="form-control form-control-sm w-auto"
+  placeholder="Filter by email"
+  (input)="onEmailChange($any($event.target).value)" />
+
+
+  <input
+  type="text"
+  class="form-control form-control-sm w-auto"
+  placeholder="Filter by student name"
+  (input)="onStudentNameChange($any($event.target).value)" />
+  -->
+
+  <div class="mb-3 d-flex align-items-center flex-wrap gap-2">
+
+  <!-- Status -->
+  <label class="mb-0 me-1">
+    {{ 'COURSE.INVITATIONS.FILTER_STATUS' | translate }}
+  </label>
+
+  <select class="form-select form-select-sm w-auto"
+          [(ngModel)]="filterStatus">
+    <option [value]="InvitationStatusEnum.ALL">
+      {{ 'COURSE.INVITATIONS.FILTER_STATUS_ALL' | translate }}
+    </option>
+
+    <option [value]="InvitationStatusEnum.PENDING">
+      {{ 'INVITATIONS.INVITATION_STATUS.pending' | translate }}
+    </option>
+
+    <option [value]="InvitationStatusEnum.ACCEPTED">
+      {{ 'INVITATIONS.INVITATION_STATUS.accepted' | translate }}
+    </option>
+
+
+    <option [value]="InvitationStatusEnum.EXPIRED">
+      {{ 'INVITATIONS.INVITATION_STATUS.expired' | translate }}
+    </option>
+
+    <option [value]="InvitationStatusEnum.CANCELED">
+      {{ 'INVITATIONS.INVITATION_STATUS.canceled' | translate }}
+    </option>
+  </select>
+
+  <!-- Course ID -->
+ 
+  <!-- Email -->
+  <input type="text"
+         class="form-control form-control-sm w-auto"
+         [placeholder]=" 'INVITATIONS.FILTER.FilterByEmail' | translate "
+         [(ngModel)]="email" />
+
+  <!-- Student Name -->
+  <input type="text"
+         class="form-control form-control-sm w-auto"
+         [placeholder]="'INVITATIONS.FILTER.FilterByName' | translate "
+         [(ngModel)]="studentName" />
+
+  <!-- Apply Button -->
+  <button class="btn btn-sm btn-primary ms-2"
+          (click)="applyAllFilters()">
+    {{ 'INVITATIONS.FILTER.applyFilter' | translate }}
+  </button>
+
+</div>
+
+    <div *ngIf="invitations.length === 0" class="text-muted">{{ 'COURSE.INVITATIONS.NO_INVITES' | translate }}</div>
+
+    <div *ngIf="invitations.length > 0" class="reponsive-table">
+      
+      <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+      style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+      >
+        <thead>
+          <tr>
+            <th>{{ 'COURSE.INVITATIONS.EMAIL' | translate }}</th>
+            <th>{{ 'COURSE.INVITATIONS.USER_STATUS_LABEL' | translate }}</th>
+            <th>{{ 'COURSE.INVITATIONS.INVITATION_STATUS_LABEL' | translate }}</th>
+            <th>{{ 'COURSE.INVITATIONS.SENT_AT' | translate }}</th>
+            <th>{{ 'COURSE.INVITATIONS.ASSIGNED_COURSE' | translate }}</th>
+            <th>{{ 'COURSE.INVITATIONS.Actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inv of invitations">
+            <td>{{ inv.email }}</td>
+            <td>{{ ('INVITATIONS.USER_STATUS.' + (inv.student_status )) | translate }}</td>
+            <td>{{ ('INVITATIONS.INVITATION_STATUS.' + (inv.invitation_status )) | translate }}</td>
+            <td>{{ inv.sent_at | date:'mediumDate' }}</td>
+            <td>{{ inv.course_name || courseName }}</td>
+            <td>
+                <div class="dropdown" ngbDropdown *ngIf="hasDropdownActions(inv)">
+                                <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
+                                    <i  class="bx bx-dots-horizontal-rounded"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                    <li>
+                                      <a *ngIf="inv.invitation_status == InvitationStatusEnum.PENDING || inv.invitation_status == InvitationStatusEnum.EXPIRED " class="dropdown-item resend" (click)="resend(inv.id)">{{ 'COURSE.INVITATIONS.ACTIONS.RESEND' | translate }}</a></li>
+                                    <li>
+                                          <a *ngIf="inv.student_status == studentStatusEnum.PENDING && inv.invitation_status != InvitationStatusEnum.CANCELED" class="dropdown-item cancel" (click)="cancel(inv.id)">{{ 'COURSE.INVITATIONS.ACTIONS.CANCEL' | translate }}</a>
+                                    </li>
+                                </ul>
+                </div>
+
+             
+           
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+  <ngb-pagination class="pagination-rounded" [collectionSize]="totalCount" (pageChange)="LoadInvitation($event)" [(page)]="pageNo" [pageSize]="pageSize">
+  </ngb-pagination>

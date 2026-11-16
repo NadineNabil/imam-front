@@ -1,0 +1,82 @@
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+                <h4 class="card-title">
+                    {{ (isEditMode ? 'CATEGORY.EDIT_CATEGORY' : 'CATEGORY.CREATE_CATEGORY') | translate }}
+                </h4>
+        </div>
+        <div class="card-body">
+            <form class="needs-validation" (ngSubmit)="addCategorySubmit()" [formGroup]="categoyForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="validationCustom01">{{'CATEGORY.CATEGORY_NAME'|translate}}
+                                <span class="required-astr">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="validationCustom01"
+                                formControlName="categoryName" placeholder="{{'CATEGORY.CATEGORY_NAME'|translate}}"
+                                [ngClass]="{'is-invalid':submit &&categoyForm.get('categoryName')?.errors ,'is-valid':submit && categoyForm.get('categoryName')?.valid}" />
+                            @if(submit && categoyForm.get('categoryName')?.errors){
+                            <div class="invalid-feedback">
+                                @if(categoyForm.get('categoryName')?.errors?.required){
+                                <span>{{'CATEGORY.CATEGORY_NAME_IS_REQUIRED'|translate}}</span>}
+                                @if(categoyForm.get('categoryName')?.errors?.pattern){
+                                <span>{{'CATEGORY.CATEGORY_NAME_INVALID_PATTERN'|translate}}</span>}
+                                @if(categoyForm.get('categoryName')?.errors?.minlength){
+                                <span>{{'CATEGORY.CATEGORY_NAME_MIN_LENGTH'|translate:{min:3} }}</span>}
+                                @if(categoyForm.get('categoryName')?.errors?.maxlength){
+                                <span>{{'CATEGORY.CATEGORY_NAME_MAX_LENGTH'|translate:{max:100} }}</span>}
+                            </div>}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="validationCustom02">{{'CATEGORY.CATEGORY_DESCRIPTION'|translate}}
+                                <span class="required-astr">*</span>
+                            </label>
+                                <input type="text" class="form-control" id="validationCustom02"
+                                    formControlName="categoryDescription"
+                                    placeholder="{{'CATEGORY.CATEGORY_DESCRIPTION'|translate}}"
+                                    [ngClass]="{'is-invalid': submit && categoyForm.get('categoryDescription')?.errors}">
+                                @if(submit && categoyForm.get('categoryDescription')?.errors){
+                                <div class="invalid-feedback">
+                                    @if(categoyForm.get('categoryDescription')?.errors?.required){
+                                    <span>{{'CATEGORY.CATEGORY_DESCRIPTION_IS_REQUIRED'|translate}}</span>}
+                                    @if(categoyForm.get('categoryDescription')?.errors?.pattern){
+                                    <span>{{'CATEGORY.CATEGORY_DESCRIPTION_INVALID_PATTERN'|translate}}</span>}
+                                    @if(categoyForm.get('categoryDescription')?.errors?.minlength){
+                                    <span>{{'CATEGORY.CATEGORY_DESCRIPTION_MIN_LENGTH'|translate:{min:3} }}</span>}
+                                    @if(categoyForm.get('categoryDescription')?.errors?.maxlength){
+                                    <span>{{'CATEGORY.CATEGORY_DESCRIPTION_MAX_LENGTH'|translate:{max:450} }}</span>}
+
+                                </div>}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <!-- <label for="validationCustom02">{{'CATEGORY.CATEGORY_IMAGE'|translate}}</label> -->
+
+                <!-- <ng-container *ngIf="!isEditMode || !loading">
+                    <app-file-upload
+                        [fileType]="'image/png,image/jpeg,image/gif,image/webp'"
+                        [maxFiles]="1"
+                        [MaxFilesExceededMessageKey]="exceededMessage"
+                        [imageUrl]="imagePreview"
+                        (fileAdded)="onAddingFile($event)">
+                    </app-file-upload>
+                </ng-container> -->
+
+                <div>
+                    <button class="btn btn-primary mt-3" type="submit"
+                        [disabled]="loading">
+                        {{ (isEditMode ? 'CATEGORY.UPDATE' : 'CATEGORY.SUBMIT') | translate }}
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end card -->
+</div>     
+

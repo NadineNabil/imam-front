@@ -1,0 +1,7 @@
+<div class="d-flex gap-4 flex-column"  [formGroup]="examForm">
+    <div>
+        <h5 class="mb-2">{{ 'EXAMS.REVIEW_EDIT_QUESTIONS' | translate }}</h5>
+        <p class="mb-0">{{'EXAMS.REVIEW_ALL_QUESTIONS'|translate}}</p>
+    </div> 
+<app-questions-form [examForm]="examForm" [learningObjectives]="objectives" [jsonFileData]="questions" [isEditMode]="true"></app-questions-form>
+</div>

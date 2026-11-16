@@ -1,0 +1,29 @@
+<div class="popup-overlay" *ngIf="show && !isBlocked">
+  <div class="popup-box">
+
+    <h3 class="popup-title text-danger">
+      <i class="bi bi-shield-exclamation"></i>
+      {{ 'violations.warning_title' | translate }}
+    </h3>
+    <p>{{ 'violations.warning_desc' | translate }}</p>
+
+    <p>
+      {{ 'violations.count' | translate }}: {{ counterViolation }}/10
+    </p>
+
+    <p class="violation-message">
+      {{ ( 'violations.' + violations[violations.length - 1].message) | translate }}
+    </p>
+
+    <div class="button-container">
+      <button  class="button btn secondary" (click)="return.emit()" *ngIf="!isBlocked">
+        {{ 'violations.return' | translate }}
+      </button>
+
+      <button class="button btn btn-danger" (click)="end.emit()" *ngIf="!isBlocked">
+        {{ 'violations.end' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

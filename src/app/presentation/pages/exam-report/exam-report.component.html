@@ -1,0 +1,160 @@
+
+
+<div class="report-container" *ngIf="report">
+
+  <!-- Summary -->
+  <div class="summary-card">
+
+    <h3>{{ 'EXAM_REPORT1.TITLE' | translate }}</h3>
+
+    <div class="row text-center mt-4">
+
+      <div class="col">
+      <div class="col d-flex justify-content-center">
+
+  <div class="score-donut-wrapper">
+
+    <svg class="score-donut" viewBox="0 0 36 36">
+
+      <path
+        class="circle-bg"
+        d="M18 2.0845
+           a 15.9155 15.9155 0 0 1 0 31.831
+           a 15.9155 15.9155 0 0 1 0 -31.831"/>
+
+      <path
+        class="circle-fill"
+        [attr.stroke-dasharray]="report.student_score + ',100'"
+        d="M18 2.0845
+           a 15.9155 15.9155 0 0 1 0 31.831
+           a 15.9155 15.9155 0 0 1 0 -31.831"/>
+
+    </svg>
+
+    <div class="donut-inner">
+      <span class="score">{{ report.student_score }}</span>
+    </div>
+
+  </div>
+
+</div> 
+        <small>{{ 'EXAM_REPORT1.SCORE' | translate }}</small>
+      </div>
+
+        <div class="col">
+        <h4>{{ report.total_questions }}</h4>
+        <small>{{ 'EXAM_REPORT1.TOTAL' | translate }}</small>
+      </div>
+
+      <div class="col">
+        <h4>{{ report.correct_answers }}</h4>
+        <small>{{ 'EXAM_REPORT1.CORRECT' | translate }}</small>
+      </div>
+
+      <div class="col">
+        <h4>{{ report.incorrect_answers }}</h4>
+        <small>{{ 'EXAM_REPORT1.INCORRECT' | translate }}</small>
+      </div>
+
+      <div class="col">
+        <h4>{{ report.unanswered_questions }}</h4>
+        <small>{{ 'EXAM_REPORT1.UNANSWERED' | translate }}</small>
+      </div>
+
+    
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Objectives -->
+
+  <div
+      *ngFor="let objective of report.studentExamObjectives"
+      class="objective-card mt-4">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+
+          <div>
+
+              <h5>{{ objective.ObjectiveName }}</h5>
+
+              <small>
+
+                  {{ objective.correct_answers }}
+
+                  /
+
+                  {{ objective.total_questions }}
+
+                  {{ 'EXAM_REPORT1.CORRECT' | translate }}
+
+              </small>
+
+          </div>
+
+          <div>
+
+              {{ (objective.correct_answers/objective.total_questions*100) | number:'1.0-0' }}%
+
+          </div>
+
+      </div>
+
+      <div class="progress mb-4">
+
+          <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="objective.correct_answers/objective.total_questions*100">
+          </div>
+
+      </div>
+
+
+
+      <!-- Questions -->
+
+      <div *ngFor="let question of objective.studentQuestionAnswers; let last = last"
+     class="question-card p-3">
+
+  <div class="d-flex justify-content-between align-items-start mb-3">
+
+    <strong class="flex-grow-1">
+      {{ question.QuestionText }}
+    </strong>
+
+    <i class="pi ms-3"
+       [ngClass]="question.IsCorrect
+          ? 'pi-check-circle text-success'
+          : 'pi-times-circle text-danger'">
+    </i>
+
+  </div>
+
+  <div class="mb-2">
+    <strong>{{ 'EXAM_REPORT1.YOUR_ANSWER' | translate }}</strong>
+
+    <div class="mt-1">
+      {{ question.StudentAnswer || ('EXAM_REPORT1.NO_ANSWER' | translate) }}
+    </div>
+  </div>
+
+  <div>
+    <strong>{{ 'EXAM_REPORT1.CORRECT_ANSWER' | translate }}</strong>
+
+    <div class="mt-1">
+      {{ question.CorrectAnswer || '-' }}
+    </div>
+  </div>
+
+  <!-- Separator -->
+  <hr class="my-4" *ngIf="!last">
+
+</div>
+
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+@import '~dropzone/dist/min/dropzone.min.css';
+
+
+.dropzone-wrapper{
+
+    margin: 2% 0;
+    padding: 3% 0;
+    border-bottom: 1px  #ccc dashed;
+}
+::ng-deep .dz-remove {
+  color: #dc3545;
+  font-weight: 600;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  z-index: 20;
+}
+::ng-deep .dz-remove:hover {
+  color: #a71d2a;
+  text-decoration: none;
+}
+::ng-deep .hide-dz-message-dz-text dropzone .dz-message .dz-text {
+  opacity: 0.1;
+}
+ @media (max-width: 576px) {
+
+    .save-continue{
+width: 100%;
+}
+
+}

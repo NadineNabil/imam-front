@@ -1,0 +1,364 @@
+mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container{
+background-color: transparent;
+}
+
+mat-sidenav {
+  width: 200px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  background-color: #ECEFFB; /* or any color you like */
+}
+
+
+
+/* Push content to match nav width */
+:dir(ltr) mat-sidenav-content {
+  margin-left: 200px!important;
+  transition: margin-left 0.3s ease;
+  margin-right: 0!important;
+
+}
+
+/* Adjust when collapsed */
+:dir(ltr) mat-sidenav-content.content-collapsed {
+  margin-left: 50px!important;
+  margin-right:0!important;
+  overflow: hidden;
+ 
+}
+
+
+/* Push content to match nav width */
+:dir(rtl) mat-sidenav-content {
+  margin-right: 200px!important;
+  transition: margin-left 0.3s ease;
+  margin-left: 0!important;
+
+}
+
+/* Adjust when collapsed */
+:dir(rtl) mat-sidenav-content.content-collapsed {
+  margin-right: 50px!important;
+  margin-left:0!important;
+
+}
+
+
+#main{
+/*   height: 100%;
+ */  padding: 16px 16px 16px 16px;
+border-radius: 24px;
+background-color: var(--bs-sidebar-bg);
+border: 1px solid var(--csk-7747-c-1100, #E3D9F2);
+margin-bottom: 25px;
+
+}
+.loadingMain{
+  height: 100%;
+
+}
+mat-sidenav.collapsed {
+  width: 60px; /* Or whatever width you want when collapsed */
+  border: none;
+
+}
+
+
+:dir(ltr) #closebtn{
+  transform: scaleX(1);
+}
+
+
+:dir(rtl) #closebtn{
+  transform: scaleX(-1);
+}
+
+#onlyOnCompress{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+#openNavbtn{
+  cursor: pointer;
+}
+:dir(rtl) #openNavbtn{
+  transform: scaleX(-1);
+}
+
+.closebtn{
+  cursor: pointer;
+    margin: 1rem 0.5rem 0 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#avatar{
+  position: relative;
+  top: -20px;
+  padding: 0 0.8rem;
+  z-index: -1;
+}
+
+hr{
+  border: 1px #D7D7D7 solid;
+}
+
+#avatar.collapsed {
+  
+  
+  padding: 0 0.5rem;
+  top: 10px;
+}
+
+
+
+.topside{
+  height: 29vh;
+}
+
+#OnOpen{
+padding: 0 0.8rem;
+display: none;
+}
+
+#newchatBtn{
+  /* Frame 1984077222 */
+
+/* Auto layFchout */
+flex-direction: row;
+color:white;
+align-items: center;
+gap: 8px;
+text-align: start;
+width:100%;
+margin: auto;
+background:  var(--primary-color);
+border-radius: 8px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+}
+
+  .chatsBtn,.chat-item{
+  
+  display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  margin-top: 5px;
+  /* Auto layout */
+  text-align: start;
+  gap: 10px;
+  
+  width: 100%;
+  height: 44px;
+  
+  background: #FAFBFF;
+  border-right: 4px solid  var(--primary-color);
+  border-radius: 8px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  }
+  
+
+
+#lang{
+    /* Language */
+    margin: auto;
+    box-sizing: border-box;
+    text-align: center;
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    position: fixed;
+    bottom: 7vh;
+    
+    }
+    
+    .langbtn{
+    display: flex;
+    border: 1px solid #606060;
+    border-radius: 8px;
+      color: #979797;
+      width: 97%;
+      text-align: center;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+
+    }
+    
+    .ChatName{
+      /* Chat Bot */
+    
+    font-family: 'DIN';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    margin-top: 0.25rem;
+    color: #000000;
+    
+    }
+    
+    #chat-list{
+        h3{
+        padding: 5px;
+        font-family: 'DIN';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        margin:0.8rem 0 0.5rem 0;
+        /* identical to box height */
+        
+        color: #000000;
+        
+        }
+        }
+
+
+        .chat-item:hover {
+            background: #e3f2fd;
+        }
+        
+        .chat-item.active {
+            border-left: 3px solid #2196F3;
+        }
+        
+        .chat-item button {
+          
+            background: transparent;
+            border: none;
+            color: #666;
+            padding: 3px;
+        }
+        
+        .chat-item button:hover {
+            color: #f44336;
+        }
+  
+       small{
+        font-size: 0.6rem!important;
+       }
+  
+      
+  
+  
+       .chatlogtopImg{
+        width: 1.8rem;
+        margin: 0 0.2rem 1rem 0.2rem;
+       }
+  
+       #chat-sessions{
+            overflow-y:auto; 
+            height: 29vh;
+           }
+      
+
+           .content{
+           
+            height: 100%;
+/*            background-color:  #FAFAFB;
+ *//*            padding: 24px  24px  24px  24px;
+ */           }
+
+           .content1
+           {
+            line-height: 1.87rem;
+            padding: 1rem;
+            font-size: 1.13rem;
+           }
+
+
+      .purple-radio label {
+        color: var(--bs-primary);              /* Label text in purple */
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: bold;
+      }
+    
+      .purple-radio input[type="radio"] {
+        accent-color: var(--bs-primary);       /* Modern browsers */
+      }
+    
+      .purple-radio span {
+         color: var(--bs-sidebar-menu-item-active-color);
+              /* Just in case for span */
+      }
+
+
+   
+         #submitBtn{
+          width: 7rem;
+          height: 48px;
+          color: white;
+          
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 2px;
+          background: var(--bs-primary);
+          box-shadow: 0px 2px 7.5px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          font-weight: bold;
+          font-size: 1.13rem;
+          padding: 10px 114px;
+         }
+
+
+
+         .helloImg{
+          width: 10rem;
+         }
+
+
+
+
+
+//mobile 
+@media screen and (max-width: 767px) {
+ .helloImg{
+  width: 7rem;
+ }
+
+ .content1{
+  line-height: 1.5rem ;
+   padding: 0rem; 
+    font-size: 0.7rem;
+ }
+
+ #submitBtn{
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+ }
+
+ ul{
+  padding: 0 1rem!important;
+  margin-bottom: 0rem;
+ }
+
+
+}
+@media(max-width:768px){
+  .content{
+    padding: 0;
+  }
+  #main{
+border: none;
+  }
+}
+

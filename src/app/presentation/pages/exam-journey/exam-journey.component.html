@@ -1,0 +1,480 @@
+<header id="page-topbar mb-5">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a  class="logo logo-dark">
+                    <span class="logo-sm">
+                        <!--<img src="assets/images/logmini.svg" alt="" height="24" width="24"> -->
+                        <svg 
+  width="45" 
+  height="45" 
+  viewBox="0 0 272 273" 
+  fill="none" 
+  xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Blue horizontal bar -->
+  <rect x="50" y="128" width="118" height="12" fill="#39B7E8"/>
+
+  <!-- Logo letters -->
+  <text
+    x="100"
+    y="185"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="140"
+    font-weight="700"
+    fill="#111111">
+    a
+  </text>
+
+  <text
+    x="190"
+    y="185"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="140"
+    font-weight="400"
+    fill="#061A2B">
+    e
+  </text>
+
+</svg>
+
+                    </span>
+                    <span class="logo-lg">
+                         <img src="assets/images/Moga_Edu.svg" alt="" height="50">
+                    </span>
+                </a>
+
+                <a  class="logo logo-light">
+                    <span class="logo-sm">
+<!--                         <img src="assets/images/logmini.svg" alt="" height="24" width="24">
+ -->                                           
+   <svg 
+  width="45" 
+  height="45" 
+  viewBox="0 0 272 273" 
+  fill="none" 
+  xmlns="http://www.w3.org/2000/svg">
+
+  <!-- White circular background -->
+
+  <!-- Blue horizontal bar -->
+  <rect x="50" y="128" width="118" height="12" fill="#39B7E8"/>
+
+  <!-- Logo letters -->
+  <text
+    x="100"
+    y="185"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="140"
+    font-weight="700"
+    fill="#111111">
+    a
+  </text>
+
+  <text
+    x="190"
+    y="185"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="140"
+    font-weight="400"
+    fill="#061A2B">
+    e
+  </text>
+
+</svg>
+                    </span>
+                    <span class="logo-lg">
+                        <img src="assets/images/logoLight.svg" alt="" height="50">
+                    </span>
+                </a>
+            </div>
+ <!-- 
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn"
+                (click)="toggleMobileMenu($event)">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+
+           App Search-->
+            <!--             <form class="app-search d-none d-lg-block">
+                <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <button class="btn btn-primary" type="button"><i class="bx bx-search-alt align-middle"></i></button>
+                </div>
+            </form> -->
+        </div>
+
+        <div class="d-flex">
+
+            <div class="dropdown d-inline-block d-lg-none ms-2" ngbDropdown>
+                <!--                 <button type="button" class="btn header-item" id="page-header-search-dropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                    <i-feather name="search" class="icon-lg"></i-feather>
+                </button> -->
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                    aria-labelledby="page-header-search-dropdown" ngbDropdownMenu>
+
+                    <form class="p-3">
+                        <div class="form-group m-0">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search ..."
+                                    aria-label="Search Result">
+
+                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="dropdown d-inline-block" ngbDropdown>
+                <button type="button"
+                    class="btn header-item waves-effect"
+                    id="page-header-lang-dropdown"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    ngbDropdownToggle>
+                    <img *ngIf="languageService.getLanguage() === 'ar'" src="assets/images/ksa.png" alt="Arabic" class="me-1" height="16">
+                    <img *ngIf="languageService.getLanguage() !== 'ar'" src="assets/images/flags/us.jpg" alt="English" class="me-1" height="16">
+                    <span class="d-none d-xl-inline-block">{{ languageService.getLanguage() === 'ar' ? 'العربية' : 'English' }}</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                    @for (item of listLang; track $index) {
+                    <a href="javascript:void(0);" class="dropdown-item notify-item"
+                        (click)="setLanguage(item.text, item.lang, item.flag)">
+                        <img src="{{item.flag}}" alt="user-image" class="me-1 flagicons" [ngStyle]="{ height: item.lang == 'ar' ? '13px' : '13px' }">
+                        <span class="align-middle">{{item.text}}</span>
+                    </a>
+                    }
+                </div>
+            </div>
+
+          
+
+
+            <div class="dropdown d-inline-block" ngbDropdown>
+                <!--             <button type="button" class="btn header-item noti-icon position-relative"
+                    id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" ngbDropdownToggle>
+                    <i-feather name="bell" class="feather-grid icon-lg"></i-feather>
+                    <span class="badge bg-danger rounded-pill">5</span>
+                </button> -->
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                    aria-labelledby="page-header-notifications-dropdown" ngbDropdownMenu>
+                    <div class="p-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="m-0"> {{ 'HEADER.NOTIFICATIONS.TITLE' | translate}} </h6>
+                            </div>
+                            <div class="col-auto">
+                                <a href="javascript:void(0);" class="small text-reset text-decoration-underline"> {{
+                                    'HEADER.NOTIFICATIONS.VIEW_ALL' | translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="p-2 border-top d-grid">
+                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                            <i class="mdi mdi-arrow-right-circle me-1"></i> <span>{{
+                                'HEADER.NOTIFICATIONS.LOAD_MORE' | translate}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+                
+             <div class="dropdown d-inline-block" ngbDropdown>
+                <button type="button"
+                    class="person-cont btn header-item topbar-light bg-light-subtle border-start border-end"
+                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    ngbDropdownToggle>
+                    <!-- <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
+                        alt="Header Avatar"> -->
+                    <i class="bi bi-person-circle fs-3"></i>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium">{{Username}}</span>
+                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end"   placement="bottom-end" ngbDropdownMenu>
+                    <!-- item-->
+                      
+<a class="dropdown-item" href="javascript: void(0);" (click)="logout()"><i
+                            class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle" key="t-logout">{{ 'HEADER.LOGOUT' | translate }}</span></a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</header>
+
+<div class="journey-page" [attr.dir]="currentDirection">
+
+  <!-- Interactive State Switcher bar for testing the 3 design screens -->
+  <!-- <div class="state-switcher d-flex justify-content-end gap-2 mb-3">
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [class.active]="completedCount === 0"
+      (click)="setDemoState(0)">
+      حالة (0/3)
+    </button>
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [class.active]="completedCount === 1 && !exams[0].expanded"
+      (click)="setDemoState(1, false)">
+      حالة (1/3 - تقرير مغلق)
+    </button>
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [class.active]="completedCount === 1 && exams[0].expanded"
+      (click)="setDemoState(1, true)">
+      حالة (1/3 - تقرير مفتوح)
+    </button>
+  </div> -->
+
+  <!-- Progress Header Card -->
+  <div class="journey-header">
+    <div class="header-top d-flex justify-content-between align-items-start">
+      
+      <!-- Right Side (RTL): Journey Title -->
+      <div class="header-right">
+        <span class="journey-subtitle">{{ 'EXAM_JOURNEY.SUBTITLE' | translate }}</span>
+        <h2 class="journey-title" >
+          {{ getProgressLabel() }}
+        </h2>
+      </div>
+
+      <!-- Left Side (RTL): Counter -->
+      <div class="header-left text-start">
+        <div class="counter d-flex align-items-baseline gap-1 justify-content-end">
+           <span class="count-total">{{ exams.length }}/</span>
+          <span class="count-num">{{ completedCount }}</span>
+         
+        </div>
+        <div class="counter-label">{{ 'EXAM_JOURNEY.COMPLETED_TESTS' | translate }}</div>
+      </div>
+
+    </div>
+
+    <!-- Progress Line Track -->
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="progressPercent"></div>
+    </div>
+
+    <!-- Bottom Progress Labels -->
+    <div class="header-bottom d-flex justify-content-between align-items-center">
+      <span class="progress-text-center">{{ remainingCount }} {{ 'EXAM_JOURNEY.REMAINING' | translate }}</span>
+
+      <span class="progress-text-left">{{ progressPercent }}% {{ 'EXAM_JOURNEY.COMPLETED' | translate }}</span>
+    </div>
+  </div>
+
+  <!-- Journey Stepper -->
+  <div class="journey-stepper">
+    <ng-container *ngFor="let exam of exams; let i = index">
+      <div
+        class="step-item"
+        [class.done]="exam.done"
+        [class.active]="!isLocked(exam) && !exam.done"
+        [class.locked]="isLocked(exam)">
+        
+        <div class="circle">
+          <!-- Check icon when completed (custom circular check) -->
+          <svg *ngIf="exam.done" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.5341 6.66764C14.8385 8.16184 14.6215 9.71525 13.9193 11.0688C13.2171 12.4224 12.072 13.4943 10.6751 14.1058C9.27816 14.7174 7.71382 14.8315 6.24293 14.4292C4.77205 14.0269 3.48353 13.1326 2.59225 11.8953C1.70097 10.6579 1.26081 9.15246 1.34518 7.62989C1.42954 6.10733 2.03332 4.6597 3.05583 3.52842C4.07835 2.39714 5.45779 1.65059 6.96411 1.41327C8.47043 1.17595 10.0126 1.46221 11.3334 2.2243" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 7.33268L8 9.33268L14.6667 2.66602" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+          <!-- Status Icon when NOT completed -->
+          <ng-container *ngIf="!exam.done">
+            <!-- Brain SVG for IQ Assessment (User SVG) -->
+            <svg *ngIf="exam.name.includes('IQ')"  width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.50002 3.12467C7.50075 2.87468 7.45149 2.62708 7.35514 2.39642C7.25878 2.16575 7.11727 1.95668 6.93893 1.78151C6.7606 1.60633 6.54903 1.46859 6.31668 1.37637C6.08432 1.28416 5.83588 1.23934 5.58595 1.24455C5.33602 1.24976 5.08966 1.30489 4.86135 1.40671C4.63304 1.50852 4.4274 1.65496 4.25652 1.83742C4.08563 2.01987 3.95296 2.23466 3.8663 2.46914C3.77964 2.70362 3.74074 2.95306 3.75189 3.20279C3.38452 3.29725 3.04345 3.47407 2.75454 3.71986C2.46562 3.96565 2.23642 4.27396 2.08429 4.62145C1.93217 4.96893 1.86112 5.34647 1.87651 5.72549C1.8919 6.1045 1.99334 6.47504 2.17314 6.80904C1.857 7.06587 1.60841 7.39606 1.44898 7.77087C1.28955 8.14569 1.22411 8.55379 1.25837 8.95966C1.29262 9.36553 1.42553 9.75688 1.64552 10.0997C1.86551 10.4425 2.16593 10.7263 2.52064 10.9265C2.47684 11.2654 2.50298 11.6097 2.59745 11.9381C2.69191 12.2665 2.8527 12.5721 3.06988 12.8359C3.28706 13.0997 3.55602 13.3162 3.86015 13.472C4.16428 13.6278 4.49713 13.7196 4.83813 13.7417C5.17913 13.7639 5.52104 13.7159 5.84276 13.6007C6.16447 13.4855 6.45916 13.3056 6.70862 13.072C6.95807 12.8385 7.157 12.5563 7.29312 12.2428C7.42924 11.9294 7.49965 11.5914 7.50002 11.2497V3.12467Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.50001 3.12467C7.49927 2.87468 7.54853 2.62708 7.64489 2.39642C7.74124 2.16575 7.88275 1.95668 8.06109 1.78151C8.23943 1.60633 8.451 1.46859 8.68335 1.37637C8.9157 1.28416 9.16415 1.23934 9.41407 1.24455C9.664 1.24976 9.91036 1.30489 10.1387 1.40671C10.367 1.50852 10.5726 1.65496 10.7435 1.83742C10.9144 2.01987 11.0471 2.23466 11.1337 2.46914C11.2204 2.70362 11.2593 2.95306 11.2481 3.20279C11.6155 3.29725 11.9566 3.47407 12.2455 3.71986C12.5344 3.96565 12.7636 4.27396 12.9157 4.62145C13.0679 4.96893 13.1389 5.34647 13.1235 5.72549C13.1081 6.1045 13.0067 6.47504 12.8269 6.80904C13.143 7.06587 13.3916 7.39606 13.551 7.77087C13.7105 8.14569 13.7759 8.55379 13.7417 8.95966C13.7074 9.36553 13.5745 9.75688 13.3545 10.0997C13.1345 10.4425 12.8341 10.7263 12.4794 10.9265C12.5232 11.2654 12.497 11.6097 12.4026 11.9381C12.3081 12.2665 12.1473 12.5721 11.9301 12.8359C11.713 13.0997 11.444 13.3162 11.1399 13.472C10.8357 13.6278 10.5029 13.7196 10.1619 13.7417C9.8209 13.7639 9.47898 13.7159 9.15727 13.6007C8.83555 13.4855 8.54086 13.3056 8.29141 13.072C8.04195 12.8385 7.84302 12.5563 7.70691 12.2428C7.57079 11.9294 7.50037 11.5914 7.50001 11.2497V3.12467Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.375 8.125C8.85028 7.94041 8.39207 7.60437 8.05833 7.15938C7.72458 6.71438 7.53028 6.18042 7.5 5.625C7.46972 6.18042 7.27542 6.71438 6.94167 7.15938C6.60793 7.60437 6.14972 7.94041 5.625 8.125" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10.9994 4.0625C11.1507 3.80037 11.2362 3.50551 11.2488 3.20312" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75189 3.20312C3.76425 3.50546 3.8496 3.80031 4.00064 4.0625" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.1731 6.81C2.28743 6.71688 2.40978 6.63406 2.53872 6.5625" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.4612 6.5625C12.5902 6.63406 12.7125 6.71688 12.8269 6.81" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75 11.2502C3.31927 11.2504 2.8958 11.1393 2.52063 10.9277" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.4794 10.9277C12.1042 11.1393 11.6807 11.2504 11.25 11.2502" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- Book SVG for English Assessment (User SVG) -->
+            <svg *ngIf="exam.name.includes('English')"  width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 4.375V13.125" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1.875 11.25C1.70924 11.25 1.55027 11.1842 1.43306 11.0669C1.31585 10.9497 1.25 10.7908 1.25 10.625V2.5C1.25 2.33424 1.31585 2.17527 1.43306 2.05806C1.55027 1.94085 1.70924 1.875 1.875 1.875H5C5.66304 1.875 6.29893 2.13839 6.76777 2.60723C7.23661 3.07607 7.5 3.71196 7.5 4.375C7.5 3.71196 7.76339 3.07607 8.23223 2.60723C8.70107 2.13839 9.33696 1.875 10 1.875H13.125C13.2908 1.875 13.4497 1.94085 13.5669 2.05806C13.6842 2.17527 13.75 2.33424 13.75 2.5V10.625C13.75 10.7908 13.6842 10.9497 13.5669 11.0669C13.4497 11.1842 13.2908 11.25 13.125 11.25H9.375C8.87772 11.25 8.40081 11.4475 8.04917 11.7992C7.69754 12.1508 7.5 12.6277 7.5 13.125C7.5 12.6277 7.30246 12.1508 6.95083 11.7992C6.59919 11.4475 6.12228 11.25 5.625 11.25H1.875Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- Code SVG for Technical Assessment (User SVG) -->
+            <svg *ngIf="exam.name.includes('Concept')"  width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.25 10L13.75 7.5L11.25 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75 5L1.25 7.5L3.75 10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.0625 2.5L5.9375 12.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </ng-container>
+        </div>
+
+        <span class="step-label">{{ exam.name }}</span>
+      </div>
+
+      <div
+        class="step-line"
+        *ngIf="i < exams.length - 1"
+        [class.active]="exam.done">
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Exam Cards List -->
+  <div class="exam-list">
+    <div
+      *ngFor="let exam of exams; let i = index"
+      class="exam-card"
+      [class.done]="exam.done"
+      [class.active]="!exam.done && !isLocked(exam)"
+      [class.locked]="isLocked(exam)">
+
+      <!-- Card Header Top Row -->
+      <div class="card-top d-flex justify-content-between align-items-start">
+        
+        <!-- Status Badge on Left (RTL) -->
+        <div class="card-left order-2">
+          <span
+            class="status-badge"
+            [class.done]="exam.done"
+            [class.ready]="!exam.done && !isLocked(exam)"
+            [class.lock]="isLocked(exam)">
+            {{ exam.done ? ('EXAM_JOURNEY.STATUS.COMPLETED' | translate) : (isLocked(exam) ? ('EXAM_JOURNEY.STATUS.LOCKED' | translate) : ('EXAM_JOURNEY.STATUS.AVAILABLE' | translate)) }}
+          </span>
+        </div>
+
+        <!-- Info & Icon on Right (RTL) -->
+        <div class="card-right order-1 d-flex gap-3 align-items-start">
+
+
+          <div class="icon-box" [class.locked-icon]="isLocked(exam)">
+
+<svg *ngIf="isLocked(exam)"
+  width="22"
+  height="22"
+  viewBox="0 0 15 15"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Lock body -->
+  <rect
+    x="3.25"
+    y="6.25"
+    width="8.5"
+    height="6.5"
+    rx="1.5"
+    stroke="currentColor"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Shackle -->
+  <path
+    d="M5 6.25V4.75C5 3.37 6.12 2.25 7.5 2.25C8.88 2.25 10 3.37 10 4.75V6.25"
+    stroke="currentColor"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Keyhole -->
+  <circle
+    cx="7.5"
+    cy="9"
+    r="0.6"
+    fill="currentColor"/>
+
+  <path
+    d="M7.5 9.6V10.8"
+    stroke="currentColor"
+    stroke-width="1.25"
+    stroke-linecap="round"/>
+</svg>
+
+            <!-- Brain SVG for IQ Assessment -->
+            <svg  *ngIf="exam.name.includes('IQ') && !isLocked(exam)" width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.50002 3.12467C7.50075 2.87468 7.45149 2.62708 7.35514 2.39642C7.25878 2.16575 7.11727 1.95668 6.93893 1.78151C6.7606 1.60633 6.54903 1.46859 6.31668 1.37637C6.08432 1.28416 5.83588 1.23934 5.58595 1.24455C5.33602 1.24976 5.08966 1.30489 4.86135 1.40671C4.63304 1.50852 4.4274 1.65496 4.25652 1.83742C4.08563 2.01987 3.95296 2.23466 3.8663 2.46914C3.77964 2.70362 3.74074 2.95306 3.75189 3.20279C3.38452 3.29725 3.04345 3.47407 2.75454 3.71986C2.46562 3.96565 2.23642 4.27396 2.08429 4.62145C1.93217 4.96893 1.86112 5.34647 1.87651 5.72549C1.8919 6.1045 1.99334 6.47504 2.17314 6.80904C1.857 7.06587 1.60841 7.39606 1.44898 7.77087C1.28955 8.14569 1.22411 8.55379 1.25837 8.95966C1.29262 9.36553 1.42553 9.75688 1.64552 10.0997C1.86551 10.4425 2.16593 10.7263 2.52064 10.9265C2.47684 11.2654 2.50298 11.6097 2.59745 11.9381C2.69191 12.2665 2.8527 12.5721 3.06988 12.8359C3.28706 13.0997 3.55602 13.3162 3.86015 13.472C4.16428 13.6278 4.49713 13.7196 4.83813 13.7417C5.17913 13.7639 5.52104 13.7159 5.84276 13.6007C6.16447 13.4855 6.45916 13.3056 6.70862 13.072C6.95807 12.8385 7.157 12.5563 7.29312 12.2428C7.42924 11.9294 7.49965 11.5914 7.50002 11.2497V3.12467Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.50001 3.12467C7.49927 2.87468 7.54853 2.62708 7.64489 2.39642C7.74124 2.16575 7.88275 1.95668 8.06109 1.78151C8.23943 1.60633 8.451 1.46859 8.68335 1.37637C8.9157 1.28416 9.16415 1.23934 9.41407 1.24455C9.664 1.24976 9.91036 1.30489 10.1387 1.40671C10.367 1.50852 10.5726 1.65496 10.7435 1.83742C10.9144 2.01987 11.0471 2.23466 11.1337 2.46914C11.2204 2.70362 11.2593 2.95306 11.2481 3.20279C11.6155 3.29725 11.9566 3.47407 12.2455 3.71986C12.5344 3.96565 12.7636 4.27396 12.9157 4.62145C13.0679 4.96893 13.1389 5.34647 13.1235 5.72549C13.1081 6.1045 13.0067 6.47504 12.8269 6.80904C13.143 7.06587 13.3916 7.39606 13.551 7.77087C13.7105 8.14569 13.7759 8.55379 13.7417 8.95966C13.7074 9.36553 13.5745 9.75688 13.3545 10.0997C13.1345 10.4425 12.8341 10.7263 12.4794 10.9265C12.5232 11.2654 12.497 11.6097 12.4026 11.9381C12.3081 12.2665 12.1473 12.5721 11.9301 12.8359C11.713 13.0997 11.444 13.3162 11.1399 13.472C10.8357 13.6278 10.5029 13.7196 10.1619 13.7417C9.8209 13.7639 9.47898 13.7159 9.15727 13.6007C8.83555 13.4855 8.54086 13.3056 8.29141 13.072C8.04195 12.8385 7.84302 12.5563 7.70691 12.2428C7.57079 11.9294 7.50037 11.5914 7.50001 11.2497V3.12467Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.375 8.125C8.85028 7.94041 8.39207 7.60437 8.05833 7.15938C7.72458 6.71438 7.53028 6.18042 7.5 5.625C7.46972 6.18042 7.27542 6.71438 6.94167 7.15938C6.60793 7.60437 6.14972 7.94041 5.625 8.125" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10.9994 4.0625C11.1507 3.80037 11.2362 3.50551 11.2488 3.20312" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75189 3.20312C3.76425 3.50546 3.8496 3.80031 4.00064 4.0625" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.1731 6.81C2.28743 6.71688 2.40978 6.63406 2.53872 6.5625" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.4612 6.5625C12.5902 6.63406 12.7125 6.71688 12.8269 6.81" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75 11.2502C3.31927 11.2504 2.8958 11.1393 2.52063 10.9277" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.4794 10.9277C12.1042 11.1393 11.6807 11.2504 11.25 11.2502" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- Book SVG for English Assessment (User SVG) -->
+            <svg  *ngIf="exam.name.includes('English') && !isLocked(exam)"  width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 4.375V13.125" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1.875 11.25C1.70924 11.25 1.55027 11.1842 1.43306 11.0669C1.31585 10.9497 1.25 10.7908 1.25 10.625V2.5C1.25 2.33424 1.31585 2.17527 1.43306 2.05806C1.55027 1.94085 1.70924 1.875 1.875 1.875H5C5.66304 1.875 6.29893 2.13839 6.76777 2.60723C7.23661 3.07607 7.5 3.71196 7.5 4.375C7.5 3.71196 7.76339 3.07607 8.23223 2.60723C8.70107 2.13839 9.33696 1.875 10 1.875H13.125C13.2908 1.875 13.4497 1.94085 13.5669 2.05806C13.6842 2.17527 13.75 2.33424 13.75 2.5V10.625C13.75 10.7908 13.6842 10.9497 13.5669 11.0669C13.4497 11.1842 13.2908 11.25 13.125 11.25H9.375C8.87772 11.25 8.40081 11.4475 8.04917 11.7992C7.69754 12.1508 7.5 12.6277 7.5 13.125C7.5 12.6277 7.30246 12.1508 6.95083 11.7992C6.59919 11.4475 6.12228 11.25 5.625 11.25H1.875Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- Code SVG for Technical Assessment (User SVG) -->
+            <svg  *ngIf="exam.name.includes('Concepts') && !isLocked(exam)"  width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.25 10L13.75 7.5L11.25 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.75 5L1.25 7.5L3.75 10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.0625 2.5L5.9375 12.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="title-meta">
+            <h4 class="exam-name">{{ exam.name }}</h4>
+            <span class="exam-subtitle">{{ exam.subtitle }}</span>
+            <p class="exam-desc">{{ exam.description }}</p>
+            
+            <!-- <div class="exam-duration" *ngIf="exam.done && exam.completedDate">
+              {{ exam.completedDate }}
+            </div> -->
+            <!-- <div class="exam-duration" *ngIf="!exam.done">
+              {{ exam.duration }}
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Area: Pending & Available -->
+      <div class="card-action mt-3" *ngIf="!exam.done">
+        <button
+          *ngIf="!isLocked(exam)"
+          class="btn-start"
+          (click)="startExam(exam)">
+          {{ 'EXAM_JOURNEY.START' | translate }}
+        </button>
+
+        <div *ngIf="isLocked(exam)" class="locked-banner">
+          {{ 'EXAM_JOURNEY.COMPLETE_PREVIOUS' | translate }}
+        </div>
+      </div>
+
+      <!-- Action Area: Completed -->
+      <div class="card-action mt-3" *ngIf="exam.done">
+        <button
+          class="btn-report d-flex align-items-center justify-content-center gap-2"
+          (click)="toggleReport(exam)"
+          [style.background-color]="exam.expanded ? 'rgba(81, 86, 190, 0.18)' : 'white'"
+          
+          >
+          <span>{{ exam.expanded ? ('EXAM_JOURNEY.HIDE_REPORT' | translate) : ('EXAM_JOURNEY.SHOW_REPORT' | translate) }}</span>
+          <i-feather [name]="'chevron-up'" *ngIf="exam.expanded"></i-feather>
+          <i-feather [name]="'chevron-down'" *ngIf="!exam.expanded"></i-feather>
+        </button>
+
+        <!-- Detailed Report Section when expanded -->
+        <div class="report-wrapper" *ngIf="exam.expanded">
+          <app-exam-report [report]="exam.report"></app-exam-report>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

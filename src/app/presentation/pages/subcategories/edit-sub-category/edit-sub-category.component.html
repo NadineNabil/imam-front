@@ -1,0 +1,70 @@
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">
+        {{ 'SUBCATEGORY.EDIT_SUBCATEGORY' | translate }}
+      </h4>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submitForm()">
+
+      
+        <!-- Subcategory Name (EDITABLE) -->
+        <div class="mb-3">
+          <label>
+            {{ 'SUBCATEGORY.NAME' | translate }} 
+            <span
+              class="text-danger">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            formControlName="subCategoryName"
+            [class.is-invalid]=" form.get('subCategoryName')?.invalid"
+          />
+
+          <div *ngIf=" form.get('subCategoryName')?.errors" class="invalid-feedback">
+            <div *ngIf="form.get('subCategoryName')?.errors?.required || form.get('subCategoryName')?.errors?.whitespace">
+              {{ 'SUBCATEGORY.NAME_REQUIRED' | translate }}
+            </div>
+            <div *ngIf="form.get('subCategoryName')?.errors?.minlength">
+              {{ 'SUBCATEGORY.NAME_MIN_LENGTH' | translate }}
+            </div>
+            <div *ngIf="form.get('subCategoryName')?.errors?.maxlength">
+              {{ 'SUBCATEGORY.NAME_MAX_LENGTH' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label>{{ 'SUBCATEGORY.DESCRIPTION' | translate }} <span
+              class="text-danger">*</span></label>
+              <textarea class="form-control" formControlName="subCategoryDescription"
+                  rows="3"   
+                  [class.is-valid]="form.get('subCategoryDescription')?.valid && form.get('subCategoryDescription')?.touched"
+                  [class.is-invalid]="form.get('subCategoryDescription')?.invalid && (form.get('subCategoryDescription')?.dirty || form.get('subCategoryDescription')?.touched)"
+               
+                
+              ></textarea>
+              <div *ngIf="form.get('subCategoryDescription')?.errors?.required || form.get('subCategoryDescription')?.errors?.whitespace" class="invalid-feedback">
+                {{ 'SUBCATEGORY.DESCRIPTION_REQUIRED' | translate }}
+              </div>
+                <div *ngIf="form.get('subCategoryDescription')?.errors?.minlength" class="invalid-feedback">{{ 'SUBCATEGORY.DESCRIPTION_MIN_LENGTH' | translate }}</div>
+                    <div *ngIf="form.get('subCategoryDescription')?.errors?.maxlength" class="invalid-feedback">{{ 'SUBCATEGORY.DESCRIPTION_MAX_LENGTH' | translate }}</div>
+          
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit" [disabled]="loading">
+          {{ 'SUBCATEGORY.UPDATE' | translate }}
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>

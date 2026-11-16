@@ -1,0 +1,16 @@
+
+  
+  .bar {
+    flex: 1;
+    max-width: 1px;
+    border-radius: 1px;
+    transition: height 0.1s ease, background-color 0.5s ease;
+  }
+  
+  .record_time{
+    padding-right: 0.3rem;
+    padding-bottom: 0.25rem;
+  }
+::ng-deep wave {
+  overflow: hidden !important;
+}

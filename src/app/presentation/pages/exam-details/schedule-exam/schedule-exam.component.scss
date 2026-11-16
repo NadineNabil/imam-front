@@ -1,0 +1,14 @@
+svg{
+    margin-top: -2px;
+}
+.date{
+    width: 50%;
+}
+@media(max-width:768px){
+    .data-container{
+        flex-direction: column;
+    }
+    .date{
+        width: 100%;
+    }
+}

@@ -1,0 +1,39 @@
+.camera-dialog {
+  position: fixed;
+  top: 123px;
+  right: 16px;
+  width: 115px;
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+
+.controls {
+  text-align: center;
+  background: #111;
+  font-size: small;
+}
+
+button {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: lightgrey;
+}
+
+.close-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: transparent;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 50;
+}

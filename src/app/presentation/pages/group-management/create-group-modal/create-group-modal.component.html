@@ -1,0 +1,46 @@
+<div class="modal fade" id="createGroupModal" tabindex="-1"  (hide.bs.modal)="onHideModal()" (hidden.bs.modal)="resetForm()">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content" [formGroup]="groupForm">
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{'GROUP_MANAGEMENT.NEW_GROUP'|translate}}</h5>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal">
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label class="form-label">{{'GROUP_MANAGEMENT.NAME'|translate}} <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="name"/>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{'GROUP_MANAGEMENT.DESCRIPTION'|translate}}</label>
+          <textarea class="form-control" formControlName="description"></textarea>
+          <div *ngIf="groupForm.get('description')?.errors?.['minlength'] && groupForm.get('description')?.touched" class="text-danger">
+            {{'GROUP_MANAGEMENT.DESCRIPTION_MIN_LENGTH'|translate}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary"
+                data-bs-dismiss="modal" >
+          {{'GROUP_MANAGEMENT.CANCEL'|translate}}
+        </button>
+
+        <button class="btn btn-primary" [disabled]="groupForm.invalid" (click)="saveGroup()">
+         {{'GROUP_MANAGEMENT.SAVE'|translate}}
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="overlay" (click)="close()">
+    <div class="dialog" [@dialogAnim] (click)="$event.stopPropagation()">
+      <h2>{{ message }}</h2>
+      <p>{{ note }}</p>
+      
+      <div class="row pt-1">
+        <div class="col center">
+            <button class="button btn logoutBtn btn-danger" (click)="confirm()">{{ confimMsg }}</button>
+        </div>
+        <div class="col center">
+            <button class="button btn closeBtn22" (click)="close()">{{ cancelMsg }}</button>
+        </div>
+      </div>
+      
+     
+      
+    </div>
+  </div>

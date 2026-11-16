@@ -1,0 +1,681 @@
+<div class="report-container">
+  <div class="report-shell">
+
+    <header class="report-topbar">
+      <div class="report-topbar__brand">
+        <span class="report-topbar__icon" aria-hidden="true">
+          <i class="bx bx-bar-chart-alt-2"></i>
+        </span>
+        <div>
+          <h1>{{ 'REPORT.TITLE' | translate }}</h1>
+          <p id="breadcrumb">{{ 'REPORT.OVERVIEW' | translate }}</p>
+        </div>
+      </div>
+      <div class="report-topbar__meta">
+        <span class="report-badge report-badge--live">{{ 'REPORT.LIVE' | translate }}</span>
+        <span class="report-topbar__date">{{ 'REPORT.DATE' | translate }}</span>
+      </div>
+    </header>
+
+    <main class="report-content">
+
+      <section class="report-hero" id="overview">
+        <div class="report-hero__glow report-hero__glow--one"></div>
+        <div class="report-hero__glow report-hero__glow--two"></div>
+
+        <div class="report-hero__copy">
+          <span class="report-eyebrow">{{ 'REPORT.EYEBROW' | translate }}</span>
+          <h2>{{ 'REPORT.HERO_TITLE' | translate }}</h2>
+          <p>{{ 'REPORT.HERO_DESC' | translate }}</p>
+        </div>
+
+        <div class="report-hero__stats">
+
+          <article class="report-stat">
+            <span class="report-stat__value" data-target="1250">1,250</span>
+            <span class="report-stat__label">
+              {{ 'REPORT.STAT_TRAINEES' | translate }}
+            </span>
+          </article>
+
+          <article class="report-stat">
+            <span class="report-stat__value" data-target="920">920</span>
+            <span class="report-stat__label">
+              {{ 'REPORT.STAT_ACTIVE' | translate }}
+            </span>
+          </article>
+
+          <article class="report-stat">
+            <span class="report-stat__value" data-target="78">78%</span>
+            <span class="report-stat__label">
+              {{ 'REPORT.STAT_COMPLETION' | translate }}
+            </span>
+          </article>
+
+          <article class="report-stat">
+            <span class="report-stat__value" data-target="146">146</span>
+            <span class="report-stat__label">
+              {{ 'REPORT.STAT_PROJECTS' | translate }}
+            </span>
+          </article>
+
+        </div>
+      </section>
+
+      <section class="report-journey" id="journey">
+        <div class="report-section-head">
+          <span class="report-section-head__badge">{{ 'REPORT.JOURNEY_BADGE' | translate }}</span>
+          <h3>{{ 'REPORT.JOURNEY_TITLE' | translate }}</h3>
+          <p>{{ 'REPORT.JOURNEY_DESC' | translate }}</p>
+        </div>
+
+        <div class="report-roadmap">
+          <div class="report-roadmap__track" aria-hidden="true"></div>
+          <div class="report-roadmap__stops">
+            <div class="report-stop" style="--accent: var(--phase-1)">
+              <div class="report-stop__dot"><span>01</span></div>
+              <p class="report-stop__name">{{ 'REPORT.STOP_01' | translate }}</p>
+            </div>
+            <div class="report-stop" style="--accent: var(--phase-2)">
+              <div class="report-stop__dot"><span>02</span></div>
+              <p class="report-stop__name">{{ 'REPORT.STOP_02' | translate }}</p>
+            </div>
+            <div class="report-stop" style="--accent: var(--phase-3)">
+              <div class="report-stop__dot"><span>03</span></div>
+              <p class="report-stop__name">{{ 'REPORT.STOP_03' | translate }}</p>
+            </div>
+            <div class="report-stop" style="--accent: var(--phase-4)">
+              <div class="report-stop__dot"><span>04</span></div>
+              <p class="report-stop__name">{{ 'REPORT.STOP_04' | translate }}</p>
+            </div>
+            <div class="report-stop" style="--accent: var(--phase-5)">
+              <div class="report-stop__dot"><span>05</span></div>
+              <p class="report-stop__name">{{ 'REPORT.STOP_05' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Charts & Key Percentages Section -->
+      <section class="report-analytics reveal" id="analytics">
+        <div class="report-section-head">
+          <span class="report-section-head__badge">{{ 'REPORT.ANALYTICS_BADGE' | translate }}</span>
+          <h3>{{ 'REPORT.ANALYTICS_TITLE' | translate }}</h3>
+          <p>{{ 'REPORT.ANALYTICS_DESC' | translate }}</p>
+        </div>
+
+        <div class="report-analytics__grid">
+          
+          <!-- Key Metric Percentage Cards -->
+          <div class="report-metrics-cards">
+            <div class="report-metric-card" style="--accent: var(--phase-1)">
+              <div class="report-metric-card__header">
+                <span class="report-metric-card__icon"><i class="bx bx-user-check"></i></span>
+                <span class="report-metric-card__trend positive"><i class="bx bx-trending-up"></i> +12%</span>
+              </div>
+              <span class="report-metric-card__val" data-target="98">98%</span>
+              <span class="report-metric-card__label">{{ 'REPORT.METRIC_1_LABEL' | translate }}</span>
+              <div class="report-metric-card__bar">
+                <div class="report-metric-card__fill" style="width: 98%; background: var(--phase-1)"></div>
+              </div>
+            </div>
+
+            <div class="report-metric-card" style="--accent: var(--phase-2)">
+              <div class="report-metric-card__header">
+                <span class="report-metric-card__icon"><i class="bx bx-badge-check"></i></span>
+                <span class="report-metric-card__trend positive"><i class="bx bx-trending-up"></i> +5.2%</span>
+              </div>
+              <span class="report-metric-card__val" data-target="85">84.5%</span>
+              <span class="report-metric-card__label">{{ 'REPORT.METRIC_2_LABEL' | translate }}</span>
+              <div class="report-metric-card__bar">
+                <div class="report-metric-card__fill" style="width: 84.5%; background: var(--phase-2)"></div>
+              </div>
+            </div>
+
+            <div class="report-metric-card" style="--accent: var(--phase-3)">
+              <div class="report-metric-card__header">
+                <span class="report-metric-card__icon"><i class="bx bx-book-open"></i></span>
+                <span class="report-metric-card__trend positive"><i class="bx bx-trending-up"></i> +8.7%</span>
+              </div>
+              <span class="report-metric-card__val" data-target="82">82%</span>
+              <span class="report-metric-card__label">{{ 'REPORT.METRIC_3_LABEL' | translate }}</span>
+              <div class="report-metric-card__bar">
+                <div class="report-metric-card__fill" style="width: 82%; background: var(--phase-3)"></div>
+              </div>
+            </div>
+
+            <div class="report-metric-card" style="--accent: var(--phase-4)">
+              <div class="report-metric-card__header">
+                <span class="report-metric-card__icon"><i class="bx bx-target-lock"></i></span>
+                <span class="report-metric-card__trend positive"><i class="bx bx-trending-up"></i> +6.4%</span>
+              </div>
+              <span class="report-metric-card__val" data-target="90">89.5%</span>
+              <span class="report-metric-card__label">{{ 'REPORT.METRIC_4_LABEL' | translate }}</span>
+              <div class="report-metric-card__bar">
+                <div class="report-metric-card__fill" style="width: 89.5%; background: var(--phase-4)"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparative Stage Chart Card -->
+          <div class="report-chart-card">
+            <div class="report-chart-card__head">
+              <div>
+                <h4>{{ 'REPORT.CHART_TITLE' | translate }}</h4>
+                <p>{{ 'REPORT.CHART_SUBTITLE' | translate }}</p>
+              </div>
+              <span class="report-badge report-badge--live">5 {{ 'REPORT.STAT_PHASES' | translate }}</span>
+            </div>
+
+            <div class="report-chart-bars">
+              <div class="report-chart-bar-item">
+                <div class="report-chart-bar-item__info">
+                  <span class="report-chart-bar-item__name">
+                    <span class="dot" style="background: var(--phase-1)"></span>
+                    {{ 'REPORT.STOP_01' | translate }}
+                  </span>
+                  <span class="report-chart-bar-item__val">98%</span>
+                </div>
+                <div class="report-chart-bar-item__track">
+                  <div class="report-chart-bar-item__fill" style="width: 98%; background: var(--phase-1)"></div>
+                </div>
+              </div>
+
+              <div class="report-chart-bar-item">
+                <div class="report-chart-bar-item__info">
+                  <span class="report-chart-bar-item__name">
+                    <span class="dot" style="background: var(--phase-2)"></span>
+                    {{ 'REPORT.STOP_02' | translate }}
+                  </span>
+                  <span class="report-chart-bar-item__val">84.5%</span>
+                </div>
+                <div class="report-chart-bar-item__track">
+                  <div class="report-chart-bar-item__fill" style="width: 84.5%; background: var(--phase-2)"></div>
+                </div>
+              </div>
+
+              <div class="report-chart-bar-item">
+                <div class="report-chart-bar-item__info">
+                  <span class="report-chart-bar-item__name">
+                    <span class="dot" style="background: var(--phase-3)"></span>
+                    {{ 'REPORT.STOP_03' | translate }}
+                  </span>
+                  <span class="report-chart-bar-item__val">82%</span>
+                </div>
+                <div class="report-chart-bar-item__track">
+                  <div class="report-chart-bar-item__fill" style="width: 82%; background: var(--phase-3)"></div>
+                </div>
+              </div>
+
+              <div class="report-chart-bar-item">
+                <div class="report-chart-bar-item__info">
+                  <span class="report-chart-bar-item__name">
+                    <span class="dot" style="background: var(--phase-4)"></span>
+                    {{ 'REPORT.STOP_04' | translate }}
+                  </span>
+                  <span class="report-chart-bar-item__val">89.5%</span>
+                </div>
+                <div class="report-chart-bar-item__track">
+                  <div class="report-chart-bar-item__fill" style="width: 89.5%; background: var(--phase-4)"></div>
+                </div>
+              </div>
+
+              <div class="report-chart-bar-item">
+                <div class="report-chart-bar-item__info">
+                  <span class="report-chart-bar-item__name">
+                    <span class="dot" style="background: var(--phase-5)"></span>
+                    {{ 'REPORT.STOP_05' | translate }}
+                  </span>
+                  <span class="report-chart-bar-item__val">94.5%</span>
+                </div>
+                <div class="report-chart-bar-item__track">
+                  <div class="report-chart-bar-item__fill" style="width: 94.5%; background: var(--phase-5)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="report-phases">
+
+        <!-- Stage 1 -->
+        <section class="report-phase reveal" id="phase-1" style="--accent: var(--phase-1)">
+          <article class="report-phase__card">
+            <header class="report-phase__head">
+              <div class="report-phase__index">01</div>
+              <div>
+                <span class="report-phase__eyebrow">{{ 'REPORT.PHASE_01_EYEBROW' | translate }}</span>
+                <h3>{{ 'REPORT.PHASE_01_TITLE' | translate }}</h3>
+              </div>
+            </header>
+            <p class="report-phase__desc">{{ 'REPORT.PHASE_01_DESC' | translate }}</p>
+            <ul class="report-phase__list">
+              <li>{{ 'REPORT.PHASE_01_L1' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_01_L2' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_01_L3' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_01_L4' | translate }}</li>
+            </ul>
+
+            <!-- Stage 1 Percentage Breakdown -->
+            <div class="report-stage-metrics">
+              <div class="report-stage-metrics__head">
+                <span class="report-stage-metrics__title">
+                  <i class="bx bx-pie-chart-alt-2"></i> {{ 'REPORT.STAGE_METRICS_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-stage-metrics__grid">
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P1_M1_LABEL' | translate }}</span>
+                    <strong>98%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 98%; background: var(--phase-1)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P1_M2_LABEL' | translate }}</span>
+                    <strong>95%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 95%; background: var(--phase-1)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P1_M3_LABEL' | translate }}</span>
+                    <strong>92%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 92%; background: var(--phase-1)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 1 KBIs -->
+            <div class="report-kbis">
+              <div class="report-kbis__head">
+                <span class="report-kbis__badge">
+                  <i class="bx bx-id-card"></i> {{ 'REPORT.KBI_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-kbis__grid">
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_01_KBI_1_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_01_KBI_1_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_01_KBI_1_DESC' | translate }}</p>
+                </div>
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_01_KBI_2_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_01_KBI_2_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_01_KBI_2_DESC' | translate }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Stage 2 -->
+        <section class="report-phase reveal" id="phase-2" style="--accent: var(--phase-2)">
+          <article class="report-phase__card">
+            <header class="report-phase__head">
+              <div class="report-phase__index">02</div>
+              <div>
+                <span class="report-phase__eyebrow">{{ 'REPORT.PHASE_02_EYEBROW' | translate }}</span>
+                <h3>{{ 'REPORT.PHASE_02_TITLE' | translate }}</h3>
+              </div>
+            </header>
+            <p class="report-phase__desc">{{ 'REPORT.PHASE_02_DESC' | translate }}</p>
+            <ul class="report-phase__list">
+              <li>{{ 'REPORT.PHASE_02_L1' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L2' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L3' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L4' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L5' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L6' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_02_L7' | translate }}</li>
+            </ul>
+
+            <!-- Stage 2 Percentage Breakdown -->
+            <div class="report-stage-metrics">
+              <div class="report-stage-metrics__head">
+                <span class="report-stage-metrics__title">
+                  <i class="bx bx-pie-chart-alt-2"></i> {{ 'REPORT.STAGE_METRICS_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-stage-metrics__grid">
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P2_M1_LABEL' | translate }}</span>
+                    <strong>88%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 88%; background: var(--phase-2)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P2_M2_LABEL' | translate }}</span>
+                    <strong>82%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 82%; background: var(--phase-2)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P2_M3_LABEL' | translate }}</span>
+                    <strong>75%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 75%; background: var(--phase-2)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 2 KBIs -->
+            <div class="report-kbis">
+              <div class="report-kbis__head">
+                <span class="report-kbis__badge">
+                  <i class="bx bx-badge-check"></i> {{ 'REPORT.KBI_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-kbis__grid">
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_02_KBI_1_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_02_KBI_1_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_02_KBI_1_DESC' | translate }}</p>
+                </div>
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_02_KBI_2_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_02_KBI_2_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_02_KBI_2_DESC' | translate }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Stage 3 -->
+        <section class="report-phase reveal" id="phase-3" style="--accent: var(--phase-3)">
+          <article class="report-phase__card">
+            <header class="report-phase__head">
+              <div class="report-phase__index">03</div>
+              <div>
+                <span class="report-phase__eyebrow">{{ 'REPORT.PHASE_03_EYEBROW' | translate }}</span>
+                <h3>{{ 'REPORT.PHASE_03_TITLE' | translate }}</h3>
+              </div>
+            </header>
+            <p class="report-phase__desc">{{ 'REPORT.PHASE_03_DESC' | translate }}</p>
+            <ul class="report-phase__list">
+              <li>{{ 'REPORT.PHASE_03_L1' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_03_L2' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_03_L3' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_03_L4' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_03_L5' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_03_L6' | translate }}</li>
+            </ul>
+
+            <!-- Stage 3 Percentage Breakdown -->
+            <div class="report-stage-metrics">
+              <div class="report-stage-metrics__head">
+                <span class="report-stage-metrics__title">
+                  <i class="bx bx-pie-chart-alt-2"></i> {{ 'REPORT.STAGE_METRICS_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-stage-metrics__grid">
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P3_M1_LABEL' | translate }}</span>
+                    <strong>82%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 82%; background: var(--phase-3)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P3_M2_LABEL' | translate }}</span>
+                    <strong>91%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 91%; background: var(--phase-3)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P3_M3_LABEL' | translate }}</span>
+                    <strong>84%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 84%; background: var(--phase-3)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 3 KBIs -->
+            <div class="report-kbis">
+              <div class="report-kbis__head">
+                <span class="report-kbis__badge">
+                  <i class="bx bx-award"></i> {{ 'REPORT.KBI_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-kbis__grid">
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_03_KBI_1_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_03_KBI_1_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_03_KBI_1_DESC' | translate }}</p>
+                </div>
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_03_KBI_2_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_03_KBI_2_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_03_KBI_2_DESC' | translate }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Stage 4 -->
+        <section class="report-phase reveal" id="phase-4" style="--accent: var(--phase-4)">
+          <article class="report-phase__card">
+            <header class="report-phase__head">
+              <div class="report-phase__index">04</div>
+              <div>
+                <span class="report-phase__eyebrow">{{ 'REPORT.PHASE_04_EYEBROW' | translate }}</span>
+                <h3>{{ 'REPORT.PHASE_04_TITLE' | translate }}</h3>
+              </div>
+            </header>
+            <p class="report-phase__desc">{{ 'REPORT.PHASE_04_DESC' | translate }}</p>
+            <ul class="report-phase__list">
+              <li>{{ 'REPORT.PHASE_04_L1' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_04_L2' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_04_L3' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_04_L4' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_04_L5' | translate }}</li>
+            </ul>
+
+            <!-- Stage 4 Percentage Breakdown -->
+            <div class="report-stage-metrics">
+              <div class="report-stage-metrics__head">
+                <span class="report-stage-metrics__title">
+                  <i class="bx bx-pie-chart-alt-2"></i> {{ 'REPORT.STAGE_METRICS_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-stage-metrics__grid">
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P4_M1_LABEL' | translate }}</span>
+                    <strong>89%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 89%; background: var(--phase-4)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P4_M2_LABEL' | translate }}</span>
+                    <strong>76%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 76%; background: var(--phase-4)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P4_M3_LABEL' | translate }}</span>
+                    <strong>85%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 85%; background: var(--phase-4)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 4 KBIs -->
+            <div class="report-kbis">
+              <div class="report-kbis__head">
+                <span class="report-kbis__badge">
+                  <i class="bx bx-check-double"></i> {{ 'REPORT.KBI_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-kbis__grid">
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_04_KBI_1_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_04_KBI_1_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_04_KBI_1_DESC' | translate }}</p>
+                </div>
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_04_KBI_2_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_04_KBI_2_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_04_KBI_2_DESC' | translate }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Stage 5 -->
+        <section class="report-phase reveal" id="phase-5" style="--accent: var(--phase-5)">
+          <article class="report-phase__card">
+            <header class="report-phase__head">
+              <div class="report-phase__index">05</div>
+              <div>
+                <span class="report-phase__eyebrow">{{ 'REPORT.PHASE_05_EYEBROW' | translate }}</span>
+                <h3>{{ 'REPORT.PHASE_05_TITLE' | translate }}</h3>
+              </div>
+            </header>
+            <p class="report-phase__desc">{{ 'REPORT.PHASE_05_DESC' | translate }}</p>
+            <ul class="report-phase__list">
+              <li>{{ 'REPORT.PHASE_05_L1' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_05_L2' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_05_L3' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_05_L4' | translate }}</li>
+              <li>{{ 'REPORT.PHASE_05_L5' | translate }}</li>
+            </ul>
+
+            <!-- Stage 5 Percentage Breakdown -->
+            <div class="report-stage-metrics">
+              <div class="report-stage-metrics__head">
+                <span class="report-stage-metrics__title">
+                  <i class="bx bx-pie-chart-alt-2"></i> {{ 'REPORT.STAGE_METRICS_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-stage-metrics__grid">
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P5_M1_LABEL' | translate }}</span>
+                    <strong>96%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 96%; background: var(--phase-5)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P5_M2_LABEL' | translate }}</span>
+                    <strong>92%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 92%; background: var(--phase-5)"></div>
+                  </div>
+                </div>
+                <div class="report-progress-box">
+                  <div class="report-progress-box__top">
+                    <span>{{ 'REPORT.P5_M3_LABEL' | translate }}</span>
+                    <strong>88%</strong>
+                  </div>
+                  <div class="report-progress-box__track">
+                    <div class="report-progress-box__fill" style="width: 88%; background: var(--phase-5)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 5 KBIs -->
+            <div class="report-kbis">
+              <div class="report-kbis__head">
+                <span class="report-kbis__badge">
+                  <i class="bx bx-file"></i> {{ 'REPORT.KBI_TITLE' | translate }}
+                </span>
+              </div>
+              <div class="report-kbis__grid">
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_05_KBI_1_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_05_KBI_1_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_05_KBI_1_DESC' | translate }}</p>
+                </div>
+                <div class="report-kbi-card">
+                  <span class="report-kbi-card__tag">{{ 'REPORT.PHASE_05_KBI_2_TAG' | translate }}</span>
+                  <strong>{{ 'REPORT.PHASE_05_KBI_2_TITLE' | translate }}</strong>
+                  <p>{{ 'REPORT.PHASE_05_KBI_2_DESC' | translate }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="report-score">
+              <div class="report-score__ring" style="--pct: 85">
+                <span>85</span>
+              </div>
+              <div class="report-score__copy">
+                <strong>{{ 'REPORT.SCORE_TITLE' | translate }}</strong>
+                <span>{{ 'REPORT.SCORE_DESC' | translate }}</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+      </div>
+
+      <section class="report-closing reveal" id="closing">
+        <div class="report-closing__card">
+          <div class="report-closing__icon" aria-hidden="true">
+            <i class="bx bx-rocket"></i>
+          </div>
+          <h3>{{ 'REPORT.CLOSING_TITLE' | translate }}</h3>
+          <p>{{ 'REPORT.CLOSING_DESC' | translate }}</p>
+          <div class="report-closing__tags">
+            <span>{{ 'REPORT.TAG_ONBOARDING' | translate }}</span>
+            <span>{{ 'REPORT.TAG_SCREENING' | translate }}</span>
+            <span>{{ 'REPORT.TAG_LEARNING' | translate }}</span>
+            <span>{{ 'REPORT.TAG_VALIDATION' | translate }}</span>
+            <span>{{ 'REPORT.TAG_PROPOSALS' | translate }}</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="report-footer">
+        <span>{{ 'REPORT.FOOTER_PROGRAM' | translate }}</span>
+        <span>{{ 'REPORT.FOOTER_INTERNAL' | translate }}</span>
+      </footer>
+
+    </main>
+  </div>
+</div>

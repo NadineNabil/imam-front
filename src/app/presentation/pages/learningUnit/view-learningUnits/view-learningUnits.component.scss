@@ -1,0 +1,28 @@
+// Using preloader.scss styles - no additional styles needed
+// The pace classes are defined in preloader.scss
+
+.title-page{
+    align-content: center;
+}
+.btnstitle{
+    a{
+        margin-top: 1%;
+    }
+    .mstart{
+        margin-inline-start: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+.btnstitle
+{
+    display: flex;
+    flex-direction: column;
+}
+
+ .mstart{
+        margin-inline-start: 0!important;
+    }
+
+}

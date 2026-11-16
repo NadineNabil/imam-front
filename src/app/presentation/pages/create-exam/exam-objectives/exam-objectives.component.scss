@@ -1,0 +1,83 @@
+.select-input-container{
+    gap: 10px;
+    width: 100%;
+}
+
+input[type="checkbox"]{
+    width: 21px;
+        height: 21px;
+        margin-top: -1px;
+}
+.main-container{
+    display: flex;
+    flex-direction: column;
+}
+H5{
+    margin: 0;
+}
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+    top: 6px;
+}
+.form-check{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  padding-top: 15px;
+}
+.objectives-container{
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+    border: 1px solid #80808030;
+    padding: 16px;
+    border-radius: 8px;
+}
+.objectives-container:hover{
+    box-shadow: 0.3px 3px 6px #8080801f;
+}
+.lastindex{
+    box-shadow: none;
+}
+.button{
+    min-width: 40px;
+    align-self: end;
+}
+.close-btn{
+    border: 1px solid rgba(128, 128, 128, 0.685);
+    border-radius: 50%;
+ padding: 0px 3px 0px 3px;
+ align-self: end;
+ cursor: pointer;
+}
+.close-btn .mdi-close-thick {
+  color: rgb(var(--bs-danger-rgb));
+}
+.title-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: start;
+}
+.disabledobjective{
+    pointer-events: none;
+}
+.noobjevticetext{
+        display: flex;
+    justify-content: center;
+  font-size: 0.8rem;        /* smaller text */
+  color: #6c757d;           /* gray text */
+  font-style: italic;        /* optional for placeholder feel */
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+@media (min-width: 992px) {
+:dir(rtl) .select-input-container{
+padding-left: 10px;}
+:dir(ltr) .select-input-container{
+padding-right: 10px;}
+}
+

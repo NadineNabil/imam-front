@@ -1,0 +1,61 @@
+<div class="ws-test-page">
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <div class="ws-header">
+    <h2>🔌 WebSocket Activity-Feed — Live Test</h2>
+    <p class="subtitle">
+      Connects to <code>{{ wsUrl }}</code>
+    </p>
+  </div>
+
+  <!-- ── Connection controls ─────────────────────────────────────────────── -->
+  <div class="ws-controls card">
+    <p class="token-note">
+      🔑 Token is read automatically from your current session
+      (same as HTTP interceptor — no need to paste it manually).
+    </p>
+
+    <div class="btn-row">
+      <button class="btn btn-connect" [disabled]="isConnected" (click)="connect()" id="btnConnect">
+        ▶ Connect
+      </button>
+      <button class="btn btn-disconnect" [disabled]="!isConnected" (click)="disconnect()" id="btnDisconnect">
+        ■ Disconnect
+      </button>
+  
+      <button class="btn btn-clear" (click)="clearLog()" id="btnClear">
+        🗑 Clear log
+      </button>
+    </div>
+
+    <!-- Status indicator -->
+    <div class="status-row">
+      <span class="dot" [class.dot-green]="isConnected" [class.dot-red]="!isConnected"></span>
+      <span>{{ isConnected ? 'Connected' : 'Disconnected' }}</span>
+    </div>
+  </div>
+
+  <!-- ── Event log ────────────────────────────────────────────────────────── -->
+  <div class="ws-log card">
+    <div class="log-header">
+      <h4>Event log <span class="count">({{ log.length }})</span></h4>
+    </div>
+
+    <div *ngIf="log.length === 0" class="empty-state">
+      No events yet — click <strong>Connect</strong> to start listening.
+    </div>
+
+    <div class="log-list">
+      <div class="log-entry" *ngFor="let entry of log">
+        <div class="entry-meta">
+          <div class="badge" [ngClass]="badgeClass(entry.event.type)">
+            {{ entry.event.type || 'unknown' }}
+          </div>
+          <span class="ts">{{ entry.timestamp | date:'HH:mm:ss.SSS' }}</span>
+        </div>
+        <pre class="entry-payload">{{ formatEvent(entry.event) }}</pre>
+      </div>
+    </div>
+  </div>
+
+</div>

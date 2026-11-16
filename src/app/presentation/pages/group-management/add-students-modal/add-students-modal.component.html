@@ -1,0 +1,142 @@
+<div class="modal fade"
+     id="AddStudentsGroupModal"
+     tabindex="-1"
+     (hide.bs.modal)="onHideModal()">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 ">
+
+            <!-- Header -->
+            <div class="modal-header d-flex flex-column border-0 pb-0">
+                        <button type="button"
+                        class="btn-close "
+                        data-bs-dismiss="modal">
+                </button>
+
+                <div class="text-center w-100 ">
+                    <h4 class="fw-bold mb-1">
+                        {{'GROUP_MANAGEMENT.ADD_STUDENTS_TO_GROUP' | translate}}
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        {{'GROUP_MANAGEMENT.ADD_STUDENTS_DESCRIPTION' | translate}}
+                    </p>
+                </div>
+
+
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <!-- Existing Students -->
+                <div class="mb-4">
+                    <h5 class="fw-bold">
+                        {{'GROUP_MANAGEMENT.SELECT_EXISTING_STUDENTS' | translate}}
+                    </h5>
+
+                    <p class="text-muted small">
+                        {{'GROUP_MANAGEMENT.SELECT_EXISTING_STUDENTS_DESCRIPTION' | translate}}
+                    </p>
+
+                    <!-- Search -->
+                    <div class="position-relative mb-3">
+                        <i class="ri-search-line search-icon"></i>
+
+                        <input type="text"
+                               class="form-control search-input"
+                                [(ngModel)]="searchTerm"
+                               [placeholder]="'GROUP_MANAGEMENT.SEARCH_BY_EMAIL' | translate">
+                    </div>
+
+                    <!-- Students List -->
+                    <div class="students-list">
+
+                        <div class="student-item"
+                             *ngFor="let student of students  | emailSearch: searchTerm: ['user.email']">
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                <input type="checkbox"
+                                [checked]="selectedStudents.includes(student.id)"
+                                       class="form-check-input" (change)="onStudentSelectionChange(student.id, $event)">
+
+                                <span class="fw-semibold">
+                                    {{student.user.email}}
+                                </span>
+                            </div>
+
+                            <span class="status-badge"
+                                  [ngClass]="{
+                                    'status-active': student.status === 'Active',
+                                    'status-pending': student.status === 'Pending',
+                                    'status-revoked': student.status === 'Revoked'
+                                  }">
+
+  {{ ('ENUM.STUDENT_STATUS.' + (student.status | titlecase)) | translate }}
+
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Add New Students 
+                <div>
+                    <h5 class="fw-bold">
+                        {{'GROUP_MANAGEMENT.ADD_NEW_STUDENTS' | translate}}
+                    </h5>
+
+                    <p class="text-muted small">
+                        {{'GROUP_MANAGEMENT.ADD_NEW_STUDENTS_DESCRIPTION' | translate}}
+                    </p>
+
+                    <div class="d-flex gap-2">
+
+                        <input type="email"
+                        [(ngModel)]="newStudentEmail"
+                               class="form-control"
+                               placeholder="student@example.com">
+
+                        <button class="btn btn-light border fw-semibold"
+                        (click)="addNewStudent()">
+                            <i class="ri-add-line"></i>
+                            {{'GROUP_MANAGEMENT.ADD' | translate}}
+                        </button>
+
+                    </div>
+                </div>
+-->
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer border-0">
+
+                <p class="text-muted me-auto mb-0">
+                    {{'GROUP_MANAGEMENT.TOTAL_TO_ADD' | translate}}:
+                    {{selectedStudents.length}}
+                    {{'GROUP_MANAGEMENT.STUDENTS' | translate}}
+                </p>
+
+                <button type="button"
+                        class="btn btn-light border"
+                        data-bs-dismiss="modal">
+
+                    {{'COMMON.CANCEL' | translate}}
+
+                </button>
+
+                <button type="button"
+                (click)="addStudentsToGroup()"
+                        class="btn btn-primary">
+
+                    {{'GROUP_MANAGEMENT.ADD_STUDENTS' | translate}}
+                    ({{selectedStudents.length}})
+
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

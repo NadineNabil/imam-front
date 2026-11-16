@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+.password-panel {
+  border: 1px solid var(--bs-border-color, var(--vz-border-color, #e3e8ef));
+  border-radius: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--vz-card-bg, rgba(248, 251, 255, 0.95)) 0%, var(--vz-secondary-bg, rgba(244, 247, 255, 0.95)) 100%);
+  box-shadow: 0 4px 14px var(--vz-shadow-color, rgba(15, 23, 42, 0.04));
+}
+
+
+.password-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.password-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.password-input-group .input-group-text {
+  background-color: var(--bs-body-bg, var(--vz-body-bg, #fff));
+  color: var(--bs-body-color, var(--vz-body-color, #212529));
+  border-inline-end: 0;
+}
+
+.password-input-group .form-control {
+  border-inline-start: 0;
+}
+
+.password-input-group .btn-outline-secondary {
+  border-inline-start: 0;
+}
+
+.password-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[dir="rtl"] .password-input-group .input-group-text {
+  border-left: 1px solid var(--bs-border-color, var(--vz-border-color, #e3e8ef));
+  border-right: 0;
+}
+
+[dir="rtl"] .password-input-group .form-control {
+  border-right: 0;
+  border-left: 1px solid var(--bs-border-color, var(--vz-border-color, #e3e8ef));
+}
+
+[dir="rtl"] .password-input-group .btn-outline-secondary {
+  border-right: 0;
+  border-left: 1px solid var(--bs-border-color, var(--vz-border-color, #e3e8ef));
+}
+
+body[data-layout-mode="dark"] .password-input-group .input-group-text,
+body[data-sidebar-color="dark"] .password-input-group .input-group-text,
+body[class*="dark"] .password-input-group .input-group-text {
+  background-color: var(--vz-dark-input-bg, rgba(255, 255, 255, 0.08));
+  color: var(--vz-dark-input-color, #f8fafc);
+}
+
+body[data-layout-mode="dark"] .password-input-group .form-control,
+body[data-sidebar-color="dark"] .password-input-group .form-control,
+body[class*="dark"] .password-input-group .form-control {
+  background-color: var(--vz-dark-input-bg, rgba(255, 255, 255, 0.04));
+  color: var(--vz-dark-input-color, #f8fafc);
+  border-color: var(--vz-dark-border-color, rgba(255, 255, 255, 0.12));
+}
+.form-switch{
+  display:flex;
+  align-items: center; 
+  gap:8px;
+}
+.form-switch .form-check-input {
+  width: 2.2rem;
+  height: 1.2rem;
+  margin-top:-2px;
+}
+@media (max-width: 576px) {
+  .password-panel__header {
+    flex-direction: column;
+  }
+
+  .password-panel__actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

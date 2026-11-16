@@ -1,0 +1,72 @@
+<div [formGroup]="parentForm">
+    <h5 clasS="mb-3">{{'EXAMS.QUESTION_TYPES' | translate}} <span class="text-danger">*</span></h5>
+    <div class="inner-container">
+ <!--    <ngb-alert *ngIf="ObjectivesWithErrors.length > 0" [dismissible]="false" type="warning">
+          <div *ngFor="let obj of ObjectivesWithErrors">
+         <i class="mdi mdi-alert-outline me-2"></i>
+      {{ 'EXAMS.OBJECTIVE_FRACTION_WARNING' | translate: { objective: obj.objective, questions: obj.questions}
+    }}
+  </div>
+    </ngb-alert> -->
+    <div formArrayName="questionTypesArray" class="checkboxes-container-questions" [ngStyle]="{'width': ObjectiveshasQuestions ? '50%' : '100%'}" >
+        <div *ngFor="let questionTypeGroup of questionTypesFormArray.controls; let i = index" [formGroupName]="i"
+            class="mb-3">
+            <div>
+                <div class="custom-checkbox-ques">
+                    <div class="checkbox-label-container">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" [id]="'questiontype'+ i"
+                                formControlName="selected">
+                            <img class="icon-images question-icon" [src]="questionTypeGroup.get('image')?.value"
+                                [alt]="questionTypeGroup.get('image')?.value" loading="lazy" />
+                            <label class="form-check-label" [for]="'questiontype' + i">{{
+                                'ENUM'+'.QUESTION_TYPES.'+questionTypeGroup.get('questionType')?.value |
+                                translate}}</label>
+                        </div>
+                        <div class="questionsnumber">
+                            <input type="number" class="form-control number-input" step="1" min="1"
+                                formControlName="numberOfQuestions">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="text-danger font-size-12 mt-1"
+                    *ngIf="parentForm.get('questionTypesArray')?.errors?.['totalQuestionNumberExceeded'] &&
+              (questionTypesFormArray.controls[i].get('numberOfQuestions')?.touched ||questionTypesFormArray.controls[i].get('numberOfQuestions')?.dirty)">
+                    {{ 'EXAMS.ERRORS.TOTAL_QUESTION_NUMBER_EXCEEDED' | translate }}
+                </div>
+                <div class="text-danger font-size-12 mt-1" *ngIf="questionTypesFormArray.controls[i].get('numberOfQuestions')?.errors?.['pattern']
+        && (questionTypesFormArray.controls[i].get('numberOfQuestions')?.touched
+        || questionTypesFormArray.controls[i].get('numberOfQuestions')?.dirty)">
+
+                    {{ 'EXAMS.ERRORS.QUESTION_NUMBER_INTEGER_ONLY' | translate }}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="objectives-container" *ngIf="ObjectiveshasQuestions">
+        <div *ngFor="let obj of Objectives" class="objective-warning">
+           <div class="objective-card" [class.has-error]="obj.hasError">
+            <p>{{obj.objective}}</p>
+            <div class="objectives-data">
+                <p>{{'EXAMS.WEIGHT'|translate}} : <span>{{obj.weight}}</span>%</p>
+                <p >{{'EXAMS.QUESTIONS'|translate}} : <span [ngStyle]="{ color: obj.hasError ? '#B45100' : '' }">{{obj.questions}}</span></p>
+            </div>
+            <div class="error-border" *ngIf="obj.hasError"></div>
+            <div *ngIf="obj.hasError" style="color:#B45100; font-weight: 500; font-size: 10px" class="d-flex gap-1">
+                <img src="assets/images/warningicon.svg" alt="Warning Icon" style="width: 16px; height: 16px;">
+                <span>{{ 'EXAMS.FRACTIONAL_QUESTION_COUNT' | translate }}</span>
+            </div>
+           </div>
+            
+        </div>
+        <div class="total-objectives">
+            <p>{{'EXAMS.TOTAL'|translate}}</p>
+            <p>{{ObjectivestTotalWeight}} %</p>
+        </div>
+    </div>
+    </div>
+</div>

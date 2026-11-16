@@ -1,0 +1,173 @@
+<div class="container-fluid py-4" *ngIf="!isLoading; else loadingTpl">
+
+  <!-- Course Header / Breadcrumbs -->
+  <div class="row align-items-center mb-4">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item">
+            <a routerLink="/courses/my-courses" class="text-primary fw-semibold">
+              {{ 'MENUITEMS.MYCOURSES.TEXT' | translate }}
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">{{ courseName }}</li>
+        </ol>
+      </nav>
+      <h2 class="fw-bold text-dark mb-0">{{ courseName }}</h2>
+      <p class="text-muted text-sm mt-1" *ngIf="categoryName">
+        <i-feather name="folder" class="icon-xs me-1"></i-feather>
+        {{ categoryName }}
+        <span *ngIf="subcategoryName"> &rsaquo; {{ subcategoryName }}</span>
+      </p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <a routerLink="/courses/my-courses" class="btn btn-primary  px-4">
+        <i-feather name="arrow-left" class="icon-sm me-2 rtl-flip"></i-feather>
+        {{ 'BACK_TO_COURSE' | translate }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Row 1: Subject Tests & Exercises (Scrollable Purple Cards) -->
+  <div class="card shadow-sm border rounded-4 mb-4 overflow-hidden" *ngIf="exams && exams.length > 0">
+    <div class="card-body p-4">
+      <div class="d-flex align-items-center mb-3">
+        <h5 class="fw-bold text-dark mb-0">{{ 'TESTS_EXERCISES' | translate }}</h5>
+      </div>
+ 
+      <!-- Horizontal Scrollable Row of Purple Cards -->
+      <div class="exams-scroll-wrapper pb-2">
+        <div class="d-flex flex-row flex-nowrap gap-3">
+          <div class="purple-exam-card p-4 d-flex flex-column justify-content-between flex-shrink-0" *ngFor="let exam of exams">
+            <!-- Top section: notification badge (bell icon) and Exam Title -->
+            <div class="d-flex align-items-center gap-3">
+              <div class="bell-badge rounded-circle bg-white bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0">
+                <i-feather name="bell" class="icon-xs"></i-feather>
+              </div>
+              <div class="exam-title-text text-white fw-bold text-truncate" [title]="exam.name">
+                {{ exam.name }}
+              </div>
+            </div>
+
+            <!-- CTA button (Non-functional) -->
+            <div class="text-center mt-3">
+              <button class="btn btn-white  px-4 py-2 fw-bold text-purple text-xs border-0 w-100" (click)="StartTrainingOrExam(exam.type,exam.id)">
+                {{ (exam.type === 'Assessment' ? 'START_EXAM' : 'START_PRACTICE') | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Progress & Mastery Cards -->
+  <div class="row mb-4">
+    <!-- Progress in Training (Left) -->
+    <div class="col-lg-6 mb-4 mb-lg-0">
+      <div class="card h-100 shadow-sm border rounded-4">
+        <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 w-100 flex-row">
+            <div class="icon-box bg-primary-soft text-primary rounded-circle p-2">
+              <i-feather name="bar-chart-2" class="icon-sm"></i-feather>
+            </div>
+            <h5 class="fw-bold text-dark mb-0">{{ 'PROGRESS_IN_TRAINING' | translate }}</h5>
+          </div>
+        </div>
+        <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+          <!-- Empty state: no training attempts yet -->
+          <ng-container *ngIf="!hasTrainingAttempts; else chartTpl">
+            <div class="d-flex flex-column align-items-center justify-content-center gap-3 py-2">
+              <img src="assets/images/no-exam.png" alt="No training exams" >
+              <p class="text-muted fw-semibold mb-0" style="font-size: 0.95rem;">
+                {{ 'NO_TRAINING_ATTEMPTS' | translate }}
+              </p>
+            </div>
+          </ng-container>
+
+          <!-- Line Chart -->
+          <ng-template #chartTpl>
+            <div class="w-100">
+              <div echarts [options]="chartOptions" style="height: 250px; width: 100%;"></div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subject Mastery Rate (Right) -->
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-sm border rounded-4">
+        <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 w-100 flex-row">
+            <div class="icon-box bg-warning-soft text-warning rounded-circle p-2">
+              <i-feather name="trending-up" class="icon-sm"></i-feather>
+            </div>
+            <h5 class="fw-bold text-dark mb-0">{{ 'SUBJECT_MASTERY_RATE' | translate }}</h5>
+          </div>
+        </div>
+        <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+          <!-- Circular progress ring -->
+          <div class="position-relative d-flex align-items-center justify-content-center" style="width: 160px; height: 160px;">
+            <svg viewBox="0 0 36 36" class="circular-chart" style="width: 100%; height: 100%;">
+              <path class="circle-bg"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none" stroke="#e1f7eb" stroke-width="2.5"/>
+              <path [attr.stroke-dasharray]="masteryRate + ', 100'"
+                    stroke="#2ecc71"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none" stroke-width="2.5" stroke-linecap="round"
+                    style="transition: stroke-dasharray 0.6s ease; transform: rotate(-90deg); transform-origin: 50% 50%;"/>
+            </svg>
+            <div class="position-absolute text-center">
+              <h2 class="fw-bold mb-0 text-success" style="font-size: 2.2rem;">{{ masteryRate }}%</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Interactive AI Assistant Banner (Matching the layout exactly) -->
+  <div class="card shadow-sm border rounded-4 assistant-banner-card mb-4 overflow-hidden">
+    <div class="card-body p-4 px-md-5 d-flex flex-row flex-wrap flex-sm-nowrap align-items-center justify-content-between gap-4">
+      
+    
+
+      <!-- Right side: Text details and purple button -->
+      <div class="flex-grow-1 assistant-text-section">
+        <h4 class="fw-bold mb-2 text-dark d-flex align-items-center gap-2 justify-content-start">
+          <span class="text-primary"><i-feather class="icon-sm"> 
+            <svg  xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+              <path  d="M9.95183 5.948C10.5498 4.198 12.9678 4.145 13.6768 5.789L13.7368 5.949L14.5438 8.309C14.7288 8.85023 15.0276 9.34551 15.4203 9.76142C15.8129 10.1773 16.2901 10.5042 16.8198 10.72L17.0368 10.801L19.3968 11.607C21.1468 12.205 21.1998 14.623 19.5568 15.332L19.3968 15.392L17.0368 16.199C16.4954 16.3838 15.9999 16.6826 15.5838 17.0753C15.1678 17.4679 14.8407 17.9452 14.6248 18.475L14.5438 18.691L13.7378 21.052C13.1398 22.802 10.7218 22.855 10.0138 21.212L9.95183 21.052L9.14583 18.692C8.96101 18.1506 8.6622 17.6551 8.26957 17.239C7.87694 16.8229 7.39962 16.4959 6.86983 16.28L6.65383 16.199L4.29383 15.393C2.54283 14.795 2.48983 12.377 4.13383 11.669L4.29383 11.607L6.65383 10.801C7.19506 10.6161 7.69034 10.3172 8.10625 9.92457C8.52217 9.53195 8.84904 9.05469 9.06483 8.525L9.14583 8.309L9.95183 5.948ZM11.8448 6.594L11.0388 8.954C10.7572 9.7793 10.2991 10.5333 9.69637 11.1635C9.09363 11.7937 8.36078 12.2849 7.54883 12.603L7.29883 12.694L4.93883 13.5L7.29883 14.306C8.12413 14.5876 8.87813 15.0457 9.50833 15.6485C10.1385 16.2512 10.6298 16.9841 10.9478 17.796L11.0388 18.046L11.8448 20.406L12.6508 18.046C12.9324 17.2207 13.3906 16.4667 13.9933 15.8365C14.596 15.2063 15.3289 14.7151 16.1408 14.397L16.3908 14.307L18.7508 13.5L16.3908 12.694C15.5655 12.4124 14.8115 11.9543 14.1813 11.3515C13.5511 10.7488 13.0599 10.0159 12.7418 9.204L12.6518 8.954L11.8448 6.594ZM19.8448 2.5C20.0319 2.5 20.2152 2.55248 20.374 2.65147C20.5327 2.75046 20.6605 2.892 20.7428 3.06L20.7908 3.177L21.1408 4.203L22.1678 4.553C22.3553 4.6167 22.5197 4.73462 22.6401 4.89182C22.7605 5.04902 22.8315 5.23842 22.8441 5.43602C22.8567 5.63362 22.8104 5.83053 22.7111 6.00179C22.6117 6.17304 22.4637 6.31094 22.2858 6.398L22.1678 6.446L21.1418 6.796L20.7918 7.823C20.728 8.01043 20.61 8.1747 20.4528 8.29499C20.2955 8.41529 20.1061 8.48619 19.9085 8.49872C19.7109 8.51125 19.514 8.46484 19.3428 8.36538C19.1716 8.26591 19.0338 8.11787 18.9468 7.94L18.8988 7.823L18.5488 6.797L17.5218 6.447C17.3343 6.3833 17.17 6.26538 17.0496 6.10819C16.9292 5.95099 16.8582 5.76158 16.8456 5.56398C16.8329 5.36638 16.8792 5.16947 16.9786 4.99821C17.078 4.82696 17.226 4.68906 17.4038 4.602L17.5218 4.554L18.5478 4.204L18.8978 3.177C18.9653 2.97943 19.0928 2.80791 19.2627 2.6865C19.4325 2.56509 19.6361 2.49987 19.8448 2.5Z" fill="#5156be" stroke="none"></path></svg>
+          </i-feather></span>
+          {{ 'YOUR_INTERACTIVE_ASSISTANT' | translate }}
+        </h4>
+        <p class="text-muted mb-3 text-sm" >
+          {{ 'CHAT_DESCRIPTION' | translate: { courseName: courseName } }}
+        </p>
+        <div>
+          <button class="btn btn-purple  px-4 py-2 fw-semibold text-white shadow-sm" (click)="StartChat()">
+            {{ 'START_CONVERSATION' | translate }}
+          </button>
+        </div>
+      </div>
+  <!-- Left side: Robot illustration with speech bubble -->
+      <div class="d-flex align-items-center justify-content-center justify-content-md-start position-relative  w-sm-auto robot-container">
+        <div class="robot-avatar-img">
+          <img src="/assets/images/robotchat.png" alt="Robot Mascot" style="height: 120px; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingTpl>
+  <div class="d-flex align-items-center justify-content-center py-5 my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

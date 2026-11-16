@@ -1,0 +1,80 @@
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">{{ 'SUBCATEGORY.CREATE_SUBCATEGORY' | translate }}</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submitForm()" class="needs-validation">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label>{{ 'SUBCATEGORY.PARENT_CATEGORY' | translate }} <span class="required-astr">*</span></label>
+     <!--          <select class="form-select" formControlName="parentId"
+                [ngClass]="{ 'is-invalid': submit && form.get('parentId')?.invalid }">
+                <option [ngValue]="null">{{ 'SUBCATEGORY.SELECT_PARENT' | translate }}</option>
+                <option *ngFor="let c of categories" 
+                [selected]="c.id === parentId"
+                [value]="c.id">{{ c.categoryName  }}</option>
+              </select> -->
+              <ng-select
+  [items]="categories"
+  bindLabel="categoryName"
+  bindValue="id"
+  formControlName="parentId"
+  [placeholder]="'SUBCATEGORY.SELECT_PARENT' | translate"
+  [clearable]="true">
+</ng-select>
+
+              <div *ngIf="submit && form.get('parentId')?.invalid" class="invalid-feedback">
+                {{ 'SUBCATEGORY.PARENT_REQUIRED' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label>{{ 'SUBCATEGORY.NAME' | translate }} <span class="required-astr">*</span></label>
+              <input type="text" class="form-control" 
+                formControlName="subCategoryName"
+                min="3"
+                max="100"
+                [class.is-valid]="form.get('subCategoryName')?.valid && form.get('subCategoryName')?.touched"
+                [class.is-invalid]="form.get('subCategoryName')?.invalid && (form.get('subCategoryName')?.dirty || form.get('subCategoryName')?.touched)"
+              />
+              <div *ngIf=" form.get('subCategoryName')?.errors " class="invalid-feedback">
+                <div *ngIf="form.get('subCategoryName')?.errors?.required || form.get('subCategoryName')?.errors?.whitespace">{{ 'SUBCATEGORY.NAME_REQUIRED' | translate }}</div>
+                <div *ngIf="form.get('subCategoryName')?.errors?.minlength">{{ 'SUBCATEGORY.NAME_MIN_LENGTH' | translate }}</div>
+                <div *ngIf="form.get('subCategoryName')?.errors?.maxlength">{{ 'SUBCATEGORY.NAME_MAX_LENGTH' | translate }}</div>
+                <div *ngIf="form.get('subCategoryName')?.errors?.duplicateName">{{ 'SUBCATEGORY.NAME_DUPLICATE' | translate }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label>{{ 'SUBCATEGORY.DESCRIPTION' | translate }} <span class="required-astr">*</span></label>
+              <textarea class="form-control" formControlName="subCategoryDescription"
+                  rows="3"   
+                  [class.is-valid]="form.get('subCategoryDescription')?.valid && form.get('subCategoryDescription')?.touched"
+                  [class.is-invalid]="form.get('subCategoryDescription')?.invalid && (form.get('subCategoryDescription')?.dirty || form.get('subCategoryDescription')?.touched)"
+               
+                
+              ></textarea>
+              <div *ngIf="form.get('subCategoryDescription')?.errors?.required || form.get('subCategoryDescription')?.errors?.whitespace" class="invalid-feedback">
+                {{ 'SUBCATEGORY.DESCRIPTION_REQUIRED' | translate }}
+              </div>
+                <div *ngIf="form.get('subCategoryDescription')?.errors?.minlength" class="invalid-feedback">{{ 'SUBCATEGORY.DESCRIPTION_MIN_LENGTH' | translate }}</div>
+                    <div *ngIf="form.get('subCategoryDescription')?.errors?.maxlength" class="invalid-feedback">{{ 'SUBCATEGORY.DESCRIPTION_MAX_LENGTH' | translate }}</div>
+          
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn btn-primary mt-3" type="submit" [disabled]="loading">{{ 'SUBCATEGORY.SUBMIT' | translate }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

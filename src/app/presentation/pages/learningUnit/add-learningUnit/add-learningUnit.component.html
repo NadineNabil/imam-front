@@ -1,0 +1,390 @@
+<!-- Preloader from preloader.scss -->
+<div class="pace" [class.pace-active]="loading" [class.pace-inactive]="!loading">
+    <div class="pace-progress"></div>
+    <div class="pace-activity"></div>
+  </div>
+
+  
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">{{ 'WIZARD.TITLE' | translate }}</h4>
+            </div>
+            <div class="card-body">
+                <ng-stepper #cdkStepper [linear]="true" class="cdksteppercontent">
+                 <cdk-step [optional]="false">
+                        <ng-template cdkStepLabel>
+                            <i class="bx bx-list-ul" [title]="'WIZARD.STEP1.LABEL' | translate"></i>
+                        </ng-template>
+                        @if(cdkStepper.selectedIndex === 0){
+                        <div>
+                            <div class="text-center mb-4">
+                                <h5>{{ 'WIZARD.STEP1.TITLE' | translate }}</h5>
+                                <p class="card-title-desc">{{ 'WIZARD.STEP1.DESC' | translate }}</p>
+                            </div>
+                            <form [formGroup]="learningUnitForm">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="learningUnit-name-input" class="form-label">
+                                                {{ 'WIZARD.LearningUnit_NAME' | translate }} <span class="text-danger">*</span>
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                id="learningUnit-name-input"
+                                                formControlName="learningUnitName"
+                                                placeholder="{{ 'WIZARD.STEP1.LearningUnit_NAME_PLACEHOLDER' | translate }}"
+                                                [class.is-invalid]="learningUnitForm.get('learningUnitName')?.invalid && learningUnitForm.get('learningUnitName')?.touched"
+                                                [class.is-valid]="learningUnitForm.get('learningUnitName')?.valid && learningUnitForm.get('learningUnitName')?.touched">
+                                        
+                                                <div *ngIf=" learningUnitForm.get('learningUnitName')?.errors && learningUnitForm.get('learningUnitName')?.touched" class="invalid-feedback">
+                                                    <div *ngIf="learningUnitForm.get('learningUnitName')?.errors?.required">{{ 'WIZARD.VALIDATION.LearningUnit_NAME_REQUIRED' | translate }}</div>
+                                                    <div *ngIf="learningUnitForm.get('learningUnitName')?.errors?.minlength">{{ 'WIZARD.VALIDATION.LearningUnit_NAME_MIN_LENGTH' | translate }}</div>
+                                                    <div *ngIf="learningUnitForm.get('learningUnitName')?.errors?.maxlength">{{ 'WIZARD.VALIDATION.LearningUnit_NAME_MAX_LENGTH' | translate }}</div>
+                                                    <!-- <div *ngIf="learningUnitForm.get('learningUnitName')?.errors?.whitespace">{{ 'WIZARD.VALIDATION.LearningUnit_NAME_NO_WHITESPACE' | translate }}</div> -->
+                                                    <div *ngIf="learningUnitForm.get('learningUnitName')?.errors?.pattern">{{ 'WIZARD.VALIDATION.LearningUnit_NAME_INVALID_CHARACTERS' | translate }}</div>
+                                        </div>
+                                        
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="subject-name-input" class="form-label">{{ 'WIZARD.SUBJECT_NAME' | translate }}</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                id="course-name-input"
+                                                formControlName="courseName"
+                                                readonly>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                <div class="text-end">
+                <button 
+                    class="btn btn-primary save-continue" 
+                    [disabled]="!canProceedToNextStep()"
+                    (click)="onNextStep(cdkStepper)">
+                    {{ 'WIZARD.SAVE_CONTINUE' | translate }}
+                    </button>
+                </div>
+                               
+                              
+                        </div>
+                        }
+                    </cdk-step>
+            
+                    <cdk-step [optional]="true">
+                        <ng-template cdkStepLabel>
+                            <i class="bx bx-book-bookmark" [title]="'WIZARD.STEP2.LABEL' | translate"></i>
+                        </ng-template>
+                        @if(cdkStepper.selectedIndex === 1){
+                        <div>
+                                                        <div class="text-center mb-4">
+                                                                <h5>{{ 'WIZARD.STEP2.TITLE' | translate }}</h5>
+                                                        </div>
+                                                        <button
+    type="button"
+    class="btn btn-primary mb-3"
+    (click)="addDropzone()">
+    {{ 'WIZARD.STEP2.ADD_CONTENT' | translate }}
+</button>
+
+<div *ngFor="let dz of dropzones" class="dropzone-wrapper">
+
+  <!-- Language selector -->
+          <select
+              class="form-select mb-2"
+              [(ngModel)]="dz.lang"
+              [disabled]="dz.hasFile"
+              (change)="onLangChange(dz, dz.lang)"
+              [attr.data-dz-id]="dz.id">
+        <option value="null">{{ 'WIZARD.STEP2.SELECT_LANGUAGE' | translate }}</option>
+        <option value="ar">{{ 'WIZARD.STEP2.LANG_AR' | translate }}</option>
+        <option value="en">{{ 'WIZARD.STEP2.LANG_EN' | translate }}</option>
+    </select>
+
+  <!-- Dropzone -->
+ 
+          <div style="position:relative" [class.hide-dz-message-dz-text]="!dz.lang || dz.lang == 'null'">
+              <dropzone
+                  [config]="dz.config"
+                  [message]="'WIZARD.STEP2.DROPZONE_MESSAGE' | translate"
+                  (addedFile)="onContentAdded($event, dz)"
+                 >
+              </dropzone>
+
+              <!-- Overlay shown when language not selected to block interactions -->
+              <div *ngIf="!dz.lang || dz.lang == 'null'" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;">
+                  <div class="text-center">
+                      <div class="mb-2">{{ 'WIZARD.STEP2.SELECT_FILE_LANGUAGE' | translate }}</div>
+                      <button type="button" class="btn btn-sm btn-outline-primary" (click)="focusLangSelect(dz.id)">
+                          {{ 'WIZARD.STEP2.SELECT_LANGUAGE' | translate }}
+                      </button>
+                  </div>
+              </div>
+          </div>
+</div>
+
+                            <!-- wizard-tab -->
+                      <div class="text-end">
+                        <button class="btn btn-primary save-continue" cdkStepperNext
+                                    (click)="onNextStep(cdkStepper)">{{ 'WIZARD.SAVE_CONTINUE' | translate }}</button>
+                      </div>
+                        </div>
+                        }
+                    </cdk-step>
+
+                    <cdk-step [optional]="false">
+                        <ng-template cdkStepLabel>
+                            <i class="bx bx-question-mark"></i>
+                        </ng-template>
+                        @if(cdkStepper.selectedIndex === 2){
+                        <div>
+                            <div class="text-center mb-4">
+                                <h5>{{ 'WIZARD.STEP3.TITLE' | translate }}</h5>
+                                <p class="card-title-desc">{{ 'WIZARD.STEP3.DESC' | translate }}</p>
+                            </div>
+                            
+                            <!-- Download Template Section -->
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h6 class="mb-0">{{ 'WIZARD.STEP3.DOWNLOAD_TEMPLATE' | translate }}</h6>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        (click)="downloadQuestionTemplate()">
+                                        <i class="bx bx-download"></i> {{ 'WIZARD.STEP3.DOWNLOAD_TEMPLATE' | translate }}
+                                    </button>
+                                </div>
+                                <p class="text-muted small mb-0">{{ 'WIZARD.STEP3.DOWNLOAD_TEMPLATE_DESC' | translate }}</p>
+                            </div>
+
+                            <!-- File Upload Section -->
+                            <div class="mb-4">
+                                <h6 class="mb-3">{{ 'WIZARD.STEP3.UPLOAD_QUESTIONS' | translate }}</h6>
+                                <dropzone
+                                    [config]="questionDropzoneConfig"
+                                    (addedFile)="onQuestionFileAdded($event)"
+                                    [message]="'WIZARD.STEP3.DROPZONE_MESSAGE' | translate"
+                                    (removedFile)="onQuestionFileRemoved()">
+                                </dropzone>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="text-center my-4">
+                                <hr>
+                                    <span class="text-muted small">{{ 'WIZARD.STEP3.OR' | translate }}</span>
+                            </div>
+
+                            <!-- Manual Question Entry Section -->
+                            <div class="mb-4">
+                                <h6 class="mb-3">{{ 'WIZARD.STEP3.MANUAL_ENTRY_TITLE' | translate }}</h6>
+                                <form [formGroup]="questionForm">
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <label for="question-type-input" class="form-label">
+                                                {{ 'WIZARD.STEP3.QUESTION_TYPE' | translate }} <span class="text-danger">*</span>
+                                            </label>
+                                            <select 
+                                                class="form-select" 
+                                                id="question-type-input"
+                                                formControlName="type"
+                                                [class.is-invalid]="questionForm.get('type')?.invalid && questionForm.get('type')?.touched">
+                                            <option value="">{{ 'WIZARD.STEP3.SELECT_QUESTION_TYPE' | translate }}</option>
+                                            <option [value]="QuestionTypeEnum.multiple_choice">{{ 'WIZARD.STEP3.QUESTION_TYPES.MULTIPLE_CHOICE' | translate }}</option>
+                                            <option [value]="QuestionTypeEnum.true_false">{{ 'WIZARD.STEP3.QUESTION_TYPES.TRUE_FALSE' | translate }}</option>
+                                            <option [value]="QuestionTypeEnum.short_answer">{{ 'WIZARD.STEP3.QUESTION_TYPES.SHORT_ANSWER' | translate }}</option>
+                                            <option [value]="QuestionTypeEnum.essay">{{ 'WIZARD.STEP3.QUESTION_TYPES.ESSAY' | translate }}</option>
+                                            <option [value]="QuestionTypeEnum.fill_blank">{{ 'WIZARD.STEP3.QUESTION_TYPES.FILL_BLANK' | translate }}</option>
+                                            </select>
+                                            @if(questionForm.get('type')?.invalid && questionForm.get('type')?.touched){
+                                            <div class="invalid-feedback d-block">
+                                                {{ 'WIZARD.VALIDATION.QUESTION_TYPE_REQUIRED' | translate }}
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <label for="question-text-input" class="form-label">
+                                                {{ 'WIZARD.STEP3.QUESTION_TEXT' | translate }} <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea 
+                                                class="form-control" 
+                                                id="question-text-input"
+                                                formControlName="question"
+                                                rows="3"
+                                                placeholder="{{ 'WIZARD.STEP3.QUESTION_TEXT_PLACEHOLDER' | translate }}"
+                                                [class.is-invalid]="questionForm.get('question')?.invalid && questionForm.get('question')?.touched"></textarea>
+                                            @if(questionForm.get('question')?.invalid && questionForm.get('question')?.touched){
+                                            <div class="invalid-feedback d-block">
+                                                {{ 'WIZARD.VALIDATION.FIELD_REQUIRED' | translate }}
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <label for="question-measure-input" class="form-label">
+                                                {{ 'WIZARD.STEP3.QUESTION_MEASURES' | translate }}
+                                            </label>
+                                            <input type="text" id="question-measure-input" class="form-control" formControlName="measure" placeholder="{{ 'WIZARD.STEP3.MEASURE_PLACEHOLDER' | translate }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <label class="form-label">
+                                                {{ 'WIZARD.STEP3.QUESTION_STATUS' | translate }} <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="form-check">
+                                                <input 
+                                                    class="form-check-input" 
+                                                    type="radio" 
+                                                    name="requirementType" 
+                                                    id="question-mandatory"
+                                                    formControlName="requirementType"
+                                                    value="Mandatory">
+                                                <label class="form-check-label" for="question-mandatory">
+                                                    {{ 'WIZARD.STEP3.MANDATORY' | translate }}
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input 
+                                                    class="form-check-input" 
+                                                    type="radio" 
+                                                    name="requirementType" 
+                                                    id="question-optional"
+                                                    formControlName="requirementType"
+                                                    value="optional">
+                                                <label class="form-check-label" for="question-optional">
+                                                    {{ 'WIZARD.STEP3.OPTIONAL' | translate }}
+                                                </label>
+                                            </div>
+                                            @if(questionForm.get('requirementType')?.invalid && questionForm.get('requirementType')?.touched){
+                                            <div class="invalid-feedback d-block">
+                                                {{ 'WIZARD.VALIDATION.SELECT_REQUIREMENT' | translate }}
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <!-- Options inputs: show when Multiple Choice, preset for True/False -->
+                                            <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <div *ngIf="questionForm.get('type')?.value === QuestionTypeEnum.multiple_choice">
+                                                <label class="form-label">{{ 'WIZARD.STEP3.OPTIONS_LABEL' | translate }}</label>
+                                                <div class="row g-2">
+                                                    <div class="col-6">
+                                                        <input type="text" class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_1' | translate }}" formControlName="option1">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="text" class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_2' | translate }}" formControlName="option2">
+                                                    </div>
+                                                    <div class="col-6 mt-2">
+                                                        <input type="text" class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_3' | translate }}" formControlName="option3">
+                                                    </div>
+                                                    <div class="col-6 mt-2">
+                                                        <input type="text" class="form-control" placeholder="{{ 'WIZARD.STEP3.OPTION_PLACEHOLDERS.OPTION_4' | translate }}" formControlName="option4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="questionForm.get('type')?.value === QuestionTypeEnum.true_false">
+                                                <label class="form-label">{{ 'WIZARD.STEP3.OPTIONS_LABEL' | translate }}</label>
+                                                <div class="d-flex gap-2">
+                                                    <input class="form-control" [value]="'WIZARD.STEP3.TRUE' | translate" disabled>
+                                                    <input class="form-control" [value]="'WIZARD.STEP3.FALSE' | translate" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <button 
+                                                type="button" 
+                                                class="btn btn-primary"
+                                                [disabled]="!questionForm.valid"
+                                                (click)="addManualQuestion()">
+                                                <i class="bx bx-plus"></i> {{ 'WIZARD.STEP3.ADD_QUESTION' | translate }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Display Added Questions -->
+                            @if(manualQuestions.length > 0){
+                            <div class="mb-4">
+                                <h6 class="mb-3">{{ 'WIZARD.STEP3.ADDED_QUESTIONS' | translate }} ({{ manualQuestions.length }})</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.QUESTION_TYPE' | translate }}</th>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.QUESTION_TEXT' | translate }}</th>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.MEASURE' | translate }}</th>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.OPTIONS' | translate }}</th>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.STATUS' | translate }}</th>
+                                                <th>{{ 'WIZARD.STEP3.TABLE.DELETE' | translate }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(question of manualQuestions; track $index){
+                                            <tr>
+                                                <td>{{ question.type }}</td>
+                                                <td>{{ question.question }}</td>
+                                                <td>{{ question.measure }}</td>
+                                                <td>
+                                                    <ng-container *ngIf="question.type === QuestionTypeEnum.multiple_choice || question.type === QuestionTypeEnum.true_false">
+                                                        <span *ngIf="question.type === QuestionTypeEnum.true_false">True / False</span>
+                                                            <ng-container *ngIf="question.type === QuestionTypeEnum.multiple_choice">
+                                        {{ getOptionsText(question) }}
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </td>
+                                                <td>
+                                                    <span class="badge" [ngClass]="question.requirementType == 'Mandatory'  ? 'bg-danger' : 'bg-secondary'">
+                                                        {{ question.requirementType }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <button 
+                                                        type="button" 
+                                                        class="btn btn-sm btn-outline-danger"
+                                                        (click)="removeManualQuestion($index)">
+                                                        <i class="bx bx-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            }
+
+                            <!-- Navigation Buttons -->
+                            <div class="d-flex align-items-start justify-content-end gap-3 mt-4">
+   
+                                <button 
+                                    type="button" 
+                                    class="btn btn-success w-sm"
+                                    (click)="onFinish()"
+                                  >
+                                    {{ 'WIZARD.STEP3.FINISH' | translate }}
+                                </button>
+                            </div>
+                        </div>}
+                    </cdk-step>
+
+                </ng-stepper>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>

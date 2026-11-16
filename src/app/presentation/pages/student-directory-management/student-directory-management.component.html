@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title mb-3">
+      {{ 'GROUP_MANAGEMENT.STUDENTS' | translate }}
+    </h4>
+<ng-template #actions let-row>
+<button
+  class="btn btn-sm btn-outline-primary"
+  (click)="viewStudent(row.id)" [title]=" 'STUDENT-MANAGEMENT.VIEW_STUDENT' | translate">
+  <i class="fa fa-eye "></i>
+  
+</button>
+</ng-template>
+
+    <app-data-table
+      [columns]="columns"
+      [data$]="students$"
+      [totalRecords]="totalStudents"
+      [tableService]="tableService"
+      [actionsTemplate]="actions"
+      [isLoading]="isLoading"
+      [statusOptions]="statusOptions"
+      >
+    </app-data-table>
+  </div>
+</div>
+
