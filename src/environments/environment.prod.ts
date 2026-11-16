@@ -2,12 +2,12 @@ export const environment = {
   production: true,
 
   // API Configuration for FastAPI backend (production)
-  apiUrl: 'https://edu-back-26-02.wfrley.site',
+  apiUrl: 'https://imam-back-02.wfrley.site',
   apiTimeout: 30000,
-  fileUrl: 'https://edu-back-26-02.wfrley.site',
-  imageUrl: 'https://edu-back-26-02.wfrley.site',
-  aiUrl: 'https://edu-ai-test-26-02.wfrley.site',
-  wsBaseUrl: 'wss://edu-back-26-02.wfrley.site',
+  fileUrl: 'https://imam-back-02.wfrley.site',
+  imageUrl: 'https://imam-back-02.wfrley.site',
+   aiUrl: 'https://edu-ai-test-26-02.wfrley.site',
+  wsBaseUrl: 'wss://imam-back-02.wfrley.site',
   aiImageUrl: 'https://moga-img-rec.wfrley.site',
 
   // Auth configuration
