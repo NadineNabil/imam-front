@@ -6,7 +6,7 @@ export const environment = {
   apiTimeout: 30000,
   fileUrl: 'https://imam-back-02.wfrley.site',
   imageUrl: 'https://imam-back-02.wfrley.site',
-   aiUrl: 'https://edu-ai-test-26-02.wfrley.site',
+   aiUrl: 'https://imam-ai-test-02.wfrley.site',
   wsBaseUrl: 'wss://imam-back-02.wfrley.site',
   aiImageUrl: 'https://moga-img-rec.wfrley.site',
 

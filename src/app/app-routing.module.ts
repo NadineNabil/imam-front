@@ -191,18 +191,6 @@ const routes: Routes = [
             (m) => m.GroupManagementModule
           ),
       },
-                        {
-        path: 'chat',
-        canActivate: [RoleGuard],
-                  data: {
-         roles: ['student']
-       },
-        loadChildren: () =>
-          import('./presentation/pages/chatbot/chatbot.module').then(
-            (m) => m.ChatbotModule
-          ),
-      },
-
       {
         path:'view-invitations',
                 canActivate: [RoleGuard],
@@ -236,6 +224,13 @@ const routes: Routes = [
           ),
       }
     ],
+  },
+  {
+    path: 'chat',
+    loadChildren: () =>
+      import('./presentation/pages/chatbot/chatbot.module').then(
+        (m) => m.ChatbotModule
+      ),
   },
   {
     path: 'account',

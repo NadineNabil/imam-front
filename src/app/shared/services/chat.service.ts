@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom, map, Observable } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { ApiConfig } from 'src/app/data/config/api.config';
 import DOMPurify from 'dompurify';
 import renderMathInElement from 'katex/dist/contrib/auto-render';
 import { GetValidAccessTokenUseCase } from 'src/app/domain/business/GetValidAccessToken.business';
+import { AUTH_BUSINESS_TOKEN, IAuthBusiness } from 'src/app/domain/business-contracts/auth-business.contract';
 
 
 export interface ChatMessage {
@@ -62,6 +63,7 @@ export class ChatService {
   currentSoundIcon: HTMLElement | null = null;
   currentAudio: HTMLAudioElement | null = null;
   isloading: boolean = false;
+  userId: string =''
 
   constructor(
     private http: HttpClient,
@@ -70,12 +72,20 @@ export class ChatService {
     private sanitizer: DomSanitizer,
     private streamService:StreamService,
     readonly apiConfig:ApiConfig,
-     private getValidToken: GetValidAccessTokenUseCase
+    private getValidToken: GetValidAccessTokenUseCase,
+    @Inject(AUTH_BUSINESS_TOKEN) private authBusiness: IAuthBusiness,
   ) {
 
-    //this.loadChatsFromStorage();
+    //this.loadChatsFromStorage(); 
+    //if there's no login and the userId is empty in localstorage means that no generated random id then generate a random id and store it in localstorage
+this.userId =
+  this.authBusiness.getCurrentUser()?.id?.toString() ||
+  localStorage.getItem('userId') ||
+  crypto.randomUUID();
 
-
+if (!this.authBusiness.getCurrentUser()?.id && !localStorage.getItem('userId')) {
+  localStorage.setItem('userId', this.userId);
+}   
   }
 
   // Load chats from localStorage
@@ -87,9 +97,7 @@ loadChatsFromStorage(): Observable<Chat[]> {
   const payload = {
     course_name: this.courseName,
     collection_id: this.assistantId,
-    user_id: (
-      JSON.parse(sessionStorage.getItem('currentUser') || '{}').id
-    ).toString()
+    user_id: this.userId
   };
 
   return this.http.get<any>(
@@ -312,7 +320,7 @@ loadChatsFromStorage(): Observable<Chat[]> {
         "question": question,
         "course_name":this.courseName,
         "collection_id": this.assistantId,
-        "user_id":(JSON.parse(sessionStorage.getItem('currentUser') || '{}').id).toString()
+        "user_id": this.userId
       }
       // Show a loading image instead of "..."
       const loadingId = `loading-${Date.now()}`;
@@ -810,7 +818,7 @@ private async endBotStream(isError: boolean = false): Promise<void> {
         this.chats = storedChats ? JSON.parse(storedChats) : []; */
 const payload={
       collection_id: this.assistantId,
-      user_id: (JSON.parse(sessionStorage.getItem('currentUser') || '{}').id).toString()
+      user_id: this.userId
 }
 
 this.http.get(

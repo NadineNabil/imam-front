@@ -151,7 +151,7 @@ this.handleLoading()
   AfterView1(): void {
         this.chatService.assistantId = this.assisstantId;
         this.chatService.courseName = this.courseName
-      const userId =(JSON.parse(sessionStorage.getItem('currentUser') || '{}').id).toString();
+      const userId = this.chatService.userId;
       localStorage.setItem('currentChatId', `${this.chatService.assistantId}_${userId}_${this.courseName}`);
 
       // Load chats after assistant is ready
