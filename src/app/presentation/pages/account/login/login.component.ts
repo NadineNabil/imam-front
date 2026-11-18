@@ -150,6 +150,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             //   'currentUser',
             //   JSON.stringify(user)
             // );
+            localStorage.removeItem('userId'); // Clear user ID from localStorage on successful login that generated because of chat random userId
             const targetUrl = this.getRedirectUrl(user);
             this.router.navigate([targetUrl]);
         },
